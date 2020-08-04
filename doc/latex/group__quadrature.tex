@@ -1,0 +1,150 @@
+\section{Quadrature routines}
+\label{group__quadrature}\index{Quadrature routines@{Quadrature routines}}
+
+
+Functions for performing integration on elements for various potentials (Laplace, Helmholtz, etc)  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad} (gdouble $\ast$xe, gint xstr, gint ne, gdouble s0, gdouble t0, gdouble $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gdouble tol, gdouble $\ast$Is, gint istr, gdouble $\ast$Id, gint dstr, gdouble $\ast$work)
+\begin{DoxyCompactList}\small\item\em Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat s0, gfloat t0, gfloat $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gfloat tol, gfloat $\ast$Is, gint istr, gfloat $\ast$Id, gint dstr, gfloat $\ast$work)
+\begin{DoxyCompactList}\small\item\em Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions for performing integration on elements for various potentials (Laplace, Helmholtz, etc) 
+
+
+
+\subsection{Function Documentation}
+\index{Quadrature routines@{Quadrature routines}!qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad@{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad}}
+\index{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad@{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad}!Quadrature routines@{Quadrature routines}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble}]{s0, }
+\item[{gdouble}]{t0, }
+\item[{gdouble $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gint}]{oq, }
+\item[{gint}]{Nmax, }
+\item[{gint}]{dmax, }
+\item[{gdouble}]{tol, }
+\item[{gdouble $\ast$}]{Is, }
+\item[{gint}]{istr, }
+\item[{gdouble $\ast$}]{Id, }
+\item[{gint}]{dstr, }
+\item[{gdouble $\ast$}]{work}
+\end{DoxyParamCaption}
+)}\label{group__quadrature_gafed5b29bc9d7a8aeefe23de40999944a}
+
+
+Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between x coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s0} & reference element coordinate of evaluation point; \\
+\hline
+{\em t0} & reference element coordinate of evaluation point; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of entries in {\itshape q}; \\
+\hline
+{\em oq} & order of {\itshape q} (highest order polynomial integrated exactly); \\
+\hline
+{\em Nmax} & maximum order of expansion; \\
+\hline
+{\em dmax} & maximum recursin depth in adaptive quadrature; \\
+\hline
+{\em tol} & error tolerance; \\
+\hline
+{\em Is} & on exit integrated single layer potential for nodal shape functions; \\
+\hline
+{\em istr} & stride in {\itshape Is} (ignored for now); \\
+\hline
+{\em Id} & on exit integrated double layer potential for nodal shape functions; \\
+\hline
+{\em dstr} & stride in {\itshape Id} (ignored for now); \\
+\hline
+{\em work} & workspace.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
+\index{Quadrature routines@{Quadrature routines}!qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f@{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f}}
+\index{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f@{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f}!Quadrature routines@{Quadrature routines}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat}]{s0, }
+\item[{gfloat}]{t0, }
+\item[{gfloat $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gint}]{oq, }
+\item[{gint}]{Nmax, }
+\item[{gint}]{dmax, }
+\item[{gfloat}]{tol, }
+\item[{gfloat $\ast$}]{Is, }
+\item[{gint}]{istr, }
+\item[{gfloat $\ast$}]{Id, }
+\item[{gint}]{dstr, }
+\item[{gfloat $\ast$}]{work}
+\end{DoxyParamCaption}
+)}\label{group__quadrature_gaf153c4f1d5295de81b584cbff4e3ac7e}
+
+
+Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between x coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s0} & reference element coordinate of evaluation point; \\
+\hline
+{\em t0} & reference element coordinate of evaluation point; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of entries in {\itshape q}; \\
+\hline
+{\em oq} & order of {\itshape q} (highest order polynomial integrated exactly); \\
+\hline
+{\em Nmax} & maximum order of expansion; \\
+\hline
+{\em dmax} & maximum recursin depth in adaptive quadrature; \\
+\hline
+{\em tol} & error tolerance; \\
+\hline
+{\em Is} & on exit integrated single layer potential for nodal shape functions; \\
+\hline
+{\em istr} & stride in {\itshape Is} (ignored for now); \\
+\hline
+{\em Id} & on exit integrated double layer potential for nodal shape functions; \\
+\hline
+{\em dstr} & stride in {\itshape Id} (ignored for now); \\
+\hline
+{\em work} & workspace.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}

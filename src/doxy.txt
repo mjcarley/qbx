@@ -1,0 +1,22 @@
+/**
+ * @mainpage QBX: a library for Quadrature By Expansion
+ * 
+ * QBX is a library for performing Quadrature By Expansion, mainly
+ * intended for use in Boundary Element Method (BEM) calculations.
+ */
+
+/**
+ * @defgroup location Location operations
+ *
+ * @brief Locating points on elements, including nearest points on
+ curved elements
+ *
+ */
+
+/**
+ * @defgroup quadrature Quadrature routines
+ *
+ * @brief Functions for performing integration on elements for various
+ *  potentials (Laplace, Helmholtz, etc)
+ *
+ */

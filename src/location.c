@@ -53,7 +53,7 @@ gint QBX_FUNCTION_NAME(qbx_element_nearest_point)(QBX_REAL *xe, gint xstr,
   implementation of Li X, Wu Z, Pan F et al. A geometric strategy
   algorithm for orthogonal projection onto a parametric
   surface. Journal of computer science and technology 34(6): 1279-1293
-  Nov. 2019. DOI 10.1007/s11390-019-1967-z
+  Nov. 2019. https://dx.doi.org/10.1007/s11390-019-1967-z
 */
   
 {
