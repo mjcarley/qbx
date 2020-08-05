@@ -29,6 +29,7 @@
 gchar *tests[] = {"planar_test",
 		  "closest_point",
 		  "self_test",
+		  "off_test",
 		  ""} ;
 
 GTimer *timer ;
@@ -271,6 +272,112 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ )
+    fprintf(stderr, " %+lg", fabs(f[nf+i]-g[nf+i])) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "source:   ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", gs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fabs(gs[i]-fs[i])) ;
+  fprintf(stderr, "\n") ;
+
+  return 0 ;
+}
+
+static gint off_test(gdouble *xe, gint xstr, gint ne,
+		     gint nq, gint N,
+		     gdouble *x0, gdouble s0, gdouble t0,
+		     gdouble rc, gint depth, gdouble tol,
+		     gint nx)
+
+{
+  gdouble work[8192], n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8] ;
+  gint order, i, nf ;
+  
+  nf = ne ;
+
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  fprintf(stderr, "triangle self-point test\n") ;
+  fprintf(stderr, "========================\n") ;
+
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
+  fprintf(stderr, "subdivision depth: %d\n", depth) ;
+  fprintf(stderr, "N: %d\n", N) ;
+
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+  qbx_vector_shift(x,x,n,rc) ;
+
+  fprintf(stderr, "x: %lg %lg %lg\n", x[0], x[1], x[2]) ;
+  
+  fprintf(stderr, "evaluating integrals, t=%lg\n",
+	  g_timer_elapsed(timer, NULL)) ;
+  qbx_triangle_laplace_quad(xe, xstr, ne, x, q, nq, order,
+			    N, depth, tol,
+			    &(f[0]), 1, &(f[ne]), 1, work) ;
+  fprintf(stderr, "integrals evaluated, t=%lg\n",
+	  g_timer_elapsed(timer, NULL)) ;
+
+  newman_tri_shape(x, &(xe[xstr*0]), &(xe[xstr*1]), &(xe[xstr*2]), NULL, 0,
+		   &(g[0]), &(g[ne])) ;
+  for ( i = 0 ; i < 2*ne ; i ++ ) g[i] *= -1.0/4.0/M_PI ;
+
+  memset(fs, 0, ne*sizeof(gdouble)) ;
+  memset(gs, 0, ne*sizeof(gdouble)) ;
+
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fs[0] += f[i]*1.0 ;
+    fs[1] += f[i]*xe[i*xstr+0] ;
+    fs[2] += f[i]*xe[i*xstr+1] ;
+    gs[0] += g[i]*1.0 ;
+    gs[1] += g[i]*xe[i*xstr+0] ;
+    gs[2] += g[i]*xe[i*xstr+1] ;
+  }
+  
+  fprintf(stderr, "single layer\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "exact:    ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", fabs(f[i]-g[i])) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "source:   ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", gs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fabs(gs[i]-fs[i])) ;
+  fprintf(stderr, "\n") ;
+  
+  memset(fs, 0, ne*sizeof(gdouble)) ;
+  memset(gs, 0, ne*sizeof(gdouble)) ;
+
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fs[0] += f[nf+i]*1.0 ;
+    fs[1] += f[nf+i]*xe[i*xstr+0] ;
+    fs[2] += f[nf+i]*xe[i*xstr+1] ;
+    gs[0] += g[nf+i]*1.0 ;
+    gs[1] += g[nf+i]*xe[i*xstr+0] ;
+    gs[2] += g[nf+i]*xe[i*xstr+1] ;
+  }
+
+  fprintf(stderr, "double layer\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "exact:    ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", fabs(f[nf+i]-g[nf+i])) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "source:   ") ;
@@ -330,7 +437,7 @@ static gint element_closest_point_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "n:   %lg %lg %lg\n", n[0], n[1], n[2]) ;
   fprintf(stderr, "r:   %lg %lg %lg\n", r[0], r[1], r[2]) ;
   fprintf(stderr, "r.n: %lg (%lg)\n",
-	  vector_scalar(r,n), vector_length(r)) ;
+	  qbx_vector_scalar(r,n), qbx_vector_length(r)) ;
   
   return 0 ;
 }
@@ -399,6 +506,11 @@ gint main(gint argc, gchar **argv)
     return 0 ;
   }
 
+  if ( test == 3 ) {
+    off_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc, depth, tol, nx) ;
+
+    return 0 ;
+  }
   
   return 0 ;
 }

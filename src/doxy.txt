@@ -20,3 +20,25 @@
  *  potentials (Laplace, Helmholtz, etc)
  *
  */
+
+/**
+ * @defgroup laplace Laplace potentials
+ *
+ * @brief Specialized functions for Laplace evaluation
+ *
+ */
+
+/**
+ * @defgroup base Basic functions
+ *
+ * @brief Basic functions for geometric handling and element manipulation
+ *
+ */
+
+/**
+ * @defgroup util Utility functions
+ *
+ * @brief Utility functions for common tasks
+ *
+ */
+

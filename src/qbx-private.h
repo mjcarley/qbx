@@ -61,39 +61,39 @@
   (QBX_Sn) = (QBX_Sn)*(QBX_C) + (QBX_tmp)*(QBX_S) ;		\
   } while (0)
 
-#define vector_cross(QBX_C,QBX_A,QBX_B)					\
+#define qbx_vector_cross(QBX_C,QBX_A,QBX_B)					\
   ((QBX_C)[0] = (QBX_A)[1]*(QBX_B)[2] - (QBX_A)[2]*(QBX_B)[1],		\
    (QBX_C)[1] = (QBX_A)[2]*(QBX_B)[0] - (QBX_A)[0]*(QBX_B)[2],		\
    (QBX_C)[2] = (QBX_A)[0]*(QBX_B)[1] - (QBX_A)[1]*(QBX_B)[0])
 
-#define vector_scalar(QBX_A,QBX_B)  \
+#define qbx_vector_scalar(QBX_A,QBX_B)  \
   (((QBX_A)[0])*((QBX_B)[0])+					\
    ((QBX_A)[1])*((QBX_B)[1])+					\
    ((QBX_A)[2])*((QBX_B)[2]))
 
-#define vector_diff_scalar(QBX_A,QBX_B,QBX_C)				\
+#define qbx_vector_diff_scalar(QBX_A,QBX_B,QBX_C)				\
   (((QBX_A)[0]-(QBX_B)[0])*((QBX_C)[0]) +				\
    ((QBX_A)[1]-(QBX_B)[1])*((QBX_C)[1]) +				\
    ((QBX_A)[2]-(QBX_B)[2])*((QBX_C)[2]))
 
-#define vector_length(QBX_A)					\
+#define qbx_vector_length(QBX_A)					\
   (SQRT(((QBX_A)[0])*((QBX_A)[0])+				\
 	((QBX_A)[1])*((QBX_A)[1]) +				\
 	((QBX_A)[2])*((QBX_A)[2])))
 
-#define vector_shift(QBX_A,QBX_B,QBX_C,QBX_D)	\
+#define qbx_vector_shift(QBX_A,QBX_B,QBX_C,QBX_D)	\
   { (QBX_A)[0] = (QBX_B)[0] + (QBX_C)[0]*(QBX_D) ;	\
     (QBX_A)[1] = (QBX_B)[1] + (QBX_C)[1]*(QBX_D) ;		\
     (QBX_A)[2] = (QBX_B)[2] + (QBX_C)[2]*(QBX_D) ;		\
   } while (0)
 
-#define vector_distance2(QBX_A,QBX_B)		\
+#define qbx_vector_distance2(QBX_A,QBX_B)		\
   ( ((QBX_A)[0]-(QBX_B)[0])*((QBX_A)[0]-(QBX_B)[0]) +	\
     ((QBX_A)[1]-(QBX_B)[1])*((QBX_A)[1]-(QBX_B)[1]) +	\
     ((QBX_A)[2]-(QBX_B)[2])*((QBX_A)[2]-(QBX_B)[2]) )
 
-#define vector_distance(QBX_A,QBX_B)		\
-  (SQRT((vector_distance2(QBX_A,QBX_B))))
+#define qbx_vector_distance(QBX_A,QBX_B)		\
+  (SQRT((qbx_vector_distance2(QBX_A,QBX_B))))
 
 #define qbx_index_laplace_nm(QBX_n,QBX_m) ((QBX_n)*(QBX_n)+(2*(QBX_m))-1)
 

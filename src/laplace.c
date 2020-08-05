@@ -476,7 +476,7 @@ gint QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(QBX_REAL *xe,
   /*check error estimate for this triangle*/
   rp = 1e6 ;
   for ( i = 0 ; i < ne ; i ++ ) {
-    rp = MIN(rp, vector_distance2(xc, &(xe[i*xstr]))) ;
+    rp = MIN(rp, qbx_vector_distance2(xc, &(xe[i*xstr]))) ;
   }
   rp = SQRT(rp) ;
   err = QBX_FUNCTION_NAME(qbx_quadrature_error)(N, w, order, rp, rp) ;

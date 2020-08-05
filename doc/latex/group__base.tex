@@ -1,0 +1,696 @@
+\section{Basic functions}
+\label{group__base}\index{Basic functions@{Basic functions}}
+
+
+Basic functions for geometric handling and element manipulation.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+gint {\bf qbx\+\_\+element\+\_\+shape\+\_\+3d} (gint ne, gdouble s, gdouble t, gdouble $\ast$L, gdouble $\ast$d\+Lds, gdouble $\ast$d\+Ldt, gdouble $\ast$d\+Ldss, gdouble $\ast$d\+Ldst, gdouble $\ast$d\+Ldtt)
+\begin{DoxyCompactList}\small\item\em Shape function evaluations for three-\/dimensional elements. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$L, gdouble $\ast$d\+Lds, gdouble $\ast$d\+Ldt, gdouble $\ast$y, gdouble $\ast$n, gdouble $\ast$J, gdouble $\ast$c)
+\begin{DoxyCompactList}\small\item\em Interpolation of point on element using shape functions. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+element\+\_\+point\+\_\+3d} (gdouble $\ast$xe, gint xstr, gint ne, gdouble s, gdouble t, gdouble $\ast$y, gdouble $\ast$n, gdouble $\ast$J, gdouble $\ast$c)
+\begin{DoxyCompactList}\small\item\em Convenience function for direct evaluation of point position on element. \end{DoxyCompactList}\item 
+gdouble {\bf qbx\+\_\+quadrature\+\_\+error} (gint N, gdouble h, gint order, gdouble r, gdouble rp)
+\begin{DoxyCompactList}\small\item\em Quadrature error estimator. \end{DoxyCompactList}\item 
+gdouble {\bf qbx\+\_\+element\+\_\+area} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$qrule, gint nq)
+\begin{DoxyCompactList}\small\item\em Estimate surface area of element. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+triangle\+\_\+truncation\+\_\+error} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$qrule, gint nq, gint N, gdouble rc, gint depth, gdouble $\ast$ee)
+\begin{DoxyCompactList}\small\item\em Truncation error estimator for triangular element. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+truncation\+\_\+optimal} (gdouble Rb, gdouble c, gdouble rp, gint order, gint pmax, gint smax, gdouble tol, gint $\ast$pq, gint $\ast$s)
+\begin{DoxyCompactList}\small\item\em Estimate parameters for optimal truncation and quadrature. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+triangle\+\_\+curvature} (gdouble $\ast$xe, gint xstr, gint ne, gdouble s, gdouble t, gdouble $\ast$kg, gdouble $\ast$km)
+\begin{DoxyCompactList}\small\item\em Curvatures on a triangular element. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f} (gint ne, gfloat s, gfloat t, gfloat $\ast$L, gfloat $\ast$d\+Lds, gfloat $\ast$d\+Ldt, gfloat $\ast$d\+Ldss, gfloat $\ast$d\+Ldst, gfloat $\ast$d\+Ldtt)
+\begin{DoxyCompactList}\small\item\em Shape function evaluations for three-\/dimensional elements. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$L, gfloat $\ast$d\+Lds, gfloat $\ast$d\+Ldt, gfloat $\ast$y, gfloat $\ast$n, gfloat $\ast$J, gfloat $\ast$c)
+\begin{DoxyCompactList}\small\item\em Interpolation of point on element using shape functions. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat s, gfloat t, gfloat $\ast$y, gfloat $\ast$n, gfloat $\ast$J, gfloat $\ast$c)
+\begin{DoxyCompactList}\small\item\em Convenience function for direct evaluation of point position on element. \end{DoxyCompactList}\item 
+gfloat {\bf qbx\+\_\+quadrature\+\_\+error\+\_\+f} (gint N, gfloat h, gint order, gfloat r, gfloat rp)
+\begin{DoxyCompactList}\small\item\em Quadrature error estimator. \end{DoxyCompactList}\item 
+gfloat {\bf qbx\+\_\+element\+\_\+area\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$qrule, gint nq)
+\begin{DoxyCompactList}\small\item\em Estimate surface area of element. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$qrule, gint nq, gint N, gfloat rc, gint depth, gfloat $\ast$ee)
+\begin{DoxyCompactList}\small\item\em Truncation error estimator for triangular element. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+truncation\+\_\+optimal\+\_\+f} (gfloat Rb, gfloat c, gfloat rp, gint order, gint pmax, gint smax, gfloat tol, gint $\ast$pq, gint $\ast$s)
+\begin{DoxyCompactList}\small\item\em Estimate parameters for optimal truncation and quadrature. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+triangle\+\_\+curvature\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat s, gfloat t, gfloat $\ast$kg, gfloat $\ast$km)
+\begin{DoxyCompactList}\small\item\em Curvatures on a triangular element. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Basic functions for geometric handling and element manipulation. 
+
+
+
+\subsection{Function Documentation}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+area@{qbx\+\_\+element\+\_\+area}}
+\index{qbx\+\_\+element\+\_\+area@{qbx\+\_\+element\+\_\+area}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+area}]{\setlength{\rightskip}{0pt plus 5cm}gdouble qbx\+\_\+element\+\_\+area (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{qrule, }
+\item[{gint}]{nq}
+\end{DoxyParamCaption}
+)}\label{group__base_ga1be2197080442d330d3a09ced44dc859}
+
+
+Estimate surface area of element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em qrule} & nodes and weights of quadrature rule; \\
+\hline
+{\em nq} & number of nodes in {\itshape qrule}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estimate of area of element. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+area\+\_\+f@{qbx\+\_\+element\+\_\+area\+\_\+f}}
+\index{qbx\+\_\+element\+\_\+area\+\_\+f@{qbx\+\_\+element\+\_\+area\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+area\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gfloat qbx\+\_\+element\+\_\+area\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{qrule, }
+\item[{gint}]{nq}
+\end{DoxyParamCaption}
+)}\label{group__base_ga257b34c9a885f4969d693ccbf9669374}
+
+
+Estimate surface area of element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em qrule} & nodes and weights of quadrature rule; \\
+\hline
+{\em nq} & number of nodes in {\itshape qrule}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estimate of area of element. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+point\+\_\+3d@{qbx\+\_\+element\+\_\+point\+\_\+3d}}
+\index{qbx\+\_\+element\+\_\+point\+\_\+3d@{qbx\+\_\+element\+\_\+point\+\_\+3d}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+point\+\_\+3d}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+point\+\_\+3d (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble}]{s, }
+\item[{gdouble}]{t, }
+\item[{gdouble $\ast$}]{y, }
+\item[{gdouble $\ast$}]{n, }
+\item[{gdouble $\ast$}]{J, }
+\item[{gdouble $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\label{group__base_gae92efaf64941bb4f09ec03da1c674b16}
+
+
+Convenience function for direct evaluation of point position on element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s} & coordinate on element; \\
+\hline
+{\em t} & coordinate on element; \\
+\hline
+{\em y} & on exit interpolated point on element; \\
+\hline
+{\em n} & on exit normal at {\itshape y}; \\
+\hline
+{\em J} & on exit Jacobian at {\itshape y}; \\
+\hline
+{\em c} & reserved for future use (can be N\+U\+L\+L).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f}}
+\index{qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+point\+\_\+3d\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat}]{s, }
+\item[{gfloat}]{t, }
+\item[{gfloat $\ast$}]{y, }
+\item[{gfloat $\ast$}]{n, }
+\item[{gfloat $\ast$}]{J, }
+\item[{gfloat $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\label{group__base_gae58fb074556a5e62437c8500fd4045e8}
+
+
+Convenience function for direct evaluation of point position on element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s} & coordinate on element; \\
+\hline
+{\em t} & coordinate on element; \\
+\hline
+{\em y} & on exit interpolated point on element; \\
+\hline
+{\em n} & on exit normal at {\itshape y}; \\
+\hline
+{\em J} & on exit Jacobian at {\itshape y}; \\
+\hline
+{\em c} & reserved for future use (can be N\+U\+L\+L).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d@{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d}}
+\index{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d@{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{L, }
+\item[{gdouble $\ast$}]{d\+Lds, }
+\item[{gdouble $\ast$}]{d\+Ldt, }
+\item[{gdouble $\ast$}]{y, }
+\item[{gdouble $\ast$}]{n, }
+\item[{gdouble $\ast$}]{J, }
+\item[{gdouble $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\label{group__base_gace4a6b778f8dafff2f88cdc7b72b5a69}
+
+
+Interpolation of point on element using shape functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em L} & shape function from \doxyref{qbx\+\_\+element\+\_\+shape\+\_\+3d}{p.}{group__base_gad4f6f268b504cb5ba9a495f572eeb6db}(...); \\
+\hline
+{\em d\+Lds} & derivative of shape function; \\
+\hline
+{\em d\+Ldt} & derivative of shape function; \\
+\hline
+{\em y} & on exit interpolated point on element; \\
+\hline
+{\em n} & on exit normal at {\itshape y}; \\
+\hline
+{\em J} & on exit Jacobian at {\itshape y}; \\
+\hline
+{\em c} & reserved for future use (can be N\+U\+L\+L).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f}}
+\index{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+point\+\_\+interp\+\_\+3d\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{L, }
+\item[{gfloat $\ast$}]{d\+Lds, }
+\item[{gfloat $\ast$}]{d\+Ldt, }
+\item[{gfloat $\ast$}]{y, }
+\item[{gfloat $\ast$}]{n, }
+\item[{gfloat $\ast$}]{J, }
+\item[{gfloat $\ast$}]{c}
+\end{DoxyParamCaption}
+)}\label{group__base_ga6892352f61084475ea750e375feec99a}
+
+
+Interpolation of point on element using shape functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em L} & shape function from \doxyref{qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f}{p.}{group__base_gaa408f9812e97d1c985f9d1e1f4ed3a9f}(...); \\
+\hline
+{\em d\+Lds} & derivative of shape function; \\
+\hline
+{\em d\+Ldt} & derivative of shape function; \\
+\hline
+{\em y} & on exit interpolated point on element; \\
+\hline
+{\em n} & on exit normal at {\itshape y}; \\
+\hline
+{\em J} & on exit Jacobian at {\itshape y}; \\
+\hline
+{\em c} & reserved for future use (can be N\+U\+L\+L).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+shape\+\_\+3d@{qbx\+\_\+element\+\_\+shape\+\_\+3d}}
+\index{qbx\+\_\+element\+\_\+shape\+\_\+3d@{qbx\+\_\+element\+\_\+shape\+\_\+3d}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+shape\+\_\+3d}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+shape\+\_\+3d (
+\begin{DoxyParamCaption}
+\item[{gint}]{ne, }
+\item[{gdouble}]{s, }
+\item[{gdouble}]{t, }
+\item[{gdouble $\ast$}]{L, }
+\item[{gdouble $\ast$}]{d\+Lds, }
+\item[{gdouble $\ast$}]{d\+Ldt, }
+\item[{gdouble $\ast$}]{d\+Ldss, }
+\item[{gdouble $\ast$}]{d\+Ldst, }
+\item[{gdouble $\ast$}]{d\+Ldtt}
+\end{DoxyParamCaption}
+)}\label{group__base_gad4f6f268b504cb5ba9a495f572eeb6db}
+
+
+Shape function evaluations for three-\/dimensional elements. 
+
+On entry {\itshape L} may not be N\+U\+L\+L, but if {\itshape d\+Lds} is N\+U\+L\+L, first and second derivatives are not evaluated. If {\itshape d\+Ldss} is N\+U\+L\+L, first derivatives are evaluated, but not second.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ne} & number of nodes on element (currently 3 or 6); \\
+\hline
+{\em s} & coordinate on element; \\
+\hline
+{\em t} & coordinate on element; \\
+\hline
+{\em L} & on exit shape function evaluated at each node; \\
+\hline
+{\em d\+Lds} & on exit $\partial L_{i}/\partial s$ at each node; \\
+\hline
+{\em d\+Ldt} & on exit $\partial L_{i}/\partial t$ at each node; \\
+\hline
+{\em d\+Ldss} & on exit $\partial^{2} L_{i}/\partial s^{2}$ at each node; \\
+\hline
+{\em d\+Ldst} & on exit $\partial^{2} L_{i}/\partial s\partial t$ at each node; \\
+\hline
+{\em d\+Ldtt} & on exit $\partial^{2} L_{i}/\partial t^{2}$ at each node;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f}}
+\index{qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f@{qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+element\+\_\+shape\+\_\+3d\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gint}]{ne, }
+\item[{gfloat}]{s, }
+\item[{gfloat}]{t, }
+\item[{gfloat $\ast$}]{L, }
+\item[{gfloat $\ast$}]{d\+Lds, }
+\item[{gfloat $\ast$}]{d\+Ldt, }
+\item[{gfloat $\ast$}]{d\+Ldss, }
+\item[{gfloat $\ast$}]{d\+Ldst, }
+\item[{gfloat $\ast$}]{d\+Ldtt}
+\end{DoxyParamCaption}
+)}\label{group__base_gaa408f9812e97d1c985f9d1e1f4ed3a9f}
+
+
+Shape function evaluations for three-\/dimensional elements. 
+
+On entry {\itshape L} may not be N\+U\+L\+L, but if {\itshape d\+Lds} is N\+U\+L\+L, first and second derivatives are not evaluated. If {\itshape d\+Ldss} is N\+U\+L\+L, first derivatives are evaluated, but not second.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ne} & number of nodes on element (currently 3 or 6); \\
+\hline
+{\em s} & coordinate on element; \\
+\hline
+{\em t} & coordinate on element; \\
+\hline
+{\em L} & on exit shape function evaluated at each node; \\
+\hline
+{\em d\+Lds} & on exit $\partial L_{i}/\partial s$ at each node; \\
+\hline
+{\em d\+Ldt} & on exit $\partial L_{i}/\partial t$ at each node; \\
+\hline
+{\em d\+Ldss} & on exit $\partial^{2} L_{i}/\partial s^{2}$ at each node; \\
+\hline
+{\em d\+Ldst} & on exit $\partial^{2} L_{i}/\partial s\partial t$ at each node; \\
+\hline
+{\em d\+Ldtt} & on exit $\partial^{2} L_{i}/\partial t^{2}$ at each node;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+quadrature\+\_\+error@{qbx\+\_\+quadrature\+\_\+error}}
+\index{qbx\+\_\+quadrature\+\_\+error@{qbx\+\_\+quadrature\+\_\+error}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+quadrature\+\_\+error}]{\setlength{\rightskip}{0pt plus 5cm}gdouble qbx\+\_\+quadrature\+\_\+error (
+\begin{DoxyParamCaption}
+\item[{gint}]{N, }
+\item[{gdouble}]{h, }
+\item[{gint}]{order, }
+\item[{gdouble}]{r, }
+\item[{gdouble}]{rp}
+\end{DoxyParamCaption}
+)}\label{group__base_gacc0e0b4f9db97c5aac6f6df6999c6ba7}
+
+
+Quadrature error estimator. 
+
+Quadrature error estimator from Siegel and Tornberg, A local target specific quadrature by expansion method for evaluation of layer potentials in 3\+D, {\tt https\+://doi.\+org/10.\+1016/j.\+jcp.\+2018.\+03.\+006}
+
+
+\begin{DoxyParams}{Parameters}
+{\em N} & order of expansion term; \\
+\hline
+{\em h} & element dimension; \\
+\hline
+{\em order} & order of quadrature rule; \\
+\hline
+{\em r} & distance from expansion centre; \\
+\hline
+{\em rp} & distance to closest point on element;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estimate of error in integration of $N$th expansion term. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+quadrature\+\_\+error\+\_\+f@{qbx\+\_\+quadrature\+\_\+error\+\_\+f}}
+\index{qbx\+\_\+quadrature\+\_\+error\+\_\+f@{qbx\+\_\+quadrature\+\_\+error\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+quadrature\+\_\+error\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gfloat qbx\+\_\+quadrature\+\_\+error\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gint}]{N, }
+\item[{gfloat}]{h, }
+\item[{gint}]{order, }
+\item[{gfloat}]{r, }
+\item[{gfloat}]{rp}
+\end{DoxyParamCaption}
+)}\label{group__base_ga5cab03f807f365b8ad4478074332e3ae}
+
+
+Quadrature error estimator. 
+
+Quadrature error estimator from Siegel and Tornberg, A local target specific quadrature by expansion method for evaluation of layer potentials in 3\+D, {\tt https\+://doi.\+org/10.\+1016/j.\+jcp.\+2018.\+03.\+006}
+
+
+\begin{DoxyParams}{Parameters}
+{\em N} & order of expansion term; \\
+\hline
+{\em h} & element dimension; \\
+\hline
+{\em order} & order of quadrature rule; \\
+\hline
+{\em r} & distance from expansion centre; \\
+\hline
+{\em rp} & distance to closest point on element;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+estimate of error in integration of $N$th expansion term. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+triangle\+\_\+curvature@{qbx\+\_\+triangle\+\_\+curvature}}
+\index{qbx\+\_\+triangle\+\_\+curvature@{qbx\+\_\+triangle\+\_\+curvature}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+curvature}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+curvature (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble}]{s, }
+\item[{gdouble}]{t, }
+\item[{gdouble $\ast$}]{kg, }
+\item[{gdouble $\ast$}]{km}
+\end{DoxyParamCaption}
+)}\label{group__base_gac0e3f6363250a06afc4786049341e910}
+
+
+Curvatures on a triangular element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s} & coordinate on reference element; \\
+\hline
+{\em t} & coordinate on reference element; \\
+\hline
+{\em kg} & on exit Gaussian curvature on element in physical space at $(s,t)$; \\
+\hline
+{\em km} & on exit mean curvature on element in physical space at $(s,t)$.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+triangle\+\_\+curvature\+\_\+f@{qbx\+\_\+triangle\+\_\+curvature\+\_\+f}}
+\index{qbx\+\_\+triangle\+\_\+curvature\+\_\+f@{qbx\+\_\+triangle\+\_\+curvature\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+curvature\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+curvature\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat}]{s, }
+\item[{gfloat}]{t, }
+\item[{gfloat $\ast$}]{kg, }
+\item[{gfloat $\ast$}]{km}
+\end{DoxyParamCaption}
+)}\label{group__base_ga53d530d166cb1efe2b8467974af1a993}
+
+
+Curvatures on a triangular element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em s} & coordinate on reference element; \\
+\hline
+{\em t} & coordinate on reference element; \\
+\hline
+{\em kg} & on exit Gaussian curvature on element in physical space at $(s,t)$; \\
+\hline
+{\em km} & on exit mean curvature on element in physical space at $(s,t)$.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+triangle\+\_\+truncation\+\_\+error@{qbx\+\_\+triangle\+\_\+truncation\+\_\+error}}
+\index{qbx\+\_\+triangle\+\_\+truncation\+\_\+error@{qbx\+\_\+triangle\+\_\+truncation\+\_\+error}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+truncation\+\_\+error}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+truncation\+\_\+error (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{qrule, }
+\item[{gint}]{nq, }
+\item[{gint}]{N, }
+\item[{gdouble}]{rc, }
+\item[{gint}]{depth, }
+\item[{gdouble $\ast$}]{ee}
+\end{DoxyParamCaption}
+)}\label{group__base_ga86cadd2318cbd6df263ab67cd838e633}
+
+
+Truncation error estimator for triangular element. 
+
+Truncation error estimator from Siegel and Tornberg, A local target specific quadrature by expansion method for evaluation of layer potentials in 3\+D, {\tt https\+://doi.\+org/10.\+1016/j.\+jcp.\+2018.\+03.\+006}
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em qrule} & quadrature rule used to estimate element area (does not need to be high order); \\
+\hline
+{\em nq} & number of nodes in {\itshape qrule}; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em rc} & distance from expansion centre; \\
+\hline
+{\em depth} & recursion depth for subdivision of element; \\
+\hline
+{\em ee} & on exit contains error estimators for single-\/ and double-\/layer potential evalution.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f@{qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f}}
+\index{qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f@{qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+triangle\+\_\+truncation\+\_\+error\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{qrule, }
+\item[{gint}]{nq, }
+\item[{gint}]{N, }
+\item[{gfloat}]{rc, }
+\item[{gint}]{depth, }
+\item[{gfloat $\ast$}]{ee}
+\end{DoxyParamCaption}
+)}\label{group__base_ga31e7a95933f6c29e0b3780d15ef8300f}
+
+
+Truncation error estimator for triangular element. 
+
+Truncation error estimator from Siegel and Tornberg, A local target specific quadrature by expansion method for evaluation of layer potentials in 3\+D, {\tt https\+://doi.\+org/10.\+1016/j.\+jcp.\+2018.\+03.\+006}
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em qrule} & quadrature rule used to estimate element area (does not need to be high order); \\
+\hline
+{\em nq} & number of nodes in {\itshape qrule}; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em rc} & distance from expansion centre; \\
+\hline
+{\em depth} & recursion depth for subdivision of element; \\
+\hline
+{\em ee} & on exit contains error estimators for single-\/ and double-\/layer potential evalution.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+truncation\+\_\+optimal@{qbx\+\_\+truncation\+\_\+optimal}}
+\index{qbx\+\_\+truncation\+\_\+optimal@{qbx\+\_\+truncation\+\_\+optimal}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+truncation\+\_\+optimal}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+truncation\+\_\+optimal (
+\begin{DoxyParamCaption}
+\item[{gdouble}]{Rb, }
+\item[{gdouble}]{c, }
+\item[{gdouble}]{rp, }
+\item[{gint}]{order, }
+\item[{gint}]{pmax, }
+\item[{gint}]{smax, }
+\item[{gdouble}]{tol, }
+\item[{gint $\ast$}]{pq, }
+\item[{gint $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\label{group__base_gac45984b38d50d7e84087ffd82dcc4ef6}
+
+
+Estimate parameters for optimal truncation and quadrature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Rb} & element dimension; \\
+\hline
+{\em c} & distance to expansion centre; \\
+\hline
+{\em rp} & distance from element to expansion centre; \\
+\hline
+{\em order} & order of quadrature rule; \\
+\hline
+{\em pmax} & maximum order of expansion; \\
+\hline
+{\em smax} & maximum recursion depth in quadrature; \\
+\hline
+{\em tol} & quadrature error tolerance; \\
+\hline
+{\em pq} & on exit recommended expansion order; \\
+\hline
+{\em s} & on exit recommended recursion depth.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Basic functions@{Basic functions}!qbx\+\_\+truncation\+\_\+optimal\+\_\+f@{qbx\+\_\+truncation\+\_\+optimal\+\_\+f}}
+\index{qbx\+\_\+truncation\+\_\+optimal\+\_\+f@{qbx\+\_\+truncation\+\_\+optimal\+\_\+f}!Basic functions@{Basic functions}}
+\subsubsection[{qbx\+\_\+truncation\+\_\+optimal\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+truncation\+\_\+optimal\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat}]{Rb, }
+\item[{gfloat}]{c, }
+\item[{gfloat}]{rp, }
+\item[{gint}]{order, }
+\item[{gint}]{pmax, }
+\item[{gint}]{smax, }
+\item[{gfloat}]{tol, }
+\item[{gint $\ast$}]{pq, }
+\item[{gint $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\label{group__base_gacc97d0b391f76f17f5d59be484f6d59e}
+
+
+Estimate parameters for optimal truncation and quadrature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Rb} & element dimension; \\
+\hline
+{\em c} & distance to expansion centre; \\
+\hline
+{\em rp} & distance from element to expansion centre; \\
+\hline
+{\em order} & order of quadrature rule; \\
+\hline
+{\em pmax} & maximum order of expansion; \\
+\hline
+{\em smax} & maximum recursion depth in quadrature; \\
+\hline
+{\em tol} & quadrature error tolerance; \\
+\hline
+{\em pq} & on exit recommended expansion order; \\
+\hline
+{\em s} & on exit recommended recursion depth.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}

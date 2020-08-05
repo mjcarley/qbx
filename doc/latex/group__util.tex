@@ -1,0 +1,220 @@
+\section{Utility functions}
+\label{group__util}\index{Utility functions@{Utility functions}}
+
+
+Utility functions for common tasks.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+gint {\bf qbx\+\_\+cartesian\+\_\+to\+\_\+spherical} (gdouble $\ast$x0, gdouble $\ast$x, gdouble $\ast$r, gdouble $\ast$th, gdouble $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Convert Cartesian to spherical coordinates. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+legendre\+\_\+recursion\+\_\+array} (gdouble $\ast$$\ast$Pnm1, gdouble $\ast$$\ast$Pn, gint n, gdouble C, gdouble S)
+\begin{DoxyCompactList}\small\item\em Perform recursion on normalized associated Legendre functions. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+legendre\+\_\+init} (gdouble C, gdouble S, gdouble $\ast$P0, gdouble $\ast$P10, gdouble $\ast$P11)
+\begin{DoxyCompactList}\small\item\em Initialize normalized associated Legendre functions. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f} (gfloat $\ast$x0, gfloat $\ast$x, gfloat $\ast$r, gfloat $\ast$th, gfloat $\ast$ph)
+\begin{DoxyCompactList}\small\item\em Convert Cartesian to spherical coordinates. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f} (gfloat $\ast$$\ast$Pnm1, gfloat $\ast$$\ast$Pn, gint n, gfloat C, gfloat S)
+\begin{DoxyCompactList}\small\item\em Perform recursion on normalized associated Legendre functions. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+legendre\+\_\+init\+\_\+f} (gfloat C, gfloat S, gfloat $\ast$P0, gfloat $\ast$P10, gfloat $\ast$P11)
+\begin{DoxyCompactList}\small\item\em Initialize normalized associated Legendre functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Utility functions for common tasks. 
+
+
+
+\subsection{Function Documentation}
+\index{Utility functions@{Utility functions}!qbx\+\_\+cartesian\+\_\+to\+\_\+spherical@{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical}}
+\index{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical@{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+cartesian\+\_\+to\+\_\+spherical (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{x0, }
+\item[{gdouble $\ast$}]{x, }
+\item[{gdouble $\ast$}]{r, }
+\item[{gdouble $\ast$}]{th, }
+\item[{gdouble $\ast$}]{ph}
+\end{DoxyParamCaption}
+)}\label{group__util_ga618d501dbc4b9f569402e8f371024db3}
+
+
+Convert Cartesian to spherical coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x0} & centre of coordinate system; \\
+\hline
+{\em x} & point; \\
+\hline
+{\em r} & radius of {\itshape x} in spherical system centred on {\itshape x0}; \\
+\hline
+{\em th} & azimuth of {\itshape x} in spherical system centred on {\itshape x0}; \\
+\hline
+{\em ph} & elevation of {\itshape x} in spherical system centred on {\itshape x0}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Utility functions@{Utility functions}!qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f@{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f}}
+\index{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f@{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+cartesian\+\_\+to\+\_\+spherical\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{x0, }
+\item[{gfloat $\ast$}]{x, }
+\item[{gfloat $\ast$}]{r, }
+\item[{gfloat $\ast$}]{th, }
+\item[{gfloat $\ast$}]{ph}
+\end{DoxyParamCaption}
+)}\label{group__util_ga5a97931a594edc8418d9c1ac5a0e85df}
+
+
+Convert Cartesian to spherical coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x0} & centre of coordinate system; \\
+\hline
+{\em x} & point; \\
+\hline
+{\em r} & radius of {\itshape x} in spherical system centred on {\itshape x0}; \\
+\hline
+{\em th} & azimuth of {\itshape x} in spherical system centred on {\itshape x0}; \\
+\hline
+{\em ph} & elevation of {\itshape x} in spherical system centred on {\itshape x0}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Utility functions@{Utility functions}!qbx\+\_\+legendre\+\_\+init@{qbx\+\_\+legendre\+\_\+init}}
+\index{qbx\+\_\+legendre\+\_\+init@{qbx\+\_\+legendre\+\_\+init}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+legendre\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+legendre\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{gdouble}]{C, }
+\item[{gdouble}]{S, }
+\item[{gdouble $\ast$}]{P0, }
+\item[{gdouble $\ast$}]{P10, }
+\item[{gdouble $\ast$}]{P11}
+\end{DoxyParamCaption}
+)}\label{group__util_gadbf2eb81937dc72440426f5df7c9ebc2}
+
+
+Initialize normalized associated Legendre functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & $\cos\theta$; \\
+\hline
+{\em S} & $\sin\theta$; \\
+\hline
+{\em P0} & on output $P_{0}^{0}(\cos\theta)$; \\
+\hline
+{\em P10} & on output $P_{1}^{0}(\cos\theta)$; \\
+\hline
+{\em P11} & on output $P_{1}^{1}(\cos\theta)$;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
+\index{Utility functions@{Utility functions}!qbx\+\_\+legendre\+\_\+init\+\_\+f@{qbx\+\_\+legendre\+\_\+init\+\_\+f}}
+\index{qbx\+\_\+legendre\+\_\+init\+\_\+f@{qbx\+\_\+legendre\+\_\+init\+\_\+f}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+legendre\+\_\+init\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+legendre\+\_\+init\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat}]{C, }
+\item[{gfloat}]{S, }
+\item[{gfloat $\ast$}]{P0, }
+\item[{gfloat $\ast$}]{P10, }
+\item[{gfloat $\ast$}]{P11}
+\end{DoxyParamCaption}
+)}\label{group__util_ga34976fa63ebb4b5c3da430b803290e02}
+
+
+Initialize normalized associated Legendre functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em C} & $\cos\theta$; \\
+\hline
+{\em S} & $\sin\theta$; \\
+\hline
+{\em P0} & on output $P_{0}^{0}(\cos\theta)$; \\
+\hline
+{\em P10} & on output $P_{1}^{0}(\cos\theta)$; \\
+\hline
+{\em P11} & on output $P_{1}^{1}(\cos\theta)$;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
+\index{Utility functions@{Utility functions}!qbx\+\_\+legendre\+\_\+recursion\+\_\+array@{qbx\+\_\+legendre\+\_\+recursion\+\_\+array}}
+\index{qbx\+\_\+legendre\+\_\+recursion\+\_\+array@{qbx\+\_\+legendre\+\_\+recursion\+\_\+array}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+legendre\+\_\+recursion\+\_\+array}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+legendre\+\_\+recursion\+\_\+array (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$$\ast$}]{Pnm1, }
+\item[{gdouble $\ast$$\ast$}]{Pn, }
+\item[{gint}]{n, }
+\item[{gdouble}]{C, }
+\item[{gdouble}]{S}
+\end{DoxyParamCaption}
+)}\label{group__util_ga493e2fbb9872e293c3f6f16e765b1118}
+
+
+Perform recursion on normalized associated Legendre functions. 
+
+Perform recursion on normalized associated Legendre functions with input $P_{n-1}^{m}(\cos\theta)$, $0\leq m\leq n-1$, and $P_{n}^{m}(\cos\theta)$, $0\leq m \leq n$, generating equivalent outputs with $n$ incremented by one. Note that the arrays of associated Legendre functions are switched internally to ensure that the ordering remains correct after the recursion step.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Pnm1} & pointer to array of normalized associated Legendre functions for $n-1$; \\
+\hline
+{\em Pn} & pointer to array of normalized associated Legendre functions for $n$; \\
+\hline
+{\em n} & order of {\itshape Pn}; \\
+\hline
+{\em C} & $\cos\theta$; \\
+\hline
+{\em S} & $\sin\theta$;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
+\index{Utility functions@{Utility functions}!qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f@{qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f}}
+\index{qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f@{qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f}!Utility functions@{Utility functions}}
+\subsubsection[{qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+legendre\+\_\+recursion\+\_\+array\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$$\ast$}]{Pnm1, }
+\item[{gfloat $\ast$$\ast$}]{Pn, }
+\item[{gint}]{n, }
+\item[{gfloat}]{C, }
+\item[{gfloat}]{S}
+\end{DoxyParamCaption}
+)}\label{group__util_ga060335458a2f7ee3cd459a241f5c65bd}
+
+
+Perform recursion on normalized associated Legendre functions. 
+
+Perform recursion on normalized associated Legendre functions with input $P_{n-1}^{m}(\cos\theta)$, $0\leq m\leq n-1$, and $P_{n}^{m}(\cos\theta)$, $0\leq m \leq n$, generating equivalent outputs with $n$ incremented by one. Note that the arrays of associated Legendre functions are switched internally to ensure that the ordering remains correct after the recursion step.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Pnm1} & pointer to array of normalized associated Legendre functions for $n-1$; \\
+\hline
+{\em Pn} & pointer to array of normalized associated Legendre functions for $n$; \\
+\hline
+{\em n} & order of {\itshape Pn}; \\
+\hline
+{\em C} & $\cos\theta$; \\
+\hline
+{\em S} & $\sin\theta$;\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}

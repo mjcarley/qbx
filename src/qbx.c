@@ -140,9 +140,9 @@ gint QBX_FUNCTION_NAME(qbx_element_point_interp_3d)(QBX_REAL *xe,
     dydt[2] += xe[i*xstr+2]*dLdt[i] ; 
   }
 
-  vector_cross(n, dyds, dydt) ;
+  qbx_vector_cross(n, dyds, dydt) ;
   
-  *J = SQRT(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]) ;
+  *J = qbx_vector_length(n) ;
 
   n[0] /= (*J) ; n[1] /= (*J) ; n[2] /= (*J) ;
 
@@ -352,20 +352,16 @@ gint QBX_FUNCTION_NAME(qbx_quadrature_optimal_points)(QBX_REAL Rb,
   ncmin = G_MAXINT ;
 
   for ( i = 0 ; i <= nr ; i ++ ) {
-    r = r0 + (r1-r0)*i/nr ;
-    c[0] = x0[0] + r*n[0] ;
-    c[1] = x0[1] + r*n[1] ;
-    c[2] = x0[2] + r*n[2] ;
-    rp = SQRT((x[0] - c[0])*(x[0] - c[0]) +
-	      (x[1] - c[1])*(x[1] - c[1]) +
-	      (x[2] - c[2])*(x[2] - c[2])) ;
+    rp = r0 + (r1-r0)*i/nr ;
+    qbx_vector_shift(c,x0,n,rp) ;
+    r = qbx_vector_distance(x,c) ;
     QBX_FUNCTION_NAME(qbx_truncation_optimal)(Rb, r, rp, order, pmax, smax,
 					      tol, &pc, &sc) ;
     ncalc = ngp*(1 << sc) ;
     if ( ncalc < ncmin ) {
       ncmin = ncalc ;
       *pq = pc ; *s = sc ;
-      *rc = r ;
+      *rc = rp ;
     }
   }
 
@@ -381,13 +377,11 @@ gint QBX_FUNCTION_NAME(qbx_triangle_expansion)(QBX_REAL *xe, gint xstr, gint ne,
 					       gint *N, gint *s)
 
 {
-  QBX_REAL Ae, rb ;
+  /* QBX_REAL Ae, rb ; */
 
-  Ae = QBX_FUNCTION_NAME(qbx_element_area)(xe, xstr, ne, q, nq) ;
-  rb = SQRT(4.0*Ae/M_PI) ;
+  /* Ae = QBX_FUNCTION_NAME(qbx_element_area)(xe, xstr, ne, q, nq) ; */
+  /* rb = SQRT(4.0*Ae/M_PI) ; */
 
-  
-  
   return 0 ;
 }
 						  
@@ -410,19 +404,19 @@ gint QBX_FUNCTION_NAME(qbx_triangle_curvature)(QBX_REAL *xe, gint xstr, gint ne,
   calc_point(xe, xstr, ne, Lst, pst) ;
   calc_point(xe, xstr, ne, Ltt, ptt) ;
 
-  vector_cross(n,ps,pt) ;
-  ds = SQRT(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]) ;
+  qbx_vector_cross(n,ps,pt) ;
+  ds = qbx_vector_length(n) ;
   n[0] /= ds ; n[1] /= ds ; n[2] /= ds ;
   
   /*first fundamental forms*/
-  E = vector_scalar(ps, ps) ;
-  F = vector_scalar(ps, pt) ;
-  G = vector_scalar(pt, pt) ;
+  E = qbx_vector_scalar(ps, ps) ;
+  F = qbx_vector_scalar(ps, pt) ;
+  G = qbx_vector_scalar(pt, pt) ;
 
   /*second fundamental forms*/
-  L = vector_scalar(pss, n) ;
-  M = vector_scalar(pst, n) ;
-  N = vector_scalar(ptt, n) ;
+  L = qbx_vector_scalar(pss, n) ;
+  M = qbx_vector_scalar(pst, n) ;
+  N = qbx_vector_scalar(ptt, n) ;
 
   *kg = (L*N - M*M)/(E*G - F*F) ;
   *km = 0.5*(E*N - 2*F*M + G*L)/(E*G - F*F) ;
@@ -466,11 +460,102 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 						   x, n, x,
 						   &rp, &N, &d) ;
 
-  fprintf(stderr, "w = %lg; rp = %lg; N = %d; d = %d\n",
-	  w, rp, N, d) ;
+  /* fprintf(stderr, "w = %lg; rp = %lg; N = %d; d = %d\n", */
+  /* 	  w, rp, N, d) ; */
   
   /*expansion centre*/
-  vector_shift(c,x,n,rp) ;
+  qbx_vector_shift(c,x,n,rp) ;
+
+  /*set up nodal quantities for call to expansion generation*/
+  fstr = ne ;
+  memset(fe, 0, ne*fstr*sizeof(QBX_REAL)) ;
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fe[i*fstr+i] = 1.0 ;
+  }
+  clear = TRUE ;
+
+  str = ne ;
+
+  if ( Id != NULL ) {
+    QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(xe, xstr, ne,
+							   fe, fstr, ne,
+							   q, nq, oq,
+							   c, rp, N,
+							   work, str, d, tol,
+							   w,
+							   clear, FALSE) ;
+    QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Id, ee) ;
+  }
+  
+  memset(fe, 0, ne*fstr*sizeof(QBX_REAL)) ;
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fe[i*fstr+i] = 1.0 ;
+  }
+
+  if ( Is != NULL ) {
+    QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(xe, xstr, ne,
+							   fe, fstr, ne,
+							   q, nq, oq,
+							   c, rp, N,
+							   work, str, d, tol,
+							   w,
+							   clear, TRUE) ;
+    QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Is, ee) ;
+  }
+  
+  return 0 ;
+}
+					  
+gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
+						  gint xstr,
+						  gint ne,
+						  QBX_REAL *x,
+						  QBX_REAL *q,
+						  gint nq, gint oq,
+						  gint Nmax, gint dmax,
+						  QBX_REAL tol,
+						  QBX_REAL *Is, gint istr,
+						  QBX_REAL *Id, gint dstr,
+						  QBX_REAL *work)
+
+{
+  QBX_REAL rp, w, c[3], x0[3], n[3], J, fe[64], ee[64], s0, t0, ntol, kn, rx ;
+#ifdef QBX_SINGLE_PRECISION
+  QBX_REAL *qa = WANDZURA_25_F ;
+#else /*QBX_SINGLE_PRECISION*/
+  QBX_REAL *qa = WANDZURA_25 ;
+#endif /*QBX_SINGLE_PRECISION*/
+  gint nqa = 25, N, d, i, fstr, str, nimax, ni ;
+  gboolean clear ;
+
+  /*tolerance for location query*/
+  ntol = tol ; nimax = 128 ;
+  
+  /*element dimension*/
+  w = SQRT(4*QBX_FUNCTION_NAME(qbx_element_area)(xe, xstr, ne, qa, nqa)/M_PI) ;
+  /*location of nearest point on element*/
+  ni = QBX_FUNCTION_NAME(qbx_element_nearest_point)(xe, xstr, ne,
+						    x, &s0, &t0,
+						    x0, ntol, nimax, &kn) ;
+  g_assert(ni < nimax) ;
+  QBX_FUNCTION_NAME(qbx_element_point_3d)(xe, xstr, ne, s0, t0, x0, n, &J,
+  					  NULL) ;
+
+  rx = qbx_vector_distance(x,x0) ;
+  QBX_FUNCTION_NAME(qbx_quadrature_optimal_points)(w,
+						   /* 0.125*w/(1 << dmax), */
+						   /* 4.0*w/(1 << dmax), */
+						   0, 2*rx,
+						   16, oq, nq,
+						   Nmax, dmax, tol,
+						   x0, n, x,
+						   &rp, &N, &d) ;
+
+  /* fprintf(stderr, "w = %lg; rp = %lg; N = %d; d = %d\n", */
+  /* 	  w, rp, N, d) ; */
+  
+  /*expansion centre*/
+  qbx_vector_shift(c,x0,n,rp) ;
 
   /*set up nodal quantities for call to expansion generation*/
   fstr = ne ;

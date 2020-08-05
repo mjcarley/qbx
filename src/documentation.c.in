@@ -9,7 +9,7 @@
  * surface. https://dx.doi.org/10.1007/s11390-019-1967-z
  *
  * @param xe element node coordinates;
- * @param xstr stride between x coordinates of element nodes;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
  * @param ne number of element nodes;
  * @param xf field point;
  * @param sn on exit reference element coordinate of nearest point;
@@ -36,7 +36,7 @@ gint QBX_FUNCTION_NAME(qbx_element_nearest_point)(QBX_REAL *xe, gint xstr,
  * field point on element ("self term")
  *
  * @param xe element node coordinates;
- * @param xstr stride between x coordinates of element nodes;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
  * @param ne number of element nodes;
  * @param s0 reference element coordinate of evaluation point;
  * @param t0 reference element coordinate of evaluation point;
@@ -71,3 +71,432 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 						       QBX_REAL *Id, gint dstr,
 						       QBX_REAL *work) ;
 
+/**
+ * @ingroup laplace
+ *
+ * @brief Generate a QBX expansion for the Laplace single layer potential
+ *
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param fe function values at element nodes;
+ * @param fstr data stride in \a fe;
+ * @param nf number of function values per element node;
+ * @param q quadrature rule nodes and weights;
+ * @param nq number of nodes in \a q;
+ * @param xc centre of expansion;
+ * @param rc radius of expansion;
+ * @param N order of expansion;
+ * @param C on exit contains coefficients of expansion;
+ * @param str data stride in \a C
+ *
+ * @return 0 on success.
+ *
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_expansion_make_laplace_sl)(QBX_REAL *xe,
+						      gint xstr, gint ne,
+						      QBX_REAL *fe,
+						      gint fstr, gint nf,
+						      QBX_REAL *q, gint nq,
+						      QBX_REAL *xc,
+						      QBX_REAL rc, gint N,
+						      QBX_REAL *C, gint str) ;
+
+/**
+ * @ingroup laplace
+ *
+ * @brief Generate a QBX expansion for the Laplace double layer potential
+ *
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param fe function values at element nodes;
+ * @param fstr data stride in \a fe;
+ * @param nf number of function values per element node;
+ * @param q quadrature rule nodes and weights;
+ * @param nq number of nodes in \a q;
+ * @param xc centre of expansion;
+ * @param rc radius of expansion;
+ * @param N order of expansion;
+ * @param C on exit contains coefficients of expansion;
+ * @param str data stride in \a C
+ *
+ * @return 0 on success.
+ *
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_expansion_make_laplace_dl)(QBX_REAL *xe,
+						      gint xstr, gint ne,
+						      QBX_REAL *fe,
+						      gint fstr, gint nf,
+						      QBX_REAL *q, gint nq,
+						      QBX_REAL *xc,
+						      QBX_REAL rc, gint N,
+						      QBX_REAL *C, gint str) ;
+
+/**
+ * @ingroup laplace
+ *
+ * @brief Evaluate a Laplace expansion
+ *
+ * @param xc centre of expansion;
+ * @param N order of expansion;
+ * @param C expansion coefficients;
+ * @param str stride/number of elements in function evaluation;
+ * @param x evaluation point;
+ * @param f on exit contains expansion evaluated at \a x for \a str elements;
+ * @param ee on exit contains last term added to \a f, as error estimator.
+ *
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(QBX_REAL *xc, gint N,
+						   QBX_REAL *C, gint str,
+						   QBX_REAL *x, QBX_REAL *f,
+						   QBX_REAL *ee) ;
+
+/**
+ * @ingroup laplace
+ *
+ * @brief Generate a QBX expansion for the Laplace double layer potential
+ *
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param fe function values at element nodes;
+ * @param fstr data stride in \a fe;
+ * @param nf number of function values per element node;
+ * @param q quadrature rule nodes and weights;
+ * @param nq number of entries in \a q;
+ * @param order order of \a q (highest order polynomial integrated exactly);
+ * @param xc centre of expansion;
+ * @param rc radius of expansion;
+ * @param N order of expansion;
+ * @param L expansion coefficients;
+ * @param str stride of entries in \a L;
+ * @param depth maximum recursion depth;
+ * @param tol quadrature tolerance (used in terminating recursion);
+ * @param w element dimension;
+ * @param init if TRUE, zero expansion entries before integrating;
+ * @param single if TRUE, generate expansion for single-layer potential, 
+ * otherwise for double-layer.
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(QBX_REAL *xe,
+							    gint xstr, gint ne,
+							    QBX_REAL *fe,
+							    gint fstr, gint nf,
+							    QBX_REAL *q,
+							    gint nq, gint order,
+							    QBX_REAL *xc,
+							    QBX_REAL rc, gint N,
+							    QBX_REAL *L,
+							    gint str,
+							    gint depth,
+							    QBX_REAL tol,
+							    QBX_REAL w,
+							    gboolean init,
+							    gboolean single) ;
+/**
+ * @ingroup base
+ *
+ * @brief Shape function evaluations for three-dimensional elements
+ * 
+ * On entry \a L may not be NULL, but if \a dLds is NULL, first and
+ * second derivatives are not evaluated. If \a dLdss is NULL, first
+ * derivatives are evaluated, but not second.
+ * 
+ * @param ne number of nodes on element (currently 3 or 6);
+ * @param s coordinate on element;
+ * @param t coordinate on element;
+ * @param L on exit shape function evaluated at each node;
+ * @param dLds on exit \f$\partial L_{i}/\partial s\f$ at each node;
+ * @param dLdt on exit \f$\partial L_{i}/\partial t\f$ at each node;
+ * @param dLdss on exit \f$\partial^{2} L_{i}/\partial s^{2}\f$ at each node;
+ * @param dLdst on exit \f$\partial^{2} L_{i}/\partial s\partial t\f$ 
+ * at each node;
+ * @param dLdtt on exit \f$\partial^{2} L_{i}/\partial t^{2}\f$ at each node;
+ *
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_element_shape_3d)(gint ne, QBX_REAL s, QBX_REAL t,
+					     QBX_REAL *L,
+					     QBX_REAL *dLds, QBX_REAL *dLdt,
+					     QBX_REAL *dLdss, QBX_REAL *dLdst,
+					     QBX_REAL *dLdtt) ;
+
+/**
+ * @ingroup base
+ *
+ * @brief Interpolation of point on element using shape functions
+ * 
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param L shape function from ::QBX_FUNCTION_NAME(qbx_element_shape_3d)(...);
+ * @param dLds derivative of shape function;
+ * @param dLdt derivative of shape function;
+ * @param y on exit interpolated point on element;
+ * @param n on exit normal at \a y;
+ * @param J on exit Jacobian at \a y;
+ * @param c reserved for future use (can be NULL).
+ * 
+ * @return 0 on success.
+ *
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_element_point_interp_3d)(QBX_REAL *xe,
+						    gint xstr, gint ne,
+						    QBX_REAL *L,
+						    QBX_REAL *dLds,
+						    QBX_REAL *dLdt,
+						    QBX_REAL *y,
+						    QBX_REAL *n,
+						    QBX_REAL *J,
+						    QBX_REAL *c) ;
+
+
+/**
+ * @ingroup base
+ *
+ * @brief Convenience function for direct evaluation of point position
+ * on element
+ * 
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param s coordinate on element;
+ * @param t coordinate on element;
+ * @param y on exit interpolated point on element;
+ * @param n on exit normal at \a y;
+ * @param J on exit Jacobian at \a y;
+ * @param c reserved for future use (can be NULL).
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_element_point_3d)(QBX_REAL *xe, gint xstr, gint ne,
+					     QBX_REAL s, QBX_REAL t,
+					     QBX_REAL *y, QBX_REAL *n,
+					     QBX_REAL *J, QBX_REAL *c) ;
+
+/**
+ * @ingroup base
+ *
+ * @brief Quadrature error estimator
+ *
+ * Quadrature error estimator from Siegel and Tornberg, A local target
+ * specific quadrature by expansion method for evaluation of layer
+ * potentials in 3D, https://doi.org/10.1016/j.jcp.2018.03.006
+ * 
+ * @param N order of expansion term;
+ * @param h element dimension;
+ * @param order order of quadrature rule;
+ * @param r distance from expansion centre;
+ * @param rp distance to closest point on element;
+ * 
+ * @return estimate of error in integration of \f$N\f$th expansion term.
+ * 
+ **/
+
+QBX_REAL QBX_FUNCTION_NAME(qbx_quadrature_error)(gint N, QBX_REAL h, gint order,
+						 QBX_REAL r, QBX_REAL rp) ;
+
+
+
+/**
+ * @ingroup base
+ *
+ * @brief Estimate surface area of element
+ * 
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param qrule nodes and weights of quadrature rule;
+ * @param nq number of nodes in \a qrule.
+ * 
+ * @return estimate of area of element.
+ * 
+ **/
+
+QBX_REAL QBX_FUNCTION_NAME(qbx_element_area)(QBX_REAL *xe, gint xstr, gint ne,
+					     QBX_REAL *qrule, gint nq) ;
+
+
+
+/**
+ * @ingroup base
+ *
+ * @brief Truncation error estimator for triangular element
+ * 
+ * Truncation error estimator from Siegel and Tornberg, A local target
+ * specific quadrature by expansion method for evaluation of layer
+ * potentials in 3D, https://doi.org/10.1016/j.jcp.2018.03.006
+ * 
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param qrule quadrature rule used to estimate element area (does not 
+ * need to be high order);
+ * @param nq number of nodes in \a qrule;
+ * @param N order of expansion;
+ * @param rc distance from expansion centre;
+ * @param depth recursion depth for subdivision of element;
+ * @param ee on exit contains error estimators for single- and
+ * double-layer potential evalution.
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_triangle_truncation_error)(QBX_REAL *xe,
+						      gint xstr, gint ne,
+						      QBX_REAL *qrule, gint nq,
+						      gint N,
+						      QBX_REAL rc, gint depth,
+						      QBX_REAL *ee) ;
+
+
+
+/**
+ * @ingroup base
+ *
+ * @brief Estimate parameters for optimal truncation and quadrature
+ * 
+ * @param Rb element dimension;
+ * @param c distance to expansion centre;
+ * @param rp distance from element to expansion centre;
+ * @param order order of quadrature rule;
+ * @param pmax maximum order of expansion;
+ * @param smax maximum recursion depth in quadrature;
+ * @param tol quadrature error tolerance;
+ * @param pq on exit recommended expansion order;
+ * @param s on exit recommended recursion depth.
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_truncation_optimal)(QBX_REAL Rb, QBX_REAL c,
+					       QBX_REAL rp,
+					       gint order,
+					       gint pmax, gint smax,
+					       QBX_REAL tol, gint *pq,
+					       gint *s) ;
+
+
+/**
+ * @ingroup base
+ *
+ * @brief Curvatures on a triangular element
+ * 
+ * @param xe element node coordinates;
+ * @param xstr stride between \f$x\f$ coordinates of element nodes;
+ * @param ne number of element nodes;
+ * @param s coordinate on reference element;
+ * @param t coordinate on reference element;
+ * @param kg on exit Gaussian curvature on element in physical space at 
+ * \f$(s,t)\f$;
+ * @param km on exit mean curvature on element in physical space at
+ * \f$(s,t)\f$.
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_triangle_curvature)(QBX_REAL *xe, gint xstr, gint ne,
+					       QBX_REAL s, QBX_REAL t,
+					       QBX_REAL *kg, QBX_REAL *km) ;
+
+
+
+/**
+ * @ingroup util
+ *
+ * @brief Convert Cartesian to spherical coordinates
+ * 
+ * @param x0 centre of coordinate system;
+ * @param x point;
+ * @param r radius of \a x in spherical system centred on \a x0;
+ * @param th azimuth of \a x in spherical system centred on \a x0;
+ * @param ph elevation of \a x in spherical system centred on \a x0.
+ * 
+ * @return 0 on success.
+ * 
+ **/
+
+gint QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(QBX_REAL *x0,
+						   QBX_REAL *x,
+						   QBX_REAL *r,
+						   QBX_REAL *th,
+						   QBX_REAL *ph) ;
+
+/**
+ *
+ * @ingroup util
+ *
+ * @brief Perform recursion on normalized associated Legendre functions
+ *
+ * Perform recursion on normalized associated Legendre functions with
+ * input \f$P_{n-1}^{m}(\cos\theta)\f$, \f$0\leq m\leq n-1\f$, and
+ * \f$P_{n}^{m}(\cos\theta)\f$, \f$0\leq m \leq n\f$, generating
+ * equivalent outputs with \f$n\f$ incremented by one. Note that the
+ * arrays of associated Legendre functions are switched internally to
+ * ensure that the ordering remains correct after the recursion step. 
+ *
+ * @param Pnm1 pointer to array of normalized associated Legendre functions
+ * for \f$n-1\f$;
+ * @param Pn pointer to array of normalized associated Legendre functions 
+ * for \f$n\f$;
+ * @param n order of \a Pn;
+ * @param C \f$\cos\theta\f$;
+ * @param S \f$\sin\theta\f$;
+ *
+ * @return 0 on success
+ *
+ */
+
+gint QBX_FUNCTION_NAME(qbx_legendre_recursion_array)(QBX_REAL **Pnm1,
+						     QBX_REAL **Pn,
+						     gint n,
+						     QBX_REAL C,
+						     QBX_REAL S) ;
+
+ /**
+ *
+ * @ingroup util
+ *
+ * @brief Initialize normalized associated Legendre functions
+ *
+ * @param C \f$\cos\theta\f$;
+ * @param S \f$\sin\theta\f$;
+ * @param P0 on output \f$P_{0}^{0}(\cos\theta)\f$;
+ * @param P10 on output \f$P_{1}^{0}(\cos\theta)\f$;
+ * @param P11 on output \f$P_{1}^{1}(\cos\theta)\f$;
+ *
+ * @return 0 on success
+ *
+ */
+gint QBX_FUNCTION_NAME(qbx_legendre_init)(QBX_REAL C, QBX_REAL S, 
+					  QBX_REAL *P0, QBX_REAL *P10,
+					  QBX_REAL *P11) ;
+
+
+/**
+ * @ingroup
+ *
+ * @brief
+ * 
+ * @param 
+ * 
+ * @return 0 on success.
+ * 
+ **/

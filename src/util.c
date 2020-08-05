@@ -14,10 +14,7 @@ gint QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(QBX_REAL *x0,
 						   QBX_REAL *ph)
 
 {
-  *r = 
-    (x[0]-x0[0])*(x[0]-x0[0]) +
-    (x[1]-x0[1])*(x[1]-x0[1]) +
-    (x[2]-x0[2])*(x[2]-x0[2]) ;
+  *r = qbx_vector_distance2(x, x0) ;
   if ( *r == 0.0 ) { *ph = *th = 0.0 ; return 0 ; }
 
   *r = SQRT((*r)) ;

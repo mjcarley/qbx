@@ -1,0 +1,474 @@
+\section{Laplace potentials}
+\label{group__laplace}\index{Laplace potentials@{Laplace potentials}}
+
+
+Specialized functions for Laplace evaluation.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$fe, gint fstr, gint nf, gdouble $\ast$q, gint nq, gdouble $\ast$xc, gdouble rc, gint N, gdouble $\ast$C, gint str)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace single layer potential. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$fe, gint fstr, gint nf, gdouble $\ast$q, gint nq, gdouble $\ast$xc, gdouble rc, gint N, gdouble $\ast$C, gint str)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace double layer potential. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+eval\+\_\+laplace} (gdouble $\ast$xc, gint N, gdouble $\ast$C, gint str, gdouble $\ast$x, gdouble $\ast$f, gdouble $\ast$ee)
+\begin{DoxyCompactList}\small\item\em Evaluate a Laplace expansion. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive} (gdouble $\ast$xe, gint xstr, gint ne, gdouble $\ast$fe, gint fstr, gint nf, gdouble $\ast$q, gint nq, gint order, gdouble $\ast$xc, gdouble rc, gint N, gdouble $\ast$L, gint str, gint depth, gdouble tol, gdouble w, gboolean init, gboolean single)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace double layer potential. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$fe, gint fstr, gint nf, gfloat $\ast$q, gint nq, gfloat $\ast$xc, gfloat rc, gint N, gfloat $\ast$C, gint str)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace single layer potential. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$fe, gint fstr, gint nf, gfloat $\ast$q, gint nq, gfloat $\ast$xc, gfloat rc, gint N, gfloat $\ast$C, gint str)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace double layer potential. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f} (gfloat $\ast$xc, gint N, gfloat $\ast$C, gint str, gfloat $\ast$x, gfloat $\ast$f, gfloat $\ast$ee)
+\begin{DoxyCompactList}\small\item\em Evaluate a Laplace expansion. \end{DoxyCompactList}\item 
+gint {\bf qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat $\ast$fe, gint fstr, gint nf, gfloat $\ast$q, gint nq, gint order, gfloat $\ast$xc, gfloat rc, gint N, gfloat $\ast$L, gint str, gint depth, gfloat tol, gfloat w, gboolean init, gboolean single)
+\begin{DoxyCompactList}\small\item\em Generate a Q\+B\+X expansion for the Laplace double layer potential. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Specialized functions for Laplace evaluation. 
+
+
+
+\subsection{Function Documentation}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+eval\+\_\+laplace@{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace}}
+\index{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace@{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+eval\+\_\+laplace (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xc, }
+\item[{gint}]{N, }
+\item[{gdouble $\ast$}]{C, }
+\item[{gint}]{str, }
+\item[{gdouble $\ast$}]{x, }
+\item[{gdouble $\ast$}]{f, }
+\item[{gdouble $\ast$}]{ee}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga1acf41c5c29d8cdef7c3716775036815}
+
+
+Evaluate a Laplace expansion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xc} & centre of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & expansion coefficients; \\
+\hline
+{\em str} & stride/number of elements in function evaluation; \\
+\hline
+{\em x} & evaluation point; \\
+\hline
+{\em f} & on exit contains expansion evaluated at {\itshape x} for {\itshape str} elements; \\
+\hline
+{\em ee} & on exit contains last term added to {\itshape f}, as error estimator.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f@{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f}}
+\index{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f@{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+eval\+\_\+laplace\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xc, }
+\item[{gint}]{N, }
+\item[{gfloat $\ast$}]{C, }
+\item[{gint}]{str, }
+\item[{gfloat $\ast$}]{x, }
+\item[{gfloat $\ast$}]{f, }
+\item[{gfloat $\ast$}]{ee}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga38be3867818f82fe04673a03a4ce8951}
+
+
+Evaluate a Laplace expansion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xc} & centre of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & expansion coefficients; \\
+\hline
+{\em str} & stride/number of elements in function evaluation; \\
+\hline
+{\em x} & evaluation point; \\
+\hline
+{\em f} & on exit contains expansion evaluated at {\itshape x} for {\itshape str} elements; \\
+\hline
+{\em ee} & on exit contains last term added to {\itshape f}, as error estimator.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gdouble $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gint}]{order, }
+\item[{gdouble $\ast$}]{xc, }
+\item[{gdouble}]{rc, }
+\item[{gint}]{N, }
+\item[{gdouble $\ast$}]{L, }
+\item[{gint}]{str, }
+\item[{gint}]{depth, }
+\item[{gdouble}]{tol, }
+\item[{gdouble}]{w, }
+\item[{gboolean}]{init, }
+\item[{gboolean}]{single}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga12c85f473d5bc45617f9449fb84f7e28}
+
+
+Generate a Q\+B\+X expansion for the Laplace double layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of entries in {\itshape q}; \\
+\hline
+{\em order} & order of {\itshape q} (highest order polynomial integrated exactly); \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em L} & expansion coefficients; \\
+\hline
+{\em str} & stride of entries in {\itshape L}; \\
+\hline
+{\em depth} & maximum recursion depth; \\
+\hline
+{\em tol} & quadrature tolerance (used in terminating recursion); \\
+\hline
+{\em w} & element dimension; \\
+\hline
+{\em init} & if T\+R\+U\+E, zero expansion entries before integrating; \\
+\hline
+{\em single} & if T\+R\+U\+E, generate expansion for single-\/layer potential, otherwise for double-\/layer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+adaptive\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gfloat $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gint}]{order, }
+\item[{gfloat $\ast$}]{xc, }
+\item[{gfloat}]{rc, }
+\item[{gint}]{N, }
+\item[{gfloat $\ast$}]{L, }
+\item[{gint}]{str, }
+\item[{gint}]{depth, }
+\item[{gfloat}]{tol, }
+\item[{gfloat}]{w, }
+\item[{gboolean}]{init, }
+\item[{gboolean}]{single}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga3af43672690d6a7f9e86346ac731d70b}
+
+
+Generate a Q\+B\+X expansion for the Laplace double layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of entries in {\itshape q}; \\
+\hline
+{\em order} & order of {\itshape q} (highest order polynomial integrated exactly); \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em L} & expansion coefficients; \\
+\hline
+{\em str} & stride of entries in {\itshape L}; \\
+\hline
+{\em depth} & maximum recursion depth; \\
+\hline
+{\em tol} & quadrature tolerance (used in terminating recursion); \\
+\hline
+{\em w} & element dimension; \\
+\hline
+{\em init} & if T\+R\+U\+E, zero expansion entries before integrating; \\
+\hline
+{\em single} & if T\+R\+U\+E, generate expansion for single-\/layer potential, otherwise for double-\/layer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gdouble $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gdouble $\ast$}]{xc, }
+\item[{gdouble}]{rc, }
+\item[{gint}]{N, }
+\item[{gdouble $\ast$}]{C, }
+\item[{gint}]{str}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga386f325c389fd7dfc654102532aaf1a2}
+
+
+Generate a Q\+B\+X expansion for the Laplace double layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of nodes in {\itshape q}; \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & on exit contains coefficients of expansion; \\
+\hline
+{\em str} & data stride in {\itshape C} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+dl\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gfloat $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gfloat $\ast$}]{xc, }
+\item[{gfloat}]{rc, }
+\item[{gint}]{N, }
+\item[{gfloat $\ast$}]{C, }
+\item[{gint}]{str}
+\end{DoxyParamCaption}
+)}\label{group__laplace_ga6492cc02cda966c4202b83d4af33784d}
+
+
+Generate a Q\+B\+X expansion for the Laplace double layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of nodes in {\itshape q}; \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & on exit contains coefficients of expansion; \\
+\hline
+{\em str} & data stride in {\itshape C} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl (
+\begin{DoxyParamCaption}
+\item[{gdouble $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gdouble $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gdouble $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gdouble $\ast$}]{xc, }
+\item[{gdouble}]{rc, }
+\item[{gint}]{N, }
+\item[{gdouble $\ast$}]{C, }
+\item[{gint}]{str}
+\end{DoxyParamCaption}
+)}\label{group__laplace_gaa5411cc4619243d5d90189e8ad911861}
+
+
+Generate a Q\+B\+X expansion for the Laplace single layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of nodes in {\itshape q}; \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & on exit contains coefficients of expansion; \\
+\hline
+{\em str} & data stride in {\itshape C} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}
+\index{Laplace potentials@{Laplace potentials}!qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f}}
+\index{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f@{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f}!Laplace potentials@{Laplace potentials}}
+\subsubsection[{qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f}]{\setlength{\rightskip}{0pt plus 5cm}gint qbx\+\_\+expansion\+\_\+make\+\_\+laplace\+\_\+sl\+\_\+f (
+\begin{DoxyParamCaption}
+\item[{gfloat $\ast$}]{xe, }
+\item[{gint}]{xstr, }
+\item[{gint}]{ne, }
+\item[{gfloat $\ast$}]{fe, }
+\item[{gint}]{fstr, }
+\item[{gint}]{nf, }
+\item[{gfloat $\ast$}]{q, }
+\item[{gint}]{nq, }
+\item[{gfloat $\ast$}]{xc, }
+\item[{gfloat}]{rc, }
+\item[{gint}]{N, }
+\item[{gfloat $\ast$}]{C, }
+\item[{gint}]{str}
+\end{DoxyParamCaption}
+)}\label{group__laplace_gaa4d8c270268779fc3132fc1fc134bcc1}
+
+
+Generate a Q\+B\+X expansion for the Laplace single layer potential. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xe} & element node coordinates; \\
+\hline
+{\em xstr} & stride between $x$ coordinates of element nodes; \\
+\hline
+{\em ne} & number of element nodes; \\
+\hline
+{\em fe} & function values at element nodes; \\
+\hline
+{\em fstr} & data stride in {\itshape fe}; \\
+\hline
+{\em nf} & number of function values per element node; \\
+\hline
+{\em q} & quadrature rule nodes and weights; \\
+\hline
+{\em nq} & number of nodes in {\itshape q}; \\
+\hline
+{\em xc} & centre of expansion; \\
+\hline
+{\em rc} & radius of expansion; \\
+\hline
+{\em N} & order of expansion; \\
+\hline
+{\em C} & on exit contains coefficients of expansion; \\
+\hline
+{\em str} & data stride in {\itshape C} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success. 
+\end{DoxyReturn}

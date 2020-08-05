@@ -127,6 +127,22 @@ gint qbx_triangle_laplace_self_quad_f(gfloat *xe, gint xstr,
 				      gfloat *Is, gint istr,
 				      gfloat *Id, gint dstr,
 				      gfloat *work) ;
+gint qbx_triangle_laplace_quad(gdouble *xe, gint xstr, gint ne,
+			       gdouble *x,
+			       gdouble *q, gint nq, gint oq,
+			       gint Nmax, gint dmax,
+			       gdouble tol,
+			       gdouble *Is, gint istr,
+			       gdouble *Id, gint dstr,
+			       gdouble *work) ;
+gint qbx_triangle_laplace_quad_f(gfloat *xe, gint xstr, gint ne,
+				 gfloat *x,
+				 gfloat *q, gint nq, gint oq,
+				 gint Nmax, gint dmax,
+				 gfloat tol,
+				 gfloat *Is, gint istr,
+				 gfloat *Id, gint dstr,
+				 gfloat *work) ;
 
 gint qbx_cartesian_to_spherical_f(gfloat *x0,
 				gfloat *x,

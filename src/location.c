@@ -73,12 +73,12 @@ gint QBX_FUNCTION_NAME(qbx_element_nearest_point)(QBX_REAL *xe, gint xstr,
     calc_point(xe, xstr, ne, Lt, pt) ;
 
     /* vector_cross(n, ps, pt) ; */
-    E = vector_scalar(ps, ps) ;
-    F = vector_scalar(ps, pt) ;
-    G = vector_scalar(pt, pt) ;
+    E = qbx_vector_scalar(ps, ps) ;
+    F = qbx_vector_scalar(ps, pt) ;
+    G = qbx_vector_scalar(pt, pt) ;
 
-    C4 = vector_diff_scalar(xf, p1, ps) ;
-    C5 = vector_diff_scalar(xf, p1, pt) ;
+    C4 = qbx_vector_diff_scalar(xf, p1, ps) ;
+    C5 = qbx_vector_diff_scalar(xf, p1, pt) ;
 
     dt = E*G - F*F ;
     ds =  (C4*G - C5*F)/dt ;
@@ -99,19 +99,20 @@ gint QBX_FUNCTION_NAME(qbx_element_nearest_point)(QBX_REAL *xe, gint xstr,
   calc_point(xe, xstr, ne, Lst, pst) ;
   calc_point(xe, xstr, ne, Ltt, ptt) ;
 
-  vector_cross(n,ps,pt) ;
-  ds = SQRT(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]) ;
+  qbx_vector_cross(n,ps,pt) ;
+  ds = qbx_vector_length(n) ;
+    /* SQRT(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]) ; */
   n[0] /= ds ; n[1] /= ds ; n[2] /= ds ;
   
   /*first fundamental forms*/
-  E = vector_scalar(ps, ps) ;
-  F = vector_scalar(ps, pt) ;
-  G = vector_scalar(pt, pt) ;
+  E = qbx_vector_scalar(ps, ps) ;
+  F = qbx_vector_scalar(ps, pt) ;
+  G = qbx_vector_scalar(pt, pt) ;
 
   /*second fundamental forms*/
-  L = vector_scalar(pss, n) ;
-  M = vector_scalar(pst, n) ;
-  N = vector_scalar(ptt, n) ;
+  L = qbx_vector_scalar(pss, n) ;
+  M = qbx_vector_scalar(pst, n) ;
+  N = qbx_vector_scalar(ptt, n) ;
 
   *kn = (L*N - M*M)/(E*G - F*F) ;
   

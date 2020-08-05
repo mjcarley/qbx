@@ -1,0 +1,19 @@
+\form#0:$x$
+\form#1:$\partial L_{i}/\partial s$
+\form#2:$\partial L_{i}/\partial t$
+\form#3:$\partial^{2} L_{i}/\partial s^{2}$
+\form#4:$\partial^{2} L_{i}/\partial s\partial t$
+\form#5:$\partial^{2} L_{i}/\partial t^{2}$
+\form#6:$N$
+\form#7:$(s,t)$
+\form#8:$P_{n-1}^{m}(\cos\theta)$
+\form#9:$0\leq m\leq n-1$
+\form#10:$P_{n}^{m}(\cos\theta)$
+\form#11:$0\leq m \leq n$
+\form#12:$n$
+\form#13:$n-1$
+\form#14:$\cos\theta$
+\form#15:$\sin\theta$
+\form#16:$P_{0}^{0}(\cos\theta)$
+\form#17:$P_{1}^{0}(\cos\theta)$
+\form#18:$P_{1}^{1}(\cos\theta)$
