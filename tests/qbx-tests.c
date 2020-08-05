@@ -47,18 +47,6 @@ static gint parse_test(gchar *arg)
   return -1 ;
 }
 
-gdouble distance(gdouble *x, gdouble *y)
-
-{
-  gdouble r ;
-
-  r = sqrt((x[0] - y[0])*(x[0] - y[0]) +
-	   (x[1] - y[1])*(x[1] - y[1]) +
-	   (x[2] - y[2])*(x[2] - y[2]))  ;
-  
-  return r ;
-}
-
 static gint read_element(FILE *f, gdouble *xe, gint *ne, gint *xstr)
 
 {
@@ -110,7 +98,7 @@ static gint planar_triangle_shape_test(gdouble *xe, gint xstr, gint ne,
   /* 			 16, order, nq, 20, smax, tol, */
   /* 			 &rcopt, &Nopt, &sopt) ; */
 
-  r0 = distance(x, xc) ;
+  r0 = qbx_vector_distance(x, xc) ;
   if ( r0 < 1e-12 ) {
     qbx_quadrature_optimal_points(w, 0.5*w/(1 << smax), 4.0*w/(1 << smax),
 				  16, order, nq, 20, smax, tol,
@@ -302,8 +290,8 @@ static gint off_test(gdouble *xe, gint xstr, gint ne,
 
   qbx_quadrature_select(nq, &q, &order) ;
 
-  fprintf(stderr, "triangle self-point test\n") ;
-  fprintf(stderr, "========================\n") ;
+  fprintf(stderr, "triangle off-element point test\n") ;
+  fprintf(stderr, "===============================\n") ;
 
   fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
   fprintf(stderr, "subdivision depth: %d\n", depth) ;
