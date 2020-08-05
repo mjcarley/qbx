@@ -13990,13 +13990,23 @@ $as_echo "$ac_cv_prog_c_openmp" >&6; }
 
 
 
+##DX_DOT_FEATURE(ON)
+
+##DX_CHM_FEATURE(OFF)
+##DX_CHI_FEATURE(OFF)
+##DX_MAN_FEATURE(OFF)
+##DX_RTF_FEATURE(OFF)
+##DX_XML_FEATURE(OFF)
+##DX_PDF_FEATURE(OFF)
+##DX_PS_FEATURE(OFF)
+
 
 # Files:
 DX_PROJECT=qbx
 
-DX_CONFIG='doxy/qbx.dxy'
+DX_CONFIG='doc/qbx.dxy'
 
-DX_DOCDIR='doc'
+DX_DOCDIR='doxygen-doc'
 
 
 # Environment variables used inside doxygen.cfg:
@@ -15947,16 +15957,6 @@ DX_RULES="${DX_SNIPPET_doc}"
 #echo DX_FLAG_pdf=$DX_FLAG_pdf
 #echo DX_FLAG_ps=$DX_FLAG_ps
 #echo DX_ENV=$DX_ENV
-
-
-
-
-
-
-
-
-
-
 
 
 CFLAGS="$CFLAGS $OPENMP_CFLAGS $SIMD_FLAGS $glib_cflags"
