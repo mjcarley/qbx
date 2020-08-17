@@ -40,6 +40,8 @@ gint QBX_FUNCTION_NAME(qbx_element_nearest_point)(QBX_REAL *xe, gint xstr,
  * @param ne number of element nodes;
  * @param s0 reference element coordinate of evaluation point;
  * @param t0 reference element coordinate of evaluation point;
+ * @param in if TRUE, generate expansion on the negative side of the 
+ * element, as determined by surface normal;
  * @param q quadrature rule nodes and weights;
  * @param nq number of entries in \a q;
  * @param oq order of \a q (highest order polynomial integrated exactly);
@@ -63,6 +65,7 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 						       gint ne,
 						       QBX_REAL s0,
 						       QBX_REAL t0,
+						       gboolean in,
 						       QBX_REAL *q,
 						       gint nq, gint oq,
 						       gint Nmax, gint dmax,

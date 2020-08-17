@@ -115,4 +115,85 @@ gint newman_tri_shape(gdouble p[], gdouble x1[], gdouble x2[], gdouble x3[],
 		      gdouble *Imn, gint hmax,
 		      gdouble Iq[], gdouble J[]) ;
 
+
+/*BLAS macros*/
+extern gint qbx_0i[], qbx_1i[], qbx_2i[] ;
+extern gdouble qbx_0z[] ;
+extern gdouble qbx_1z[] ;
+extern gdouble qbx_m1z[] ;
+extern gdouble qbx_0d[], qbx_1d[], qbx_m1d[] ;
+
+extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+		   gdouble *A, gint *lda, gdouble *v, gint *incx,
+		   gdouble *beta, gdouble *y, gint *incy) ;
+extern void zgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+		   gdouble *A, gint *lda, gdouble *v, gint *incx,
+		   gdouble *beta, gdouble *y, gint *incy) ;
+
+extern void dgetri_(gint *n, gdouble *A, gint *lda, gint *ip,
+		    gdouble *work, gint *lwork, gint *info) ;
+extern void zgetri_(gint *n, gdouble *A, gint *lda, gint *ip,
+		    gdouble *work, gint *lwork, gint *info) ;
+
+extern void zgetrf_(gint *m, gint *n, gdouble *A, gint *lda, gint *ip,
+		    gint *info) ;
+extern void dgetrf_(gint *m, gint *n, gdouble *A, gint *lda, gint *ip,
+		    gint *info) ;
+
+extern void dgemm_(gchar *transa, gchar *transb,
+		   gint *m, gint *n, gint *k, gdouble *alpha,
+		   gdouble *A, gint *lda,
+		   gdouble *B, gint *ldb,
+		   gdouble *beta, gdouble *C, gint *ldc) ;
+extern void zgemm_(gchar *transa, gchar *transb,
+		   gint *m, gint *n, gint *k, gdouble *alpha,
+		   gdouble *A, gint *lda,
+		   gdouble *B, gint *ldb,
+		   gdouble *beta, gdouble *C, gint *ldc) ;
+
+extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+
+extern gdouble dasum_ (gint *n, gdouble *x, gint *incx) ;
+extern gdouble dzasum_(gint *n, gdouble *x, gint *incx) ;
+extern gdouble dnrm2_ (gint *n, gdouble *x, gint *incx) ;
+extern gdouble dznrm2_(gint *n, gdouble *x, gint *incx) ;
+extern gint    idamax_(gint *n, gdouble *x, gint *incx) ;
+extern gint    izamax_(gint *n, gdouble *x, gint *incx) ;
+extern gdouble ddot_  (gint *n, gdouble *x, gint *incx, 
+		       gdouble *y, gint *incy) ;
+/* extern gsl_complex zdotu_ (gint *n, gdouble *x, gint *incx,  */
+/* 			   gdouble *y, gint *incy) ; */
+extern void    dcopy_(gint *n, 
+		      gdouble *x, const gint *incx,
+		      gdouble *y, const gint *incy) ;
+extern void    daxpy_(gint *n, 
+		      gdouble *a, gdouble *x, gint *incx,
+		      gdouble *y, gint *incy) ;
+extern void    zaxpy_(gint *n, 
+		      gdouble *a, gdouble *x, gint *incx,
+		      gdouble *y, gint *incy) ;
+
+/* scale x by da */
+#define qbx_dscal(_n,_al,_x,_strx) dscal_((_n),(_al),(_x),(_strx))
+
+/* sum x[i]*y[i] */
+
+#define qbx_ddot(_n,_x,_strx,_y,_stry)		\
+  ddot_((_n), (_x), (_strx), (_y), (_stry)) 
+
+/* y := al*A*x + bt*y */
+
+/*trans nr nc al A lda x strx bt y stry*/
+
+#define qbx_dgemv(_t,_m,_n,_al,_A,_lda,_x,_incx,_bt,_y,_incy)		\
+  do {									\
+    if ( (_t) ) {							\
+      g_assert_not_reached() ;						\
+    } else {								\
+      dgemv_("T",(_n),(_m),(_al),(_A),(_n),(_x),(_incx),		\
+	     (_bt),(_y),(_incy)) ;					\
+    }									\
+  } while (0)
+    
+
 #endif /*QBX_PRIVATE_H_INCLUDED*/

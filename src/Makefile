@@ -95,6 +95,7 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
 	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/acx_blas.m4 $(top_srcdir)/acx_lapack.m4 \
 	$(top_srcdir)/ax_gcc_x86_cpu_supports.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -137,7 +138,8 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libqbx_la_DEPENDENCIES = libsub.la
 am_libqbx_la_OBJECTS = qbx.lo laplace.lo newman.lo wandzura.lo xiao.lo \
-	wandzura-f.lo xiao-f.lo util.lo location.lo
+	wandzura-f.lo xiao-f.lo util.lo location.lo rules.lo \
+	koornwinder.lo blas.lo
 libqbx_la_OBJECTS = $(am_libqbx_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -148,7 +150,8 @@ libqbx_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(libqbx_la_LDFLAGS) $(LDFLAGS) -o $@
 libsub_la_LIBADD =
 am_libsub_la_OBJECTS = libsub_la-qbx.lo libsub_la-laplace.lo \
-	libsub_la-util.lo
+	libsub_la-util.lo libsub_la-location.lo libsub_la-rules.lo \
+	libsub_la-koornwinder.lo
 libsub_la_OBJECTS = $(am_libsub_la_OBJECTS)
 libsub_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libsub_la_CFLAGS) \
@@ -226,9 +229,10 @@ AUTOCONF = ${SHELL} /home/michael/Codes/C/qbx/missing autoconf
 AUTOHEADER = ${SHELL} /home/michael/Codes/C/qbx/missing autoheader
 AUTOMAKE = ${SHELL} /home/michael/Codes/C/qbx/missing automake-1.15
 AWK = gawk
+BLAS_LIBS = -lblas
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
+CFLAGS = -g -O0 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -242,7 +246,10 @@ ECHO_N = -n
 ECHO_T = 
 EGREP = /usr/bin/grep -E
 EXEEXT = 
+F77 = g77
+FFLAGS = -g -O2
 FGREP = /usr/bin/grep -F
+FLIBS =  -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. -lgfortran -lm -lquadmath
 GLIB_CFLAGS = -pthread -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
 GLIB_COMPILE_RESOURCES = glib-compile-resources
 GLIB_CONFIG = 
@@ -256,10 +263,11 @@ INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
+LAPACK_LIBS = 
 LD = /usr/x86_64-slackware-linux/bin/ld -m elf_x86_64
 LDFLAGS =  -lglib-2.0
 LIBOBJS = 
-LIBS = -lglib-2.0   -lm  
+LIBS = -lglib-2.0  -lblas -lm   -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. -lgfortran -lm -lquadmath
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -307,12 +315,14 @@ abs_top_srcdir = /home/michael/Codes/C/qbx
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
+ac_ct_F77 = g77
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
+blas_libs = -lblas
 build = x86_64-unknown-linux-gnu
 build_alias = 
 build_cpu = x86_64
@@ -333,6 +343,7 @@ htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
 install_sh = ${SHELL} /home/michael/Codes/C/qbx/install-sh
+lapack_libs = 
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -353,7 +364,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) -DG_LOG_DOMAIN=\"QBX\" \
-	-DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""
+	-DQBX_COMPILER_FLAGS="\"-g -O0 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""
 
 bin_SCRIPTS = qbx-config
 BUILT_SOURCES = \
@@ -374,11 +385,21 @@ libqbx_la_SOURCES = \
 	wandzura-f.c \
 	xiao-f.c \
 	util.c \
-	location.c
+	location.c \
+	rules.c \
+	koornwinder.c \
+	blas.c
 
 libqbx_la_LIBADD = libsub.la
 noinst_LTLIBRARIES = libsub.la
-libsub_la_SOURCES = qbx.c laplace.c util.c
+libsub_la_SOURCES = \
+	qbx.c \
+	laplace.c \
+	util.c \
+	location.c \
+	rules.c \
+	koornwinder.c
+
 libsub_la_CFLAGS = -DQBX_SINGLE_PRECISION
 include_HEADERS = \
 	qbx.h
@@ -514,13 +535,19 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/blas.Plo
+include ./$(DEPDIR)/koornwinder.Plo
 include ./$(DEPDIR)/laplace.Plo
+include ./$(DEPDIR)/libsub_la-koornwinder.Plo
 include ./$(DEPDIR)/libsub_la-laplace.Plo
+include ./$(DEPDIR)/libsub_la-location.Plo
 include ./$(DEPDIR)/libsub_la-qbx.Plo
+include ./$(DEPDIR)/libsub_la-rules.Plo
 include ./$(DEPDIR)/libsub_la-util.Plo
 include ./$(DEPDIR)/location.Plo
 include ./$(DEPDIR)/newman.Plo
 include ./$(DEPDIR)/qbx.Plo
+include ./$(DEPDIR)/rules.Plo
 include ./$(DEPDIR)/util.Plo
 include ./$(DEPDIR)/wandzura-f.Plo
 include ./$(DEPDIR)/wandzura.Plo
@@ -571,6 +598,27 @@ libsub_la-util.lo: util.c
 #	$(AM_V_CC)source='util.c' object='libsub_la-util.lo' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-util.lo `test -f 'util.c' || echo '$(srcdir)/'`util.c
+
+libsub_la-location.lo: location.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -MT libsub_la-location.lo -MD -MP -MF $(DEPDIR)/libsub_la-location.Tpo -c -o libsub_la-location.lo `test -f 'location.c' || echo '$(srcdir)/'`location.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libsub_la-location.Tpo $(DEPDIR)/libsub_la-location.Plo
+#	$(AM_V_CC)source='location.c' object='libsub_la-location.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-location.lo `test -f 'location.c' || echo '$(srcdir)/'`location.c
+
+libsub_la-rules.lo: rules.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -MT libsub_la-rules.lo -MD -MP -MF $(DEPDIR)/libsub_la-rules.Tpo -c -o libsub_la-rules.lo `test -f 'rules.c' || echo '$(srcdir)/'`rules.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libsub_la-rules.Tpo $(DEPDIR)/libsub_la-rules.Plo
+#	$(AM_V_CC)source='rules.c' object='libsub_la-rules.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-rules.lo `test -f 'rules.c' || echo '$(srcdir)/'`rules.c
+
+libsub_la-koornwinder.lo: koornwinder.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -MT libsub_la-koornwinder.lo -MD -MP -MF $(DEPDIR)/libsub_la-koornwinder.Tpo -c -o libsub_la-koornwinder.lo `test -f 'koornwinder.c' || echo '$(srcdir)/'`koornwinder.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libsub_la-koornwinder.Tpo $(DEPDIR)/libsub_la-koornwinder.Plo
+#	$(AM_V_CC)source='koornwinder.c' object='libsub_la-koornwinder.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-koornwinder.lo `test -f 'koornwinder.c' || echo '$(srcdir)/'`koornwinder.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

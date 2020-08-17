@@ -1,8 +1,10 @@
 #!/bin/sh
 # @configure_input@
 
+qbx_cflags="@CFLAGS@"
 qbx_cppflags="@CPPFLAGS@"
 openmp_cflags="@OPENMP_CFLAGS@"
+glib_libs="@glib_libs@"
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -94,11 +96,17 @@ if test "$echo_exec_prefix" = "yes"; then
 	echo $exec_prefix
 fi
 if test "$echo_cflags" = "yes"; then
-    qbx_cflags="$openmp_cflags -I${prefix}/include"
+    glib_cflags="$glib_cflags -I${prefix}/include"
+    glib_cflags=`uniquify "$glib_cflags"`
+
+    qbx_cflags="$qbx_cflags $openmp_cflags -I${prefix}/include"
     qbx_cflags=`uniquify "$qbx_cflags"`
-    echo $qbx_cppflags $qbx_cflags
+    echo $qbx_cppflags $qbx_cflags $glib_cflags
 fi
 if test "$echo_libs" = "yes"; then
+    glib_libs="-L${exec_prefix}/lib $lib_wmpi @LDFLAGS@  $glib_libs -lm"
+    glib_libs=`uniquify "$glib_libs"`
+
     qbx_libs="-L${exec_prefix}/lib -lqbx @LDFLAGS@  -lm $qbx_libs"
     qbx_libs=`uniquify "$qbx_libs"`
     echo ${qbx_libs}

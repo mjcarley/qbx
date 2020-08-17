@@ -429,6 +429,7 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 						       gint ne,
 						       QBX_REAL s0,
 						       QBX_REAL t0,
+						       gboolean in,
 						       QBX_REAL *q,
 						       gint nq, gint oq,
 						       gint Nmax, gint dmax,
@@ -464,8 +465,12 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
   /* 	  w, rp, N, d) ; */
   
   /*expansion centre*/
-  qbx_vector_shift(c,x,n,rp) ;
-
+  if ( in ) {
+    qbx_vector_shift(c,x,n,-rp) ;
+  } else {
+    qbx_vector_shift(c,x,n, rp) ;
+  }
+  
   /*set up nodal quantities for call to expansion generation*/
   fstr = ne ;
   memset(fe, 0, ne*fstr*sizeof(QBX_REAL)) ;
@@ -530,6 +535,7 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
 
   /*tolerance for location query*/
   ntol = tol ; nimax = 128 ;
+  ntol = 1e-9 ;
   
   /*element dimension*/
   w = SQRT(4*QBX_FUNCTION_NAME(qbx_element_area)(xe, xstr, ne, qa, nqa)/M_PI) ;
@@ -537,26 +543,35 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
   ni = QBX_FUNCTION_NAME(qbx_element_nearest_point)(xe, xstr, ne,
 						    x, &s0, &t0,
 						    x0, ntol, nimax, &kn) ;
-  g_assert(ni < nimax) ;
+  /* g_assert(ni < nimax) ; */
+  if ( !(ni < nimax) ) {
+    for ( i = 0 ; i < ne ; i ++ ) {
+      fprintf(stderr, "%lg %lg %lg\n",
+	      xe[xstr*i+0], xe[xstr*i+1], xe[xstr*i+2]) ;
+    }
+    fprintf(stderr, "%lg %lg %lg\n", x[0], x[1], x[2]) ;
+    g_error("%s: point location failed to converge, %d iterations",
+	    __FUNCTION__, ni) ;
+  }
+
   QBX_FUNCTION_NAME(qbx_element_point_3d)(xe, xstr, ne, s0, t0, x0, n, &J,
   					  NULL) ;
 
   rx = qbx_vector_distance(x,x0) ;
   QBX_FUNCTION_NAME(qbx_quadrature_optimal_points)(w,
-						   /* 0.125*w/(1 << dmax), */
-						   /* 4.0*w/(1 << dmax), */
 						   0, 2*rx,
 						   16, oq, nq,
 						   Nmax, dmax, tol,
 						   x0, n, x,
 						   &rp, &N, &d) ;
-
-  /* fprintf(stderr, "w = %lg; rp = %lg; N = %d; d = %d\n", */
-  /* 	  w, rp, N, d) ; */
   
-  /*expansion centre*/
-  qbx_vector_shift(c,x0,n,rp) ;
-
+  /*expansion centre same side of element as field point*/
+  if ( qbx_vector_diff_scalar(x,x0,n) < 0 ) {
+    qbx_vector_shift(c, x0, n, -rp) ;
+  } else {
+    qbx_vector_shift(c, x0, n,  rp) ;
+  }
+  
   /*set up nodal quantities for call to expansion generation*/
   fstr = ne ;
   memset(fe, 0, ne*fstr*sizeof(QBX_REAL)) ;
@@ -596,4 +611,3 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
   
   return 0 ;
 }
-					  

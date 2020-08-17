@@ -30,6 +30,10 @@ gchar *tests[] = {"planar_test",
 		  "closest_point",
 		  "self_test",
 		  "off_test",
+		  "koornwinder",
+		  "koornwinder_orthogonality",
+		  "blas",
+		  "koornwinder_interpolation",
 		  ""} ;
 
 GTimer *timer ;
@@ -177,7 +181,7 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
 		      gint nx)
 
 {
-  gdouble work[8192], n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8] ;
+  gdouble work[8192], n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t ;
   gint order, i, nf ;
   
   nf = ne ;
@@ -192,12 +196,15 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "N: %d\n", N) ;
 
   fprintf(stderr, "evaluating integrals, t=%lg\n",
-	  g_timer_elapsed(timer, NULL)) ;
-  qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, q, nq, order,
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, TRUE, q, nq, order,
 				 N, depth, tol,
 				 &(f[0]), 1, &(f[ne]), 1, work) ;
-  fprintf(stderr, "integrals evaluated, t=%lg\n",
-	  g_timer_elapsed(timer, NULL)) ;
+  qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, FALSE, q, nq, order,
+				 N, depth, tol,
+				 &(f[2*ne]), 1, &(f[2*ne+ne]), 1, work) ;
+  fprintf(stderr, "integrals evaluated, t=%lg (%lg)\n",
+	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer, NULL)-t) ;
 
   qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
   newman_tri_shape(x, &(xe[xstr*0]), &(xe[xstr*1]), &(xe[xstr*2]), NULL, 0,
@@ -215,6 +222,9 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
     fs[0] += f[i]*1.0 ;
     fs[1] += f[i]*xe[i*xstr+0] ;
     fs[2] += f[i]*xe[i*xstr+1] ;
+    fs[3] += f[2*ne+i]*1.0 ;
+    fs[4] += f[2*ne+i]*xe[i*xstr+0] ;
+    fs[5] += f[2*ne+i]*xe[i*xstr+1] ;
     gs[0] += g[i]*1.0 ;
     gs[1] += g[i]*xe[i*xstr+0] ;
     gs[2] += g[i]*xe[i*xstr+1] ;
@@ -223,6 +233,9 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "single layer\n") ;
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "internal: ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "exact:    ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
@@ -255,6 +268,9 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "double layer\n") ;
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "internal: ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+nf+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "exact:    ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
@@ -430,6 +446,191 @@ static gint element_closest_point_test(gdouble *xe, gint xstr, gint ne,
   return 0 ;
 }
 				       
+static gint koornwinder_test(gint N, gdouble u, gdouble v)
+
+{
+  gdouble Knm[1024] ;
+  gint n, m, str ;
+
+  fprintf(stderr, "koornwinder test\n") ;
+  fprintf(stderr, "================\n") ;
+
+  fprintf(stderr, "N = %d\n", N) ;
+  fprintf(stderr, "(u,v) = (%lg,%lg)\n", u, v) ;
+
+  str = 3 ;
+  
+  qbx_koornwinder_nm(N, u, v, str, 8192, Knm) ;
+
+  for ( n = 0 ; n <= N ; n ++ ) {
+    for ( m = 0 ; m <= n ; m ++ ) {
+      fprintf(stdout,
+	      "%d %d %1.16e %1.16e %1.16e\n",
+	      n, m, u, v, Knm[str*(n*(n+1)/2+m)]) ;
+    }
+  }
+
+  return 0 ;
+}
+
+static gint koornwinder_orthogonality_test(gint N)
+
+{
+  gint nq, order, i, n1, m1, n2, m2, idx1, idx2, str ;
+  gdouble s, t, Knm[4096], *q, I, w, tol ;
+
+  str = 3 ;
+  
+  tol = 1e-12 ;
+  
+  fprintf(stderr, "koornwinder orthogonality test\n") ;
+  fprintf(stderr, "==============================\n") ;
+
+  fprintf(stderr, "N = %d\n", N) ;
+
+  nq = 453 ;
+  
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  for ( n1 = 0 ; n1 <= N ; n1 ++ ) {
+    for ( m1 = 0 ; m1 <= n1 ; m1 ++ ) {
+      for ( n2 = 0 ; n2 <= N ; n2 ++ ) {
+	for ( m2 = 0 ; m2 <= n2 ; m2 ++ ) {
+	  idx1 = n1*(n1+1)/2 + m1 ; 
+	  idx2 = n2*(n2+1)/2 + m2 ; 
+  
+	  I = 0.0 ;
+	  for ( i = 0 ; i < nq ; i ++ ) {
+	    s = q[3*i+0] ; 
+	    t = q[3*i+1] ;
+	    w = q[3*i+2] ; 
+	    
+	    qbx_koornwinder_nm(N, s, t, str, 8192, Knm) ;
+	    
+	    I += Knm[str*idx1]*Knm[str*idx2]*w ;
+	  }
+
+	  fprintf(stderr, "%d %d %d %d %e ", n1, m1, n2, m2, I) ;
+	  if ( n1 != n2 || m1 != m2 ) {
+	    if ( fabs(I) > tol ) 
+	      fprintf(stderr, "FAIL\n") ;
+	    else
+	      fprintf(stderr, "PASS\n") ;
+	  } else {
+	    if ( fabs(I-1.0) > tol ) 
+	      fprintf(stderr, "FAIL\n") ;
+	    else
+	      fprintf(stderr, "PASS\n") ;
+	  }	  
+	}
+      }
+    }
+  }
+  return 0 ;
+}
+
+static gint koornwinder_interpolation_test(gint N)
+
+{
+  gint nq, order, i, idx1, idx2, str ;
+  gdouble s, t, Knm[32768], A[4*65536], *q, f, fr, fi[512], al, bt, c[512] ;
+  
+  fprintf(stderr, "koornwinder interpolation test\n") ;
+  fprintf(stderr, "==============================\n") ;
+
+  nq = 85 ; 
+  
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  N = qbx_koornwinder_interp_matrix(q, nq, A) ;
+
+  fprintf(stderr, "Knm N max: %d\n", N) ;
+  
+  for ( i = 0 ; i < nq ; i ++ ) {
+    s = q[i*3+0] ; t = q[i*3+1] ;
+    /* fi[i] = 3.0*s*t - t*t ; */
+    fi[i] = sin(2.0*M_PI*s*t/8) ;
+  }
+
+  al = 1.0 ; bt = 0.0 ;
+  qbx_dgemv(FALSE, &nq, &nq, &al, A, &nq, fi, &qbx_1i, &bt, c, &qbx_1i) ;
+
+  for ( s = 0 ; s <= 1.0 ; s += 0.1 ) {
+    for ( t = 0 ; t <= 1.0-s ; t += 0.1 ) {
+      qbx_koornwinder_nm(N, s, t, 1, nq, Knm) ;
+
+      f = qbx_ddot(&nq, c, &qbx_1i, Knm, qbx_1i) ;
+      /* fr = 3.0*s*t - t*t ; */
+      fr = sin(2.0*M_PI*s*t/8) ;
+  
+      fprintf(stderr, "%lg %lg %lg %lg (%lg)\n", s, t, fr, f, fabs(fr-f)) ;
+    }
+  }
+
+  return 0 ;
+}
+
+static gint blas_tests(gint N)
+
+{
+  gint i, j, stra, strx, stry, nr, nc ;
+  gdouble A[8192], x[256], y[256], yref[256], al, bt, d, dref ;
+
+  fprintf(stderr, "BLAS test\n") ;
+  fprintf(stderr, "=========\n") ;
+
+  nr = N ; nc = nr + 3 ;
+
+  al = -1.23 ; bt = 0.7 ;
+  
+  stra = nc+5 ; strx = 2 ; stry = 5 ;
+  /* stra = nc ; strx = 1 ; stry = 1 ; */
+  
+  fprintf(stderr, "A: %dx%d, stride %d\n", nr, nc, stra) ;
+  fprintf(stderr, "x: %d elements, stride %d\n", nc, strx) ;
+  fprintf(stderr, "y: %d elements, stride %d\n", nr, stry) ;
+  fprintf(stderr, "al = %lg; bt = %lg\n", al, bt) ;
+  
+  for ( i = 0 ; i < nr ; i ++ ) {
+    for ( j = 0 ; j < nc ; j ++ ) {
+      A[i*stra+j] = (gdouble)(i+3)*(j+1) ;
+    }
+  }
+  for ( j = 0 ; j < nc ; j ++ ) {
+    y[stry*j] = -(gdouble)((j-0.3)*0.7) ;
+    x[strx*j] = -(gdouble)((j+5.3)*0.7) ;
+  }
+
+  for ( i = 0 ; i < nr ; i ++ ) {
+    yref[i] = bt*y[i*stry] ;
+    for ( j = 0 ; j < nc ; j ++ ) {
+      yref[i] += al*A[i*nc+j]*x[j*strx] ;
+    }
+  }
+
+  qbx_dgemv(FALSE, &nr, &nc, &al, A, &stra, x, &strx, &bt, y, &stry) ;
+
+  for ( i = 0 ; i < nr ; i ++ ) {
+    fprintf(stderr, "%lg ", yref[i]) ;
+  }
+  fprintf(stderr, "\n") ;
+  for ( i = 0 ; i < nr ; i ++ ) {
+    fprintf(stderr, "%lg ", y[stry*i]) ;
+  }
+  fprintf(stderr, "\n") ;
+  dref = 0.0 ;
+  for ( i = 0 ; i < nr ; i ++ ) {
+    fprintf(stderr, "%lg ", fabs(y[stry*i]-yref[i])) ;
+    dref += y[stry*i]*yref[i] ;
+  }
+  fprintf(stderr, "\n") ;
+
+  d = qbx_ddot(&nr, y, &stry, yref, qbx_1i) ;
+
+  fprintf(stderr, "dot: %lg %lg (%lg)\n", d, dref, fabs(d-dref)) ;
+  
+  return 0 ;
+}
 
 gint main(gint argc, gchar **argv)
 
@@ -467,6 +668,30 @@ gint main(gint argc, gchar **argv)
   if ( s0 != G_MAXDOUBLE && t0 == G_MAXDOUBLE ) t0 = s0 ;
   if ( t0 != G_MAXDOUBLE && s0 == G_MAXDOUBLE ) s0 = t0 ;
   
+  if ( test == 4 ) {
+    koornwinder_test(N, s0, t0) ;
+
+    return 0 ;
+  }
+
+  if ( test == 5 ) {
+    koornwinder_orthogonality_test(N) ;
+
+    return 0 ;
+  }
+
+  if ( test == 6 ) {
+    blas_tests(N) ;
+
+    return 0 ;
+  }
+  
+  if ( test == 7 ) {
+    koornwinder_interpolation_test(N) ;
+
+    return 0 ;
+  }
+
   read_element(input, xe, &ne, &xstr) ;
   fscanf(input, "%lg %lg %lg", &(x0[0]), &(x0[1]), &(x0[2])) ;
 	 
@@ -499,7 +724,7 @@ gint main(gint argc, gchar **argv)
 
     return 0 ;
   }
-  
+
   return 0 ;
 }
 

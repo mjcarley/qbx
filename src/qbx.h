@@ -112,6 +112,7 @@ gint qbx_triangle_expansion_f(gfloat *xe, gint xstr, gint ne,
 gint qbx_triangle_laplace_self_quad(gdouble *xe, gint xstr,
 				    gint ne,
 				    gdouble s0, gdouble t0,
+				    gboolean in,
 				    gdouble *q, gint nq, gint oq,
 				    gint Nmax, gint dmax,
 				    gdouble tol,
@@ -121,6 +122,7 @@ gint qbx_triangle_laplace_self_quad(gdouble *xe, gint xstr,
 gint qbx_triangle_laplace_self_quad_f(gfloat *xe, gint xstr,
 				      gint ne,
 				      gfloat s0, gfloat t0,
+				      gboolean in,
 				      gfloat *q, gint nq, gint oq,
 				      gint Nmax, gint dmax,
 				      gfloat tol,
@@ -218,5 +220,12 @@ gint qbx_element_nearest_point_f(gfloat *xe, gint xstr,
 				 gfloat *sn, gfloat *tn, 
 				 gfloat *xn, gfloat tol,
 				 gint nimax, gfloat *kn) ;
+gint qbx_koornwinder_nm(gint N, gdouble u, gdouble v, gint str, gint imax,
+			gdouble *Knm) ;
+gint qbx_koornwinder_nm_f(gint N, gfloat u, gfloat v, gint str, gint imax,
+			  gfloat *Knm) ;
+
+gint qbx_koornwinder_interp_matrix(gdouble *q, gint nq, gdouble *A) ;
+gint qbx_koornwinder_interp_matrix_f(gfloat *q, gint nq, gfloat *A) ;
 
 #endif /*QBX_H_INCLUDED*/

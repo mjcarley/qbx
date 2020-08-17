@@ -8,9 +8,9 @@ Functions for performing integration on elements for various potentials (Laplace
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad} (gdouble $\ast$xe, gint xstr, gint ne, gdouble s0, gdouble t0, gdouble $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gdouble tol, gdouble $\ast$Is, gint istr, gdouble $\ast$Id, gint dstr, gdouble $\ast$work)
+gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad} (gdouble $\ast$xe, gint xstr, gint ne, gdouble s0, gdouble t0, gboolean in, gdouble $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gdouble tol, gdouble $\ast$Is, gint istr, gdouble $\ast$Id, gint dstr, gdouble $\ast$work)
 \begin{DoxyCompactList}\small\item\em Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) \end{DoxyCompactList}\item 
-gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat s0, gfloat t0, gfloat $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gfloat tol, gfloat $\ast$Is, gint istr, gfloat $\ast$Id, gint dstr, gfloat $\ast$work)
+gint {\bf qbx\+\_\+triangle\+\_\+laplace\+\_\+self\+\_\+quad\+\_\+f} (gfloat $\ast$xe, gint xstr, gint ne, gfloat s0, gfloat t0, gboolean in, gfloat $\ast$q, gint nq, gint oq, gint Nmax, gint dmax, gfloat tol, gfloat $\ast$Is, gint istr, gfloat $\ast$Id, gint dstr, gfloat $\ast$work)
 \begin{DoxyCompactList}\small\item\em Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -29,6 +29,7 @@ Functions for performing integration on elements for various potentials (Laplace
 \item[{gint}]{ne, }
 \item[{gdouble}]{s0, }
 \item[{gdouble}]{t0, }
+\item[{gboolean}]{in, }
 \item[{gdouble $\ast$}]{q, }
 \item[{gint}]{nq, }
 \item[{gint}]{oq, }
@@ -41,7 +42,7 @@ Functions for performing integration on elements for various potentials (Laplace
 \item[{gint}]{dstr, }
 \item[{gdouble $\ast$}]{work}
 \end{DoxyParamCaption}
-)}\label{group__quadrature_gafed5b29bc9d7a8aeefe23de40999944a}
+)}\label{group__quadrature_gaccb0d6bbc9832a8aaa9586525abbae57}
 
 
 Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) 
@@ -57,6 +58,8 @@ Integration of Laplace potential on triangular element, with field point on elem
 {\em s0} & reference element coordinate of evaluation point; \\
 \hline
 {\em t0} & reference element coordinate of evaluation point; \\
+\hline
+{\em in} & if T\+R\+U\+E, generate expansion on the negative side of the element, as determined by surface normal; \\
 \hline
 {\em q} & quadrature rule nodes and weights; \\
 \hline
@@ -93,6 +96,7 @@ Integration of Laplace potential on triangular element, with field point on elem
 \item[{gint}]{ne, }
 \item[{gfloat}]{s0, }
 \item[{gfloat}]{t0, }
+\item[{gboolean}]{in, }
 \item[{gfloat $\ast$}]{q, }
 \item[{gint}]{nq, }
 \item[{gint}]{oq, }
@@ -105,7 +109,7 @@ Integration of Laplace potential on triangular element, with field point on elem
 \item[{gint}]{dstr, }
 \item[{gfloat $\ast$}]{work}
 \end{DoxyParamCaption}
-)}\label{group__quadrature_gaf153c4f1d5295de81b584cbff4e3ac7e}
+)}\label{group__quadrature_ga58dd56dd0e54313be75578616541898a}
 
 
 Integration of Laplace potential on triangular element, with field point on element (\char`\"{}self term\char`\"{}) 
@@ -121,6 +125,8 @@ Integration of Laplace potential on triangular element, with field point on elem
 {\em s0} & reference element coordinate of evaluation point; \\
 \hline
 {\em t0} & reference element coordinate of evaluation point; \\
+\hline
+{\em in} & if T\+R\+U\+E, generate expansion on the negative side of the element, as determined by surface normal; \\
 \hline
 {\em q} & quadrature rule nodes and weights; \\
 \hline

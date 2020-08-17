@@ -46,17 +46,17 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafed5b29bc9d7a8aeefe23de40999944a"><td class="memItemLeft" align="right" valign="top">gint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quadrature.html#gafed5b29bc9d7a8aeefe23de40999944a">qbx_triangle_laplace_self_quad</a> (gdouble *xe, gint xstr, gint ne, gdouble s0, gdouble t0, gdouble *q, gint nq, gint oq, gint Nmax, gint dmax, gdouble tol, gdouble *Is, gint istr, gdouble *Id, gint dstr, gdouble *work)</td></tr>
-<tr class="memdesc:gafed5b29bc9d7a8aeefe23de40999944a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integration of Laplace potential on triangular element, with field point on element ("self term")  <a href="#gafed5b29bc9d7a8aeefe23de40999944a">More...</a><br /></td></tr>
-<tr class="separator:gafed5b29bc9d7a8aeefe23de40999944a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf153c4f1d5295de81b584cbff4e3ac7e"><td class="memItemLeft" align="right" valign="top">gint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quadrature.html#gaf153c4f1d5295de81b584cbff4e3ac7e">qbx_triangle_laplace_self_quad_f</a> (gfloat *xe, gint xstr, gint ne, gfloat s0, gfloat t0, gfloat *q, gint nq, gint oq, gint Nmax, gint dmax, gfloat tol, gfloat *Is, gint istr, gfloat *Id, gint dstr, gfloat *work)</td></tr>
-<tr class="memdesc:gaf153c4f1d5295de81b584cbff4e3ac7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integration of Laplace potential on triangular element, with field point on element ("self term")  <a href="#gaf153c4f1d5295de81b584cbff4e3ac7e">More...</a><br /></td></tr>
-<tr class="separator:gaf153c4f1d5295de81b584cbff4e3ac7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaccb0d6bbc9832a8aaa9586525abbae57"><td class="memItemLeft" align="right" valign="top">gint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quadrature.html#gaccb0d6bbc9832a8aaa9586525abbae57">qbx_triangle_laplace_self_quad</a> (gdouble *xe, gint xstr, gint ne, gdouble s0, gdouble t0, gboolean in, gdouble *q, gint nq, gint oq, gint Nmax, gint dmax, gdouble tol, gdouble *Is, gint istr, gdouble *Id, gint dstr, gdouble *work)</td></tr>
+<tr class="memdesc:gaccb0d6bbc9832a8aaa9586525abbae57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integration of Laplace potential on triangular element, with field point on element ("self term")  <a href="#gaccb0d6bbc9832a8aaa9586525abbae57">More...</a><br /></td></tr>
+<tr class="separator:gaccb0d6bbc9832a8aaa9586525abbae57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58dd56dd0e54313be75578616541898a"><td class="memItemLeft" align="right" valign="top">gint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quadrature.html#ga58dd56dd0e54313be75578616541898a">qbx_triangle_laplace_self_quad_f</a> (gfloat *xe, gint xstr, gint ne, gfloat s0, gfloat t0, gboolean in, gfloat *q, gint nq, gint oq, gint Nmax, gint dmax, gfloat tol, gfloat *Is, gint istr, gfloat *Id, gint dstr, gfloat *work)</td></tr>
+<tr class="memdesc:ga58dd56dd0e54313be75578616541898a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integration of Laplace potential on triangular element, with field point on element ("self term")  <a href="#ga58dd56dd0e54313be75578616541898a">More...</a><br /></td></tr>
+<tr class="separator:ga58dd56dd0e54313be75578616541898a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions for performing integration on elements for various potentials (Laplace, Helmholtz, etc) </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gafed5b29bc9d7a8aeefe23de40999944a"></a>
+<a class="anchor" id="gaccb0d6bbc9832a8aaa9586525abbae57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -93,6 +93,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">gboolean&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">gdouble *&#160;</td>
           <td class="paramname"><em>q</em>, </td>
         </tr>
@@ -172,6 +178,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">ne</td><td>number of element nodes; </td></tr>
     <tr><td class="paramname">s0</td><td>reference element coordinate of evaluation point; </td></tr>
     <tr><td class="paramname">t0</td><td>reference element coordinate of evaluation point; </td></tr>
+    <tr><td class="paramname">in</td><td>if TRUE, generate expansion on the negative side of the element, as determined by surface normal; </td></tr>
     <tr><td class="paramname">q</td><td>quadrature rule nodes and weights; </td></tr>
     <tr><td class="paramname">nq</td><td>number of entries in <em>q</em>; </td></tr>
     <tr><td class="paramname">oq</td><td>order of <em>q</em> (highest order polynomial integrated exactly); </td></tr>
@@ -190,7 +197,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf153c4f1d5295de81b584cbff4e3ac7e"></a>
+<a class="anchor" id="ga58dd56dd0e54313be75578616541898a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -223,6 +230,12 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">gfloat&#160;</td>
           <td class="paramname"><em>t0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gboolean&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -306,6 +319,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">ne</td><td>number of element nodes; </td></tr>
     <tr><td class="paramname">s0</td><td>reference element coordinate of evaluation point; </td></tr>
     <tr><td class="paramname">t0</td><td>reference element coordinate of evaluation point; </td></tr>
+    <tr><td class="paramname">in</td><td>if TRUE, generate expansion on the negative side of the element, as determined by surface normal; </td></tr>
     <tr><td class="paramname">q</td><td>quadrature rule nodes and weights; </td></tr>
     <tr><td class="paramname">nq</td><td>number of entries in <em>q</em>; </td></tr>
     <tr><td class="paramname">oq</td><td>order of <em>q</em> (highest order polynomial integrated exactly); </td></tr>
@@ -327,7 +341,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 5 2020 15:52:36 for QBX by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 7 2020 15:31:27 for QBX by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
