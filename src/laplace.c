@@ -333,117 +333,172 @@ gint QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(QBX_REAL *xc, gint N,
   return 0 ;
 }
 
-static gint point_interp(QBX_REAL *xb, QBX_REAL *fb, gint i,
-			 QBX_REAL *xe, gint xstr, gint ne,
-			 QBX_REAL *fe, gint fstr, gint nf,
-			 QBX_REAL s, QBX_REAL t)
-
+static gint QBX_FUNCTION_NAME(laplace_quad_sl)(QBX_REAL s, QBX_REAL t,
+					       QBX_REAL w,
+					       QBX_REAL *x, QBX_REAL *y,
+					       QBX_REAL *n,
+					       gint N,
+					       QBX_REAL *C, gint str,
+					       gint nf,
+					       gpointer data[])
 {
-  QBX_REAL n[3], J, L[16], dLds[16], dLdt[16] ;
-  gint j, k ;
+  gint ne = *((gint *)(data[2])) ;
+  QBX_REAL r, th, ph, L[32], sc ;
+  QBX_REAL Cth, Sth, Cmph[64], Smph[64], *Pnm1, *Pn, P[128] ;
+  gint nn, mm, idx, j ;
   
-  QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, dLds, dLdt,
+  QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(x, y, &r, &th, &ph) ;
+  QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, NULL, NULL,
 					  NULL, NULL, NULL) ;
-  QBX_FUNCTION_NAME(qbx_element_point_interp_3d)(xe, xstr, ne,
-						 L, dLds, dLdt, &(xb[xstr*i]),
-						 n, &J, NULL) ;
 
-  for ( j = 0 ; j < ne ; j ++ ) fb[fstr*i+j] = 0.0 ;
-  for ( j = 0 ; j < ne ; j ++ ) {
-    for ( k = 0 ; k < nf ; k ++ ) {
-      fb[fstr*i+k] += L[j]*fe[j*fstr+k] ;
+  Pnm1 = &(P[0]) ; Pn = &(Pnm1[N+2]) ;
+  Cth = COS(th) ; Sth = SIN(th) ;
+  QBX_FUNCTION_NAME(qbx_legendre_init)(Cth, Sth, &(Pnm1[0]),
+				       &(Pn[0]), &(Pn[1])) ;
+  Pnm1[1] = 0.0 ;
+  
+  Cmph[0] = 1.0 ; Cmph[1] = COS(ph) ;
+  Smph[0] = 0.0 ; Smph[1] = SIN(ph) ;
+  
+  w /= r ;
+  
+  nn = 0 ; mm = 0 ; sc = 1.0/(2*nn+1) ;
+  idx = nn*nn ;
+  for ( j = 0 ; j < nf ; j ++ ) C[str*idx+j] += Pnm1[mm]*w*sc*L[j] ;
+  
+  w /= r ;
+  nn = 1 ; sc = 1.0/(2*nn+1) ;
+  mm =  0 ;
+  idx = nn*nn ;
+  for ( j = 0 ; j < nf ; j ++ ) C[str*idx+j] += Pn[mm]*w*sc*L[j] ;
+  mm =  1 ;
+  idx = qbx_index_laplace_nm(nn, mm) ;
+  for ( j = 0 ; j < nf ; j ++ ) {
+    C[str*(idx+0)+j] += Pn[mm]*Cmph[mm]*w*sc*L[j] ;
+    C[str*(idx+1)+j] -= Pn[mm]*Smph[mm]*w*sc*L[j] ;
+  }
+  
+  for ( nn = 2 ; nn <= N ; nn ++ ) {
+    QBX_FUNCTION_NAME(qbx_legendre_recursion_array)(&Pnm1, &Pn, nn-1,
+						    Cth, Sth) ;
+    w /= r ;
+    sc = 1.0/(2*nn+1) ;      
+    mm =  0 ;
+    idx = nn*nn ;
+    for ( j = 0 ; j < nf ; j ++ ) C[str*idx+j] += Pn[mm]*w*sc*L[j] ;
+    
+    Cmph[nn] = Cmph[nn-1]*Cmph[1] - Smph[nn-1]*Smph[1] ;
+    Smph[nn] = Smph[nn-1]*Cmph[1] + Cmph[nn-1]*Smph[1] ;
+    
+    for ( mm = 1 ; mm <= nn ; mm ++ ) {
+      idx = qbx_index_laplace_nm(nn, mm) ;
+      for ( j = 0 ; j < nf ; j ++ ) {
+	C[str*(idx+0)+j] += Pn[mm]*Cmph[mm]*w*sc*L[j] ;
+	C[str*(idx+1)+j] -= Pn[mm]*Smph[mm]*w*sc*L[j] ;
+      }
+    }
+  }
+
+  return 0 ;
+}
+
+static gint QBX_FUNCTION_NAME(laplace_quad_dl)(QBX_REAL s, QBX_REAL t,
+					       QBX_REAL w,
+					       QBX_REAL *x, QBX_REAL *y,
+					       QBX_REAL *n,
+					       gint N,
+					       QBX_REAL *C, gint str,
+					       gint nf,
+					       gpointer data[])
+{
+  gint ne = *((gint *)(data[2])) ;
+  QBX_REAL r, th, ph, L[32], rn, nR, sc, fr, fi ;
+  QBX_REAL Cth, Sth, Cmph[64], Smph[64], dP, nC, nph, *Pnm1, *Pn, P[128] ;
+  gint nn, mm, idx, j ;
+  
+  QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(x, y, &r, &th, &ph) ;
+  QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, NULL, NULL,
+					  NULL, NULL, NULL) ;
+
+  Pnm1 = &(P[0]) ; Pn = &(Pnm1[N+2]) ;
+  
+  Cth = COS(th) ; Sth = SIN(th) ;
+  QBX_FUNCTION_NAME(qbx_legendre_init)(Cth, Sth, &(Pnm1[0]),
+					 &(Pn[0]), &(Pn[1])) ;
+  Pnm1[1] = Pnm1[2] = Pn[2] = 0.0 ;
+  
+  Cmph[0] = 1.0 ; Cmph[1] = COS(ph) ;
+  Smph[0] = 0.0 ; Smph[1] = SIN(ph) ;
+
+  nR = -(n[0]*(x[0]-y[0]) + n[1]*(x[1]-y[1]) + n[2]*(x[2]-y[2]))/r ;
+  nph = (n[0]*(x[1]-y[1]) - n[1]*(x[0]-y[0]))/r/r/Sth/Sth ;
+  nC = (n[2]-Cth*nR)/r ;
+  
+  rn = r ;
+  
+  nn = 0 ; mm = 0 ; sc = 1.0/(2*nn+1) ;
+  dP = 0 ;
+  fr = (Cmph[mm]*( dP*nC-(nn+1)*Pnm1[mm]*nR/r) -
+	mm*Smph[mm]*Pnm1[mm]*nph)/rn ;
+  
+  idx = nn*nn ;
+  for ( j = 0 ; j < nf ; j ++ ) C[str*idx+j] += fr*w*sc*L[j] ;
+  
+  rn *= r ;
+  nn = 1 ; sc = 1.0/(2*nn+1) ;
+  mm = 0 ;
+  dP = SQRT((2*nn+1)/(2*nn-1)*(nn+mm)*(nn-mm))*Pnm1[mm] - nn*Cth*Pn[mm] ;
+  dP /= Sth*Sth ;
+  fr = (Cmph[mm]*( dP*nC-(nn+1)*Pn[mm]*nR/r) - mm*Smph[mm]*Pn[mm]*nph)/rn ;
+  
+  idx = nn*nn ;
+  for ( j = 0 ; j < nf ; j ++ ) C[str*idx+j] += fr*w*sc*L[j] ;
+  
+  mm = 1 ;
+  dP = SQRT((2*nn+1)/(2*nn-1)*(nn+mm)*(nn-mm))*Pnm1[mm] - nn*Cth*Pn[mm] ;
+  dP /= Sth*Sth ;
+  fr = (Cmph[mm]*( dP*nC-(nn+1)*Pn[mm]*nR/r) - mm*Smph[mm]*Pn[mm]*nph)/rn ;
+  fi = (Smph[mm]*(-dP*nC+(nn+1)*Pn[mm]*nR/r) - mm*Cmph[mm]*Pn[mm]*nph)/rn ;
+  
+  idx = qbx_index_laplace_nm(nn, mm) ;
+  for ( j = 0 ; j < nf ; j ++ ) {
+    C[str*(idx+0)+j] += fr*w*sc*L[j] ;
+    C[str*(idx+1)+j] += fi*w*sc*L[j] ;
+  }
+
+  for ( nn = 2 ; nn <= N ; nn ++ ) {
+    QBX_FUNCTION_NAME(qbx_legendre_recursion_array)(&Pnm1, &Pn, nn-1,
+						    Cth, Sth) ;
+    rn *= r ;
+    sc = 1.0/(2*nn+1) ;      
+    mm =  0 ;
+    dP = SQRT((2.0*nn+1)/(2*nn-1)*(nn+mm)*(nn-mm))*Pnm1[mm] - nn*Cth*Pn[mm] ;
+    dP /= Sth*Sth ;
+    fr = (Cmph[mm]*( dP*nC-(nn+1)*Pn[mm]*nR/r) - mm*Smph[mm]*Pn[mm]*nph)/rn ;
+    fi = (Smph[mm]*(-dP*nC+(nn+1)*Pn[mm]*nR/r) - mm*Cmph[mm]*Pn[mm]*nph)/rn ;
+    idx = nn*nn ;
+    for ( j = 0 ; j < nf ; j ++ )  C[str*idx+j] += fr*w*sc*L[j] ;
+    
+    Cmph[nn] = Cmph[nn-1]*Cmph[1] - Smph[nn-1]*Smph[1] ;
+    Smph[nn] = Smph[nn-1]*Cmph[1] + Cmph[nn-1]*Smph[1] ;
+    
+    for ( mm = 1 ; mm <= nn ; mm ++ ) {
+      dP = SQRT((2.0*nn+1)/(2*nn-1)*(nn+mm)*(nn-mm))*Pnm1[mm] -
+	nn*Cth*Pn[mm] ;
+      dP /= Sth*Sth ;
+      fr = (Cmph[mm]*( dP*nC-(nn+1)*Pn[mm]*nR/r) -
+	    mm*Smph[mm]*Pn[mm]*nph)/rn ;
+      fi = (Smph[mm]*(-dP*nC+(nn+1)*Pn[mm]*nR/r) -
+	    mm*Cmph[mm]*Pn[mm]*nph)/rn ;
+      
+      idx = qbx_index_laplace_nm(nn, mm) ;
+      for ( j = 0 ; j < nf ; j ++ ) {
+	C[str*(idx+0)+j] += fr*w*sc*L[j] ;
+	C[str*(idx+1)+j] += fi*w*sc*L[j] ;
+      }
     }
   }
   
-  return 0 ;
-}
-  
-static gint point_copy(QBX_REAL *xb, QBX_REAL *fb, gint i,
-		       QBX_REAL *xe, gint xstr, gint ne,
-		       QBX_REAL *fe, gint fstr, gint nf, gint j)
-
-{
-  gint k ;
-  
-  xb[xstr*i+0] = xe[xstr*j+0] ;
-  xb[xstr*i+1] = xe[xstr*j+1] ;
-  xb[xstr*i+2] = xe[xstr*j+2] ;
-
-  for ( k = 0 ; k < nf ; k ++ ) fb[fstr*j+k] = fe[fstr*i+k] ;
-
-  return 0 ;
-}
-
-static gint triangle_divide_loop(QBX_REAL *xe, gint xstr, gint ne,
-				 QBX_REAL *fe, gint fstr, gint nf, gint d,
-				 QBX_REAL *xl, QBX_REAL *fl)
-
-{
-  g_assert(ne == 3 || ne == 6) ;
-
-  if ( ne == 3 ) {
-    switch ( d ) {
-    case 0:
-      point_copy(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      break ;
-    case 1:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_copy(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 1) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      break ;
-    case 2:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      point_copy(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 2) ;
-      break ;
-    case 3:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      break ;
-    default: g_assert_not_reached() ; break ;
-    }
-    return 0 ;
-  }
-  
-  switch ( d ) {
-  case 0:
-    point_copy(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.25, 0.0 ) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.25) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.0,  0.25) ;
-    break ;
-  case 1:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_copy(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 1) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.75, 0.0 ) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.75, 0.25) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.5 , 0.25) ;
-    break ;
-  case 2:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_copy(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 2) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.25, 0.5) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.75) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.0, 0.75) ;
-    break ;
-  case 3:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.5, 0.25) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.5) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.25, 0.25) ;
-    break ;
-    default: g_assert_not_reached() ; break ;
-  }
-
   return 0 ;
 }
 
@@ -464,44 +519,41 @@ gint QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(QBX_REAL *xe,
 							    gboolean single) 
 
 {
-  QBX_REAL xb[128], fb[128], rp, err ;
-  gint i ;
-
-  g_assert(ne == 3 || ne == 6) ;
-
-  g_assert(ne <= str) ;
-  
-  if ( init ) memset(L, 0, str*(N+1)*(N+1)*sizeof(QBX_REAL)) ;
-
-  /*check error estimate for this triangle*/
-  rp = 1e6 ;
-  for ( i = 0 ; i < ne ; i ++ ) {
-    rp = MIN(rp, qbx_vector_distance2(xc, &(xe[i*xstr]))) ;
-  }
-  rp = SQRT(rp) ;
-  err = QBX_FUNCTION_NAME(qbx_quadrature_error)(N, w, order, rp, rp) ;
-  
-  if ( depth == 0 || err < tol ) {
-    if ( single ) 
-      QBX_FUNCTION_NAME(qbx_expansion_make_laplace_sl)(xe, xstr, ne,
-						       fe, fstr, nf, q, nq,
-						       xc, rc, N, L, str) ;
-    else
-      QBX_FUNCTION_NAME(qbx_expansion_make_laplace_dl)(xe, xstr, ne,
-						       fe, fstr, nf, q, nq,
-						       xc, rc, N, L, str) ;
-    return 0 ;
+  if ( !single ) {
+#ifdef QBX_SINGLE_PRECISION
+    qbx_quadrature_func_f_t func = laplace_quad_dl_f ;
+#else /*QBX_SINGLE_PRECISION*/
+    qbx_quadrature_func_t func = laplace_quad_dl ;
+#endif /*QBX_SINGLE_PRECISION*/
+    gpointer data[4] ;
+    QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
+    
+    data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    /* memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ; */
+    QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
+					     xe, xstr, ne, xe, xstr, st,
+					     w, xc, N, depth, q, nq, order, tol,
+					     L, str, ne, data) ;
   }
 
-  for ( i = 0 ; i < 4 ; i ++ ) {
-    triangle_divide_loop(xe, xstr, ne, fe, fstr, nf, i, xb, fb) ;
-
-    QBX_FUNCTION_NAME(qbx_expansion_make_laplace_adaptive)(xb, xstr, ne,
-							   fb, fstr, nf,
-							   q, nq, order, xc, rc,
-							   N, L, str, depth-1,
-							   tol, 0.5*w,
-							   FALSE, single) ;
+  if ( single ) {
+    /* fprintf(stderr, "Hello\n") ; */
+#ifdef QBX_SINGLE_PRECISION
+    qbx_quadrature_func_f_t func = laplace_quad_sl_f ;
+#else /*QBX_SINGLE_PRECISION*/
+    qbx_quadrature_func_t func = laplace_quad_sl ;
+#endif /*QBX_SINGLE_PRECISION*/
+    gpointer data[4] ;
+    QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
+		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
+    
+    data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    /* memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ; */
+    QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
+					     xe, xstr, ne, xe, xstr, st,
+					     w, xc, N, depth, q, nq, order, tol,
+					     L, str, ne, data) ;
   }
 
   return 0 ;

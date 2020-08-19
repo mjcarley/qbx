@@ -3,6 +3,17 @@
 
 #include <glib.h>
 
+typedef gint (*qbx_quadrature_func_t)(gdouble s, gdouble t, gdouble w,
+				      gdouble *x, gdouble *y, gdouble *n,
+				      gint N,
+				      gdouble *fq, gint fstr, gint nf,
+				      gpointer data) ;
+typedef gint (*qbx_quadrature_func_f_t)(gfloat s, gfloat t, gfloat w,
+					gfloat *x, gfloat *y, gfloat *n,
+					gint N,
+					gfloat *fq, gint fstr, gint nf,
+					gpointer data) ;
+
 gint qbx_expansion_make_laplace_sl(gdouble *xe, gint xstr, gint ne,
 				   gdouble *fe, gint fstr, gint nf,
 				   gdouble *qrule, gint ngp,
@@ -227,5 +238,42 @@ gint qbx_koornwinder_nm_f(gint N, gfloat u, gfloat v, gint str, gint imax,
 
 gint qbx_koornwinder_interp_matrix(gdouble *q, gint nq, gdouble *A) ;
 gint qbx_koornwinder_interp_matrix_f(gfloat *q, gint nq, gfloat *A) ;
+
+gint qbx_laplace_ts_integrate(gdouble *xe, gint xstr, gint ne,
+			      gdouble *q,  gint nq, gint order,
+			      gdouble *xc, gdouble rc, gint N,
+			      gdouble s0, gdouble t0,
+			      gdouble *L,  gint str,
+			      gint depth,  gdouble tol, gdouble w) ;
+gint qbx_laplace_ts_integrate_f(gfloat *xe, gint xstr, gint ne,
+				gfloat *q,  gint nq, gint order,
+				gfloat *xc, gfloat rc, gint N,
+				gfloat s0, gfloat t0,
+				gfloat *L,  gint str,
+				gint depth,  gfloat tol, gfloat w) ;
+
+gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+			   gdouble *xt, gint tstr, gint ne,
+			   gdouble *xd, gint dstr,
+			   gdouble *st,
+			   gdouble w, gdouble *xc,
+			   gint N,
+			   gint depth,
+			   gdouble *q, gint nq, gint oq,
+			   gdouble tol,
+			   gdouble *f, gint fstr, gint nf,
+			   gpointer data) ;
+gint qbx_triangle_adaptive_f(qbx_quadrature_func_f_t func,
+			     gfloat *xt, gint tstr, gint ne,
+			     gfloat *xd, gint dstr,
+			     gfloat *st,
+			     gfloat w,
+			     gfloat *xc, gint N,
+			     gint depth,
+			     gfloat *q, gint nq, gint oq,
+			     gfloat tol,
+			     gfloat *f, gint fstr, gint nf,
+			     gpointer data) ;
+
 
 #endif /*QBX_H_INCLUDED*/

@@ -139,7 +139,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libqbx_la_DEPENDENCIES = libsub.la
 am_libqbx_la_OBJECTS = qbx.lo laplace.lo newman.lo wandzura.lo xiao.lo \
 	wandzura-f.lo xiao-f.lo util.lo location.lo rules.lo \
-	koornwinder.lo blas.lo
+	koornwinder.lo blas.lo siegel.lo adapt.lo
 libqbx_la_OBJECTS = $(am_libqbx_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
@@ -151,7 +151,8 @@ libqbx_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 libsub_la_LIBADD =
 am_libsub_la_OBJECTS = libsub_la-qbx.lo libsub_la-laplace.lo \
 	libsub_la-util.lo libsub_la-location.lo libsub_la-rules.lo \
-	libsub_la-koornwinder.lo
+	libsub_la-koornwinder.lo libsub_la-siegel.lo \
+	libsub_la-adapt.lo
 libsub_la_OBJECTS = $(am_libsub_la_OBJECTS)
 libsub_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libsub_la_CFLAGS) \
@@ -232,7 +233,7 @@ AWK = gawk
 BLAS_LIBS = -lblas
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O0 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
+CFLAGS = -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -364,7 +365,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AM_CPPFLAGS = -I$(top_srcdir) -I$(includedir) -DG_LOG_DOMAIN=\"QBX\" \
-	-DQBX_COMPILER_FLAGS="\"-g -O0 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""
+	-DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""
 
 bin_SCRIPTS = qbx-config
 BUILT_SOURCES = \
@@ -388,7 +389,9 @@ libqbx_la_SOURCES = \
 	location.c \
 	rules.c \
 	koornwinder.c \
-	blas.c
+	blas.c \
+	siegel.c \
+	adapt.c
 
 libqbx_la_LIBADD = libsub.la
 noinst_LTLIBRARIES = libsub.la
@@ -398,7 +401,9 @@ libsub_la_SOURCES = \
 	util.c \
 	location.c \
 	rules.c \
-	koornwinder.c
+	koornwinder.c \
+	siegel.c \
+	adapt.c
 
 libsub_la_CFLAGS = -DQBX_SINGLE_PRECISION
 include_HEADERS = \
@@ -535,19 +540,23 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/adapt.Plo
 include ./$(DEPDIR)/blas.Plo
 include ./$(DEPDIR)/koornwinder.Plo
 include ./$(DEPDIR)/laplace.Plo
+include ./$(DEPDIR)/libsub_la-adapt.Plo
 include ./$(DEPDIR)/libsub_la-koornwinder.Plo
 include ./$(DEPDIR)/libsub_la-laplace.Plo
 include ./$(DEPDIR)/libsub_la-location.Plo
 include ./$(DEPDIR)/libsub_la-qbx.Plo
 include ./$(DEPDIR)/libsub_la-rules.Plo
+include ./$(DEPDIR)/libsub_la-siegel.Plo
 include ./$(DEPDIR)/libsub_la-util.Plo
 include ./$(DEPDIR)/location.Plo
 include ./$(DEPDIR)/newman.Plo
 include ./$(DEPDIR)/qbx.Plo
 include ./$(DEPDIR)/rules.Plo
+include ./$(DEPDIR)/siegel.Plo
 include ./$(DEPDIR)/util.Plo
 include ./$(DEPDIR)/wandzura-f.Plo
 include ./$(DEPDIR)/wandzura.Plo
@@ -619,6 +628,20 @@ libsub_la-koornwinder.lo: koornwinder.c
 #	$(AM_V_CC)source='koornwinder.c' object='libsub_la-koornwinder.lo' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-koornwinder.lo `test -f 'koornwinder.c' || echo '$(srcdir)/'`koornwinder.c
+
+libsub_la-siegel.lo: siegel.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -MT libsub_la-siegel.lo -MD -MP -MF $(DEPDIR)/libsub_la-siegel.Tpo -c -o libsub_la-siegel.lo `test -f 'siegel.c' || echo '$(srcdir)/'`siegel.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libsub_la-siegel.Tpo $(DEPDIR)/libsub_la-siegel.Plo
+#	$(AM_V_CC)source='siegel.c' object='libsub_la-siegel.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-siegel.lo `test -f 'siegel.c' || echo '$(srcdir)/'`siegel.c
+
+libsub_la-adapt.lo: adapt.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -MT libsub_la-adapt.lo -MD -MP -MF $(DEPDIR)/libsub_la-adapt.Tpo -c -o libsub_la-adapt.lo `test -f 'adapt.c' || echo '$(srcdir)/'`adapt.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/libsub_la-adapt.Tpo $(DEPDIR)/libsub_la-adapt.Plo
+#	$(AM_V_CC)source='adapt.c' object='libsub_la-adapt.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libsub_la_CFLAGS) $(CFLAGS) -c -o libsub_la-adapt.lo `test -f 'adapt.c' || echo '$(srcdir)/'`adapt.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

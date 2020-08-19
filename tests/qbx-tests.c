@@ -34,6 +34,8 @@ gchar *tests[] = {"planar_test",
 		  "koornwinder_orthogonality",
 		  "blas",
 		  "koornwinder_interpolation",
+		  "adaptive",
+		  "target_specific",
 		  ""} ;
 
 GTimer *timer ;
@@ -161,7 +163,7 @@ static gint planar_triangle_shape_test(gdouble *xe, gint xstr, gint ne,
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "exact:    ") ;
+  fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < 2*ne ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -182,9 +184,9 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
 
 {
   gdouble work[8192], n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t ;
-  gint order, i, nf ;
+  gint order, i, nf, fstr ;
   
-  nf = ne ;
+  nf = ne ; fstr = ne ;
 
   qbx_quadrature_select(nq, &q, &order) ;
 
@@ -197,12 +199,12 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
 
   fprintf(stderr, "evaluating integrals, t=%lg\n",
 	  (t = g_timer_elapsed(timer, NULL))) ;
-  qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, TRUE, q, nq, order,
-				 N, depth, tol,
-				 &(f[0]), 1, &(f[ne]), 1, work) ;
   qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, FALSE, q, nq, order,
 				 N, depth, tol,
-				 &(f[2*ne]), 1, &(f[2*ne+ne]), 1, work) ;
+				 &(f[0]), fstr, &(f[ne]), fstr, work) ;
+  qbx_triangle_laplace_self_quad(xe, xstr, ne, s0, t0, TRUE, q, nq, order,
+				 N, depth, tol,
+				 &(f[2*ne]), fstr, &(f[2*ne+ne]), fstr, work) ;
   fprintf(stderr, "integrals evaluated, t=%lg (%lg)\n",
 	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer, NULL)-t) ;
 
@@ -237,7 +239,7 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "internal: ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "exact:    ") ;
+  fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -272,7 +274,137 @@ static gint self_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "internal: ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+nf+i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "exact:    ") ;
+  fprintf(stderr, "planar:   ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ )
+    fprintf(stderr, " %+lg", fabs(f[nf+i]-g[nf+i])) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "source:   ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", gs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fabs(gs[i]-fs[i])) ;
+  fprintf(stderr, "\n") ;
+
+  return 0 ;
+}
+
+static gint target_specific_test(gdouble *xe, gint xstr, gint ne,
+				 gint nq, gint N,
+				 gdouble *x0, gdouble s0, gdouble t0,
+				 gdouble rc, gint depth, gdouble tol,
+				 gint nx)
+
+{
+  gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w ;
+  gdouble rcopt ;
+  gint order, i, nf, fstr, Nopt, sopt, smax ;
+  
+  nf = ne ; fstr = ne ; smax = 10 ;
+
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  w = sqrt(4*qbx_element_area(xe, xstr, ne, q, nq)/M_PI) ;
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+  qbx_quadrature_optimal_points(w, 0.5*w/(1 << smax), 4.0*w/(1 << smax),
+				16, order, nq, 20, smax, tol,
+				x, n, x,
+				&rcopt, &Nopt, &sopt) ;
+  
+  fprintf(stderr, "target specific self-point test\n") ;
+  fprintf(stderr, "===============================\n") ;
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
+  fprintf(stderr, "subdivision depth: %d %d\n", depth, sopt) ;
+  fprintf(stderr, "N: %d %d\n", N, Nopt) ;
+  fprintf(stderr, "rc: %lg %lg\n", rc, rcopt) ;
+  /* fprintf(stderr, "xc: %lg %lg %lg\n", xc[0], xc[1], xc[2]) ; */
+  /* fprintf(stderr, "n:  %lg %lg %lg\n", n[0], n[1], n[2]) ; */
+  /* fprintf(stderr, "c:  %lg %lg %lg\n", c[0], c[1], c[2]) ; */
+
+  fprintf(stderr, "evaluating integrals, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  memset(f, 0, 64*sizeof(gdouble)) ;
+  
+  /* qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, NULL, rc, N, */
+  /* 			   s0, t0, FALSE, &(f[ne]), fstr, depth, tol, w) ; */
+  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, NULL, rc, N,
+			   s0, t0, &(f[0]), fstr, depth, tol, w) ;
+
+  fprintf(stderr, "integrals evaluated, t=%lg (%lg)\n",
+	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer, NULL)-t) ;
+
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+  newman_tri_shape(x, &(xe[xstr*0]), &(xe[xstr*1]), &(xe[xstr*2]), NULL, 0,
+		   &(g[0]), &(g[ne])) ;
+  for ( i = 0 ; i < 2*ne ; i ++ ) g[i] *= -1.0/4.0/M_PI ;
+  if ( s0 != G_MAXDOUBLE ) {
+    qbx_element_shape_3d(ne, s0, t0, &(g[nf]), NULL, NULL, NULL, NULL, NULL) ;
+    for ( i = 0 ; i < ne ; i ++ ) g[nf+i] *= 0.5 ;
+  }
+
+  memset(fs, 0, ne*sizeof(gdouble)) ;
+  memset(gs, 0, ne*sizeof(gdouble)) ;
+
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fs[0] += f[i]*1.0 ;
+    fs[1] += f[i]*xe[i*xstr+0] ;
+    fs[2] += f[i]*xe[i*xstr+1] ;
+    fs[3] += f[2*ne+i]*1.0 ;
+    fs[4] += f[2*ne+i]*xe[i*xstr+0] ;
+    fs[5] += f[2*ne+i]*xe[i*xstr+1] ;
+    gs[0] += g[i]*1.0 ;
+    gs[1] += g[i]*xe[i*xstr+0] ;
+    gs[2] += g[i]*xe[i*xstr+1] ;
+  }
+  
+  fprintf(stderr, "single layer\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "internal: ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "planar:   ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", fabs(f[i]-g[i])) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "source:   ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", gs[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "          ") ;
+  for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fabs(gs[i]-fs[i])) ;
+  fprintf(stderr, "\n") ;
+  
+  memset(fs, 0, ne*sizeof(gdouble)) ;
+  memset(gs, 0, ne*sizeof(gdouble)) ;
+
+  for ( i = 0 ; i < ne ; i ++ ) {
+    fs[0] += f[nf+i]*1.0 ;
+    fs[1] += f[nf+i]*xe[i*xstr+0] ;
+    fs[2] += f[nf+i]*xe[i*xstr+1] ;
+    gs[0] += g[nf+i]*1.0 ;
+    gs[1] += g[nf+i]*xe[i*xstr+0] ;
+    gs[2] += g[nf+i]*xe[i*xstr+1] ;
+  }
+
+  fprintf(stderr, "double layer\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "internal: ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -346,7 +478,7 @@ static gint off_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "exact:    ") ;
+  fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -378,7 +510,7 @@ static gint off_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "exact:    ") ;
+  fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -532,7 +664,7 @@ static gint koornwinder_orthogonality_test(gint N)
 static gint koornwinder_interpolation_test(gint N)
 
 {
-  gint nq, order, i, idx1, idx2, str ;
+  gint nq, order, i ;
   gdouble s, t, Knm[32768], A[4*65536], *q, f, fr, fi[512], al, bt, c[512] ;
   
   fprintf(stderr, "koornwinder interpolation test\n") ;
@@ -553,13 +685,13 @@ static gint koornwinder_interpolation_test(gint N)
   }
 
   al = 1.0 ; bt = 0.0 ;
-  qbx_dgemv(FALSE, &nq, &nq, &al, A, &nq, fi, &qbx_1i, &bt, c, &qbx_1i) ;
+  qbx_dgemv(FALSE, &nq, &nq, &al, A, &nq, fi, qbx_1i, &bt, c, qbx_1i) ;
 
   for ( s = 0 ; s <= 1.0 ; s += 0.1 ) {
     for ( t = 0 ; t <= 1.0-s ; t += 0.1 ) {
       qbx_koornwinder_nm(N, s, t, 1, nq, Knm) ;
 
-      f = qbx_ddot(&nq, c, &qbx_1i, Knm, qbx_1i) ;
+      f = qbx_ddot(&nq, c, qbx_1i, Knm, qbx_1i) ;
       /* fr = 3.0*s*t - t*t ; */
       fr = sin(2.0*M_PI*s*t/8) ;
   
@@ -628,6 +760,95 @@ static gint blas_tests(gint N)
   d = qbx_ddot(&nr, y, &stry, yref, qbx_1i) ;
 
   fprintf(stderr, "dot: %lg %lg (%lg)\n", d, dref, fabs(d-dref)) ;
+  
+  return 0 ;
+}
+
+static gint adaptive_test_func(gdouble s, gdouble t, gdouble w,
+			       gdouble *x, gdouble *y, gdouble *n,
+			       gint N,
+			       gdouble *fq, gint fstr, gint nf,
+			       gpointer data[])
+{
+  gdouble *xe = data[0] ;
+  gint xstr = *((gint *)(data[1])) ;
+  gint ne = *((gint *)(data[2])) ;
+  gdouble L[32], Ls[32], Lt[32], J, yc[3], nc[3], err ;
+  
+  /* fprintf(stdout, "%e %e %e\n", y[0], y[1], y[2]) ; */
+  qbx_element_shape_3d(ne, s, t, L, Ls, Lt, NULL, NULL, NULL) ;
+  qbx_element_point_interp_3d(xe, xstr, ne, L, Ls, Lt, yc, nc, &J, NULL) ;
+
+  err = qbx_vector_distance(y, yc) ;  
+  fprintf(stdout, "%e %e %e %e ", y[0], y[1], y[2], err) ;
+  err = qbx_vector_distance(n, nc) ;
+  fprintf(stdout, "%e\n", err) ;
+
+  fq[0] += w ;
+  
+  return 0 ;
+}
+
+static gint adaptive_test(gdouble *xe, gint xstr, gint ne,
+			  gint nq, gint N,
+			  gdouble *x0, gdouble s0, gdouble t0,
+			  gdouble rc, gint depth, gdouble tol,
+			  gint nx)
+
+{
+  gdouble st[32], *q, f[512], w, xt[3], J, n[3], c[3], rcopt ;
+  gint oq, nf, smax, sopt, Nopt, fstr ;
+  gpointer data[4] ;
+  
+  fprintf(stderr, "adaptive subdivision test\n") ;
+  fprintf(stderr, "=========================\n") ;
+
+  smax = depth ;
+  
+  st[0*2+0] = 0.0  ; st[0*2+1] = 0.0 ; 
+  st[1*2+0] = 1.0  ; st[1*2+1] = 0.0 ; 
+  st[2*2+0] = 0.0  ; st[2*2+1] = 1.0 ; 
+  st[3*2+0] = 0.5  ; st[3*2+1] = 0.0 ; 
+  st[4*2+0] = 0.5  ; st[4*2+1] = 0.5 ; 
+  st[5*2+0] = 0.0  ; st[5*2+1] = 0.5 ; 
+
+  /* nq = 25 ; */
+  qbx_quadrature_select(nq, &q, &oq) ;
+  w = sqrt(4*qbx_element_area(xe, xstr, ne, q, nq)/M_PI) ;
+
+  /*surface target point*/
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, xt, n, &J, NULL) ;
+  /* x[0] = xc[0] ; x[1] = xc[1] ; x[2] = xc[2] ;     */
+
+  c[0] = xt[0] + rc*n[0] ; 
+  c[1] = xt[1] + rc*n[1] ; 
+  c[2] = xt[2] + rc*n[2] ; 
+
+  qbx_quadrature_optimal_points(w, 0.5*w/(1 << smax), 4.0*w/(1 << smax),
+				16, oq, nq, 20, smax, tol,
+				xt, n, xt,
+				&rcopt, &Nopt, &sopt) ;
+
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, oq) ;
+  fprintf(stderr, "subdivision depth: %d %d\n", depth, sopt) ;
+  fprintf(stderr, "tol: %e\n", tol) ;
+  fprintf(stderr, "N:  %d %d\n", N, Nopt) ;
+  fprintf(stderr, "rc: %lg %lg\n", rc, rcopt) ;
+  fprintf(stderr, "xt: %lg %lg %lg\n", xt[0], xt[1], xt[2]) ;
+  fprintf(stderr, "n:  %lg %lg %lg\n", n[0], n[1], n[2]) ;
+  fprintf(stderr, "c:  %lg %lg %lg\n", c[0], c[1], c[2]) ;
+
+  nf = 1 ; fstr = 1 ;
+  f[0] = 0.0 ;
+  
+  data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+  qbx_triangle_adaptive(adaptive_test_func,
+			xe, xstr, ne, xe, xstr, st, w, c, N, depth,
+			q, nq, oq, tol, f, fstr, nf, data) ;
+			
+  fprintf(stderr, "A:  %lg %lg (%e)\n",
+	  f[0], qbx_element_area(xe, xstr, ne, q, nq),
+	  fabs(f[0] - qbx_element_area(xe, xstr, ne, q, nq))) ;
   
   return 0 ;
 }
@@ -721,6 +942,19 @@ gint main(gint argc, gchar **argv)
 
   if ( test == 3 ) {
     off_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc, depth, tol, nx) ;
+
+    return 0 ;
+  }
+
+  if ( test == 8 ) {
+    adaptive_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc, depth, tol, nx) ;
+
+    return 0 ;
+  }
+  
+  if ( test == 9 ) {
+    target_specific_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc,
+			 depth, tol, nx) ;
 
     return 0 ;
   }
