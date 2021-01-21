@@ -29,8 +29,8 @@ libqbx_la_SOURCES = \
 	location.c \
 	rules.c \
 	koornwinder.c \
-	blas.c \
 	siegel.c \
+	foreach.c \
 	adapt.c
 
 documentation.c: documentation.c.in
@@ -54,6 +54,7 @@ libsub_la_SOURCES = \
 	rules.c \
 	koornwinder.c \
 	siegel.c \
+	foreach.c \
 	adapt.c
 
 libsub_la_CFLAGS = -DQBX_SINGLE_PRECISION

@@ -1,0 +1,1452 @@
+make  all-recursive
+make[1]: Entering directory '/home/michael/Codes/C/qbx'
+Making all in src
+make[2]: Entering directory '/home/michael/Codes/C/qbx/src'
+make  all-am
+make[3]: Entering directory '/home/michael/Codes/C/qbx/src'
+depbase=`echo siegel.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""   -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT siegel.lo -MD -MP -MF $depbase.Tpo -c -o siegel.lo siegel.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT siegel.lo -MD -MP -MF .deps/siegel.Tpo -c siegel.c  -fPIC -DPIC -o .libs/siegel.o
+siegel.c: In function 'qbx_laplace_ts_integrate':
+siegel.c:141:32: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_t func = laplace_quad ;
+                                ^
+siegel.c: In function 'laplace_quad_weights':
+siegel.c:169:12: warning: unused variable 'j' [-Wunused-variable]
+   gint nn, j, i1 = 1 ;
+            ^
+siegel.c: In function 'qbx_laplace_ts_self_weights':
+siegel.c:259:32: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_t func = laplace_quad_weights ;
+                                ^
+siegel.c: In function 'qbx_laplace_ts_off_weights':
+siegel.c:369:32: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_t func = laplace_quad_weights ;
+                                ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT siegel.lo -MD -MP -MF .deps/siegel.Tpo -c siegel.c -o siegel.o >/dev/null 2>&1
+depbase=`echo foreach.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""   -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT foreach.lo -MD -MP -MF $depbase.Tpo -c -o foreach.lo foreach.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT foreach.lo -MD -MP -MF .deps/foreach.Tpo -c foreach.c  -fPIC -DPIC -o .libs/foreach.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT foreach.lo -MD -MP -MF .deps/foreach.Tpo -c foreach.c -o foreach.o >/dev/null 2>&1
+depbase=`echo adapt.lo | sed 's|[^/]*$|.deps/&|;s|\.lo$||'`;\
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""   -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT adapt.lo -MD -MP -MF $depbase.Tpo -c -o adapt.lo adapt.c &&\
+mv -f $depbase.Tpo $depbase.Plo
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT adapt.lo -MD -MP -MF .deps/adapt.Tpo -c adapt.c  -fPIC -DPIC -o .libs/adapt.o
+adapt.c: In function 'qbx_adaptive_quad_tri':
+adapt.c:77:56: warning: unused variable 'J' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                                        ^
+adapt.c:77:50: warning: unused variable 'y' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                                  ^
+adapt.c:77:44: warning: unused variable 'n' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                            ^
+adapt.c:77:36: warning: unused variable 'Lt' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                    ^
+adapt.c:77:28: warning: unused variable 'Ls' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                            ^
+adapt.c:77:21: warning: unused variable 'L' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                     ^
+adapt.c:77:18: warning: unused variable 'w' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                  ^
+adapt.c:77:15: warning: unused variable 't' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+               ^
+adapt.c:77:12: warning: unused variable 's' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+            ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT adapt.lo -MD -MP -MF .deps/adapt.Tpo -c adapt.c -o adapt.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""  -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-laplace.lo -MD -MP -MF .deps/libsub_la-laplace.Tpo -c -o libsub_la-laplace.lo `test -f 'laplace.c' || echo './'`laplace.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-laplace.lo -MD -MP -MF .deps/libsub_la-laplace.Tpo -c laplace.c  -fPIC -DPIC -o .libs/libsub_la-laplace.o
+laplace.c: In function 'qbx_expansion_make_laplace_adaptive_f':
+laplace.c:532:36: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_quadrature_func_f_t func = laplace_quad_dl_f ;
+                                    ^
+laplace.c:553:36: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_quadrature_func_f_t func = laplace_quad_sl_f ;
+                                    ^
+laplace.c: In function 'laplace_quad_weights_f':
+laplace.c:591:39: warning: passing argument 6 of 'qbx_koornwinder_nm' from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_koornwinder_nm(Nk, s, t, 1, nq, Knm) ;
+                                       ^
+In file included from laplace.c:24:0:
+./qbx.h:239:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_koornwinder_nm(gint N, gdouble u, gdouble v, gint str, gint imax,
+      ^
+In file included from laplace.c:26:0:
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+laplace.c:599:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+laplace.c:601:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+laplace.c: In function 'qbx_laplace_weights_f':
+laplace.c:634:34: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_f_t func = laplace_quad_weights_f ;
+                                  ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-laplace.lo -MD -MP -MF .deps/libsub_la-laplace.Tpo -c laplace.c -o libsub_la-laplace.o >/dev/null 2>&1
+mv -f .deps/libsub_la-laplace.Tpo .deps/libsub_la-laplace.Plo
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""  -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-koornwinder.lo -MD -MP -MF .deps/libsub_la-koornwinder.Tpo -c -o libsub_la-koornwinder.lo `test -f 'koornwinder.c' || echo './'`koornwinder.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-koornwinder.lo -MD -MP -MF .deps/libsub_la-koornwinder.Tpo -c koornwinder.c  -fPIC -DPIC -o .libs/libsub_la-koornwinder.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-koornwinder.lo -MD -MP -MF .deps/libsub_la-koornwinder.Tpo -c koornwinder.c -o libsub_la-koornwinder.o >/dev/null 2>&1
+mv -f .deps/libsub_la-koornwinder.Tpo .deps/libsub_la-koornwinder.Plo
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""  -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-siegel.lo -MD -MP -MF .deps/libsub_la-siegel.Tpo -c -o libsub_la-siegel.lo `test -f 'siegel.c' || echo './'`siegel.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-siegel.lo -MD -MP -MF .deps/libsub_la-siegel.Tpo -c siegel.c  -fPIC -DPIC -o .libs/libsub_la-siegel.o
+siegel.c: In function 'qbx_laplace_ts_integrate_f':
+siegel.c:139:34: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_f_t func = laplace_quad_f ;
+                                  ^
+siegel.c: In function 'laplace_quad_weights_f':
+siegel.c:172:39: warning: passing argument 6 of 'qbx_koornwinder_nm' from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_koornwinder_nm(Nk, s, t, 1, nq, Knm) ;
+                                       ^
+In file included from siegel.c:26:0:
+./qbx.h:239:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_koornwinder_nm(gint N, gdouble u, gdouble v, gint str, gint imax,
+      ^
+In file included from siegel.c:24:0:
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:185:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:187:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:193:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:195:3: note: in expansion of macro 'blaswrap_dgemv'
+   blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+   ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:204:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, ws, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:92:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("N",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:93:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:30: warning: passing argument 4 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                              ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:37: warning: passing argument 5 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                     ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:95:50: warning: passing argument 7 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       dgemv_("T",&(_n),&(_m),&(_al),(_A),&(_lda),(_x),&(_incx),  \
+                                                  ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:7: warning: passing argument 9 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+       ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+/home/michael/Codes/include/blaswrap.h:96:14: warning: passing argument 10 of 'dgemv_' from incompatible pointer type [-Wincompatible-pointer-types]
+       &(_bt),(_y),&(_incy)) ;     \
+              ^
+siegel.c:206:5: note: in expansion of macro 'blaswrap_dgemv'
+     blaswrap_dgemv(TRUE, nq, nq, wt, Kq, nq, Knm, i1, d1, wd, i1) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:23:13: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern void dgemv_(gchar *trans, gint *m, gint *n, gdouble *alpha,
+             ^
+siegel.c:169:12: warning: unused variable 'j' [-Wunused-variable]
+   gint nn, j, i1 = 1 ;
+            ^
+siegel.c: In function 'qbx_laplace_ts_self_weights_f':
+siegel.c:257:34: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_f_t func = laplace_quad_weights_f ;
+                                  ^
+siegel.c: In function 'qbx_triangle_laplace_ts_self_matrix_f':
+siegel.c:301:26: warning: passing argument 1 of 'qbx_element_point_3d' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+                          ^
+In file included from siegel.c:26:0:
+./qbx.h:81:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_element_point_3d(gdouble *xe, gint xstr, gint ne,
+      ^
+siegel.c:301:48: warning: passing argument 6 of 'qbx_element_point_3d' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+                                                ^
+In file included from siegel.c:26:0:
+./qbx.h:81:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_element_point_3d(gdouble *xe, gint xstr, gint ne,
+      ^
+siegel.c:301:51: warning: passing argument 7 of 'qbx_element_point_3d' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+                                                   ^
+In file included from siegel.c:26:0:
+./qbx.h:81:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_element_point_3d(gdouble *xe, gint xstr, gint ne,
+      ^
+siegel.c:301:54: warning: passing argument 8 of 'qbx_element_point_3d' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+                                                      ^
+In file included from siegel.c:26:0:
+./qbx.h:81:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_element_point_3d(gdouble *xe, gint xstr, gint ne,
+      ^
+siegel.c:304:7: warning: passing argument 10 of 'qbx_quadrature_optimal_points' from incompatible pointer type [-Wincompatible-pointer-types]
+       x, n, x,
+       ^
+In file included from siegel.c:26:0:
+./qbx.h:215:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_quadrature_optimal_points(gdouble Rb, gdouble r0, gdouble r1,
+      ^
+siegel.c:304:10: warning: passing argument 11 of 'qbx_quadrature_optimal_points' from incompatible pointer type [-Wincompatible-pointer-types]
+       x, n, x,
+          ^
+In file included from siegel.c:26:0:
+./qbx.h:215:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_quadrature_optimal_points(gdouble Rb, gdouble r0, gdouble r1,
+      ^
+siegel.c:304:13: warning: passing argument 12 of 'qbx_quadrature_optimal_points' from incompatible pointer type [-Wincompatible-pointer-types]
+       x, n, x,
+             ^
+In file included from siegel.c:26:0:
+./qbx.h:215:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_quadrature_optimal_points(gdouble Rb, gdouble r0, gdouble r1,
+      ^
+siegel.c:305:7: warning: passing argument 13 of 'qbx_quadrature_optimal_points' from incompatible pointer type [-Wincompatible-pointer-types]
+       &rcopt, &Nopt, &sopt) ;
+       ^
+In file included from siegel.c:26:0:
+./qbx.h:215:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_quadrature_optimal_points(gdouble Rb, gdouble r0, gdouble r1,
+      ^
+In file included from siegel.c:24:0:
+/home/michael/Codes/include/blaswrap.h:75:54: warning: passing argument 2 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                      ^
+siegel.c:313:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(wd[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+/home/michael/Codes/include/blaswrap.h:75:61: warning: passing argument 3 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                             ^
+siegel.c:313:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(wd[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+/home/michael/Codes/include/blaswrap.h:75:54: warning: passing argument 2 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                      ^
+siegel.c:321:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(ws[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+/home/michael/Codes/include/blaswrap.h:75:61: warning: passing argument 3 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                             ^
+siegel.c:321:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(ws[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+/home/michael/Codes/include/blaswrap.h:75:54: warning: passing argument 2 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                      ^
+siegel.c:322:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(wd[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+/home/michael/Codes/include/blaswrap.h:75:61: warning: passing argument 3 of 'dscal_' from incompatible pointer type [-Wincompatible-pointer-types]
+ #define blaswrap_dscal(_n,_al,_x,_strx) dscal_(&(_n),&(_al),(_x),&(_strx))
+                                                             ^
+siegel.c:322:5: note: in expansion of macro 'blaswrap_dscal'
+     blaswrap_dscal(nq, sc, &(wd[i*nq]), one) ;
+     ^
+/home/michael/Codes/include/blaswrap.h:52:16: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ extern gdouble dscal_(gint *n, gdouble *da, gdouble *dx, gint *incx) ;
+                ^
+siegel.c: In function 'qbx_laplace_ts_off_weights_f':
+siegel.c:367:34: warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_quadrature_func_f_t func = laplace_quad_weights_f ;
+                                  ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-siegel.lo -MD -MP -MF .deps/libsub_la-siegel.Tpo -c siegel.c -o libsub_la-siegel.o >/dev/null 2>&1
+mv -f .deps/libsub_la-siegel.Tpo .deps/libsub_la-siegel.Plo
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""  -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-foreach.lo -MD -MP -MF .deps/libsub_la-foreach.Tpo -c -o libsub_la-foreach.lo `test -f 'foreach.c' || echo './'`foreach.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-foreach.lo -MD -MP -MF .deps/libsub_la-foreach.Tpo -c foreach.c  -fPIC -DPIC -o .libs/libsub_la-foreach.o
+foreach.c: In function 'qbx_triangle_adaptive_f':
+foreach.c:258:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:258:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:258:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:258:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:259:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:259:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:261:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:261:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:261:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:261:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:262:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:262:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:264:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:264:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:264:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:264:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:265:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:265:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:267:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:267:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:267:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:267:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:268:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:268:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:293:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:293:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:293:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:293:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:294:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:294:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:296:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:296:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:296:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:296:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:297:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:297:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:299:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:299:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:299:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:299:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:300:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:300:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:302:27: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                           ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'qbx_quadrature_func_f_t {aka int (*)(float,  float,  float,  float *, float *, float *, int,  void *)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:302:33: warning: passing argument 2 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                 ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:302:47: warning: passing argument 5 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                               ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:302:57: warning: passing argument 7 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+     qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
+                                                         ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:303:6: warning: passing argument 9 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+foreach.c:303:22: warning: passing argument 12 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+      xc, N, depth-1, q, nq, oq, tol, data) ;
+                      ^
+In file included from foreach.c:26:0:
+./qbx.h:262:6: note: expected 'gdouble * {aka double *}' but argument is of type 'gfloat * {aka float *}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-foreach.lo -MD -MP -MF .deps/libsub_la-foreach.Tpo -c foreach.c -o libsub_la-foreach.o >/dev/null 2>&1
+mv -f .deps/libsub_la-foreach.Tpo .deps/libsub_la-foreach.Plo
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" -DQBX_COMPILER_FLAGS="\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\""  -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-adapt.lo -MD -MP -MF .deps/libsub_la-adapt.Tpo -c -o libsub_la-adapt.lo `test -f 'adapt.c' || echo './'`adapt.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-adapt.lo -MD -MP -MF .deps/libsub_la-adapt.Tpo -c adapt.c  -fPIC -DPIC -o .libs/libsub_la-adapt.o
+adapt.c: In function 'qbx_adaptive_quad_tri_f':
+adapt.c:77:56: warning: unused variable 'J' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                                        ^
+adapt.c:77:50: warning: unused variable 'y' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                                  ^
+adapt.c:77:44: warning: unused variable 'n' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                            ^
+adapt.c:77:36: warning: unused variable 'Lt' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                                    ^
+adapt.c:77:28: warning: unused variable 'Ls' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                            ^
+adapt.c:77:21: warning: unused variable 'L' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                     ^
+adapt.c:77:18: warning: unused variable 'w' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+                  ^
+adapt.c:77:15: warning: unused variable 't' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+               ^
+adapt.c:77:12: warning: unused variable 's' [-Wunused-variable]
+   QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+            ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -I.. -I/home/michael/Codes/include -DG_LOG_DOMAIN=\"QBX\" "-DQBX_COMPILER_FLAGS=\"-g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include\"" -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT libsub_la-adapt.lo -MD -MP -MF .deps/libsub_la-adapt.Tpo -c adapt.c -o libsub_la-adapt.o >/dev/null 2>&1
+mv -f .deps/libsub_la-adapt.Tpo .deps/libsub_la-adapt.Plo
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -DQBX_SINGLE_PRECISION -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include  -lglib-2.0 -o libsub.la  libsub_la-qbx.lo libsub_la-laplace.lo libsub_la-util.lo libsub_la-location.lo libsub_la-rules.lo libsub_la-koornwinder.lo libsub_la-siegel.lo libsub_la-foreach.lo libsub_la-adapt.lo  -lglib-2.0  -lblas -lm   -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. -lgfortran -lm -lquadmath
+libtool: link: rm -fr  .libs/libsub.a .libs/libsub.la
+libtool: link: ar cru .libs/libsub.a .libs/libsub_la-qbx.o .libs/libsub_la-laplace.o .libs/libsub_la-util.o .libs/libsub_la-location.o .libs/libsub_la-rules.o .libs/libsub_la-koornwinder.o .libs/libsub_la-siegel.o .libs/libsub_la-foreach.o .libs/libsub_la-adapt.o 
+libtool: link: ranlib .libs/libsub.a
+libtool: link: ( cd ".libs" && rm -f "libsub.la" && ln -s "../libsub.la" "libsub.la" )
+/bin/sh ../libtool  --tag=CC   --mode=link gcc  -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -version-info 0:0:0 -release 0.1 -export-dynamic -lglib-2.0 -o libqbx.la -rpath /home/michael/Codes/lib qbx.lo laplace.lo newman.lo wandzura.lo xiao.lo wandzura-f.lo xiao-f.lo util.lo location.lo rules.lo koornwinder.lo siegel.lo foreach.lo adapt.lo libsub.la -lglib-2.0  -lblas -lm   -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. -lgfortran -lm -lquadmath
+libtool: link: rm -fr  .libs/libqbx-0.1.so.0 .libs/libqbx-0.1.so.0.0.0 .libs/libqbx.a .libs/libqbx.la .libs/libqbx.lai .libs/libqbx.so
+libtool: link: gcc -shared  -fPIC -DPIC  .libs/qbx.o .libs/laplace.o .libs/newman.o .libs/wandzura.o .libs/xiao.o .libs/wandzura-f.o .libs/xiao-f.o .libs/util.o .libs/location.o .libs/rules.o .libs/koornwinder.o .libs/siegel.o .libs/foreach.o .libs/adapt.o  -Wl,--whole-archive ./.libs/libsub.a -Wl,--no-whole-archive  -Wl,-rpath -Wl,/usr/lib64/../lib64 -Wl,-rpath -Wl,/usr/lib64/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. /usr/lib64/libglib-2.0.so -lpthread -lblas /usr/lib64/../lib64/libgfortran.so /usr/lib64/../lib64/libquadmath.so -lm  -g -O2 -fopenmp -mavx   -fopenmp -Wl,-soname -Wl,libqbx-0.1.so.0 -o .libs/libqbx-0.1.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libqbx-0.1.so.0" && ln -s "libqbx-0.1.so.0.0.0" "libqbx-0.1.so.0")
+libtool: link: (cd ".libs" && rm -f "libqbx.so" && ln -s "libqbx-0.1.so.0.0.0" "libqbx.so")
+libtool: link: (cd .libs/libqbx.lax/libsub.a && ar x "/home/michael/Codes/C/qbx/src/./.libs/libsub.a")
+libtool: link: ar cru .libs/libqbx.a  qbx.o laplace.o newman.o wandzura.o xiao.o wandzura-f.o xiao-f.o util.o location.o rules.o koornwinder.o siegel.o foreach.o adapt.o  .libs/libqbx.lax/libsub.a/libsub_la-adapt.o .libs/libqbx.lax/libsub.a/libsub_la-foreach.o .libs/libqbx.lax/libsub.a/libsub_la-koornwinder.o .libs/libqbx.lax/libsub.a/libsub_la-laplace.o .libs/libqbx.lax/libsub.a/libsub_la-location.o .libs/libqbx.lax/libsub.a/libsub_la-qbx.o .libs/libqbx.lax/libsub.a/libsub_la-rules.o .libs/libqbx.lax/libsub.a/libsub_la-siegel.o .libs/libqbx.lax/libsub.a/libsub_la-util.o 
+libtool: link: ranlib .libs/libqbx.a
+libtool: link: rm -fr .libs/libqbx.lax
+libtool: link: ( cd ".libs" && rm -f "libqbx.la" && ln -s "../libqbx.la" "libqbx.la" )
+make[3]: Leaving directory '/home/michael/Codes/C/qbx/src'
+make[2]: Leaving directory '/home/michael/Codes/C/qbx/src'
+Making all in tests
+make[2]: Entering directory '/home/michael/Codes/C/qbx/tests'
+depbase=`echo qbx-tests.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;\
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../src -I/home/michael/Codes/include   -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -MT qbx-tests.o -MD -MP -MF $depbase.Tpo -c -o qbx-tests.o qbx-tests.c &&\
+mv -f $depbase.Tpo $depbase.Po
+qbx-tests.c: In function 'weight_test':
+qbx-tests.c:442:44: warning: unused variable 'fs' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                                            ^
+qbx-tests.c: In function 'off_weight_test':
+qbx-tests.c:550:43: warning: unused variable 'smax' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                                           ^
+qbx-tests.c:550:37: warning: unused variable 'sopt' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                                     ^
+qbx-tests.c:550:31: warning: unused variable 'Nopt' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                               ^
+qbx-tests.c:550:25: warning: variable 'fstr' set but not used [-Wunused-but-set-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                         ^
+qbx-tests.c:550:22: warning: unused variable 'j' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                      ^
+qbx-tests.c:550:18: warning: variable 'nf' set but not used [-Wunused-but-set-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+                  ^
+qbx-tests.c:549:11: warning: unused variable 'rcopt' [-Wunused-variable]
+   gdouble rcopt, K[453*453], wd[453], ws[453], L[16], s[453], work[1024] ;
+           ^
+qbx-tests.c:548:64: warning: variable 'sc' set but not used [-Wunused-but-set-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                                                                ^
+qbx-tests.c:548:51: warning: unused variable 'gs' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                                                   ^
+qbx-tests.c:548:44: warning: unused variable 'fs' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                                            ^
+qbx-tests.c:548:20: warning: unused variable 'x' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                    ^
+qbx-tests.c:548:17: warning: unused variable 'J' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+                 ^
+qbx-tests.c:548:11: warning: unused variable 'n' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+           ^
+qbx-tests.c: In function 'matrix_weight_test':
+qbx-tests.c:608:25: warning: unused variable 'fstr' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc, one = 1 ;
+                         ^
+qbx-tests.c:608:22: warning: unused variable 'j' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc, one = 1 ;
+                      ^
+qbx-tests.c:608:18: warning: unused variable 'nf' [-Wunused-variable]
+   gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc, one = 1 ;
+                  ^
+qbx-tests.c:606:30: warning: unused variable 'wt' [-Wunused-variable]
+   gdouble rcopt, K[453*453], wt[453], L[16], As[453*453], Ad[453*453] ;
+                              ^
+qbx-tests.c:605:33: warning: unused variable 'g' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, t, w, al, bt ;
+                                 ^
+qbx-tests.c:605:26: warning: unused variable 'f' [-Wunused-variable]
+   gdouble n[3], J, x[3], f[64], g[64], *q, t, w, al, bt ;
+                          ^
+qbx-tests.c: In function 'foreach_test':
+qbx-tests.c:1088:25: warning: passing argument 1 of 'qbx_triangle_adaptive' from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_triangle_adaptive(foreach_test_func,
+                         ^
+In file included from qbx-tests.c:25:0:
+../src/qbx.h:262:6: note: expected 'qbx_quadrature_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'gint (*)(gdouble,  gdouble,  gdouble,  gdouble *, gdouble *, gdouble *, gint,  gdouble *, gint,  gint,  void **) {aka int (*)(double,  double,  double,  double *, double *, double *, int,  double *, int,  int,  void **)}'
+ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
+      ^
+qbx-tests.c: At top level:
+qbx-tests.c:1100:6: warning: no previous prototype for 'adaptive_quad_func' [-Wmissing-prototypes]
+ gint adaptive_quad_func(gdouble s, gdouble t, gdouble w,
+      ^
+qbx-tests.c:1122:6: warning: no previous prototype for 'adaptive_quad_test' [-Wmissing-prototypes]
+ gint adaptive_quad_test(gdouble *xe, gint xstr, gint ne,
+      ^
+qbx-tests.c: In function 'adaptive_quad_test':
+qbx-tests.c:1152:50: warning: passing argument 7 of 'qbx_adaptive_quad_tri' from incompatible pointer type [-Wincompatible-pointer-types]
+   qbx_adaptive_quad_tri(xe, xstr, ne, st, q, nq, adaptive_quad_func,
+                                                  ^
+In file included from qbx-tests.c:25:0:
+../src/qbx.h:360:6: note: expected 'qbx_adaptive_func_t {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void *)}' but argument is of type 'gint (*)(gdouble,  gdouble,  gdouble,  gdouble *, gdouble *, gdouble *, gint,  void **) {aka int (*)(double,  double,  double,  double *, double *, double *, int,  void **)}'
+ gint qbx_adaptive_quad_tri(gdouble *xe, gint xstr, gint ne,
+      ^
+qbx-tests.c:1129:53: warning: unused variable 'work' [-Wunused-variable]
+   gdouble st[32], *q, f[512], J, n[3], g[8], dg[8], work[1024], t ;
+                                                     ^
+qbx-tests.c:1129:46: warning: unused variable 'dg' [-Wunused-variable]
+   gdouble st[32], *q, f[512], J, n[3], g[8], dg[8], work[1024], t ;
+                                              ^
+qbx-tests.c:1129:34: warning: unused variable 'n' [-Wunused-variable]
+   gdouble st[32], *q, f[512], J, n[3], g[8], dg[8], work[1024], t ;
+                                  ^
+qbx-tests.c:1129:31: warning: unused variable 'J' [-Wunused-variable]
+   gdouble st[32], *q, f[512], J, n[3], g[8], dg[8], work[1024], t ;
+                               ^
+/bin/sh ../libtool  --tag=CC   --mode=link gcc  -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp  -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include  -lglib-2.0 -o qbx-tests qbx-tests.o ../src/.libs/libqbx.a  -lglib-2.0  -lblas -lm   -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. -lgfortran -lm -lquadmath
+libtool: link: gcc -g -O2 -Wall -Werror-implicit-function-declaration -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -fopenmp -mavx -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -o qbx-tests qbx-tests.o  ../src/.libs/libqbx.a /usr/lib64/libglib-2.0.so -lpthread -lblas -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../../../x86_64-slackware-linux/lib -L/usr/lib64/gcc/x86_64-slackware-linux/5.5.0/../../.. /usr/lib64/../lib64/libgfortran.so /usr/lib64/../lib64/libquadmath.so -lm -fopenmp -Wl,-rpath -Wl,/usr/lib64/../lib64 -Wl,-rpath -Wl,/usr/lib64/../lib64
+make[2]: Leaving directory '/home/michael/Codes/C/qbx/tests'
+make[2]: Entering directory '/home/michael/Codes/C/qbx'
+make[2]: Leaving directory '/home/michael/Codes/C/qbx'
+make[1]: Leaving directory '/home/michael/Codes/C/qbx'

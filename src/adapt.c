@@ -21,188 +21,117 @@
 
 #include <glib.h>
 
+#include <blaswrap.h>
+
 #include <qbx.h>
 
 #include "qbx-private.h"
 
-/*
-  Target-specific QBX based on the methods of Siegel and Tornberg,
-  https://doi.org/10.1016/j.jcp.2018.03.006
-*/
+/* #define TRIANGLE_TRACE */
 
-
-static gint point_interp(QBX_REAL *xb, QBX_REAL *fb, gint i,
-			 QBX_REAL *xe, gint xstr, gint ne,
-			 QBX_REAL *fe, gint fstr, gint nf,
-			 QBX_REAL s, QBX_REAL t)
-
-{
-  QBX_REAL n[3], J, L[16], dLds[16], dLdt[16] ;
-  gint j, k ;
-  
-  QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, dLds, dLdt,
-					  NULL, NULL, NULL) ;
-  QBX_FUNCTION_NAME(qbx_element_point_interp_3d)(xe, xstr, ne,
-						 L, dLds, dLdt, &(xb[xstr*i]),
-						 n, &J, NULL) ;
-
-  for ( j = 0 ; j < ne ; j ++ ) fb[fstr*i+j] = 0.0 ;
-  for ( j = 0 ; j < ne ; j ++ ) {
-    for ( k = 0 ; k < nf ; k ++ ) {
-      fb[fstr*i+k] += L[j]*fe[j*fstr+k] ;
-    }
-  }
-  
-  return 0 ;
-}
-  
-static gint point_copy(QBX_REAL *xb, QBX_REAL *fb, gint i,
-		       QBX_REAL *xe, gint xstr, gint ne,
-		       QBX_REAL *fe, gint fstr, gint nf, gint j)
-
-{
-  gint k ;
-  
-  xb[xstr*i+0] = xe[xstr*j+0] ;
-  xb[xstr*i+1] = xe[xstr*j+1] ;
-  xb[xstr*i+2] = xe[xstr*j+2] ;
-
-  for ( k = 0 ; k < nf ; k ++ ) fb[fstr*j+k] = fe[fstr*i+k] ;
-
-  return 0 ;
-}
-
-static gint triangle_divide_loop(QBX_REAL *xe, gint xstr, gint ne,
-				 QBX_REAL *fe, gint fstr, gint nf, gint d,
-				 QBX_REAL *xl, QBX_REAL *fl)
-
-{
-  g_assert(ne == 3 || ne == 6) ;
-
-  if ( ne == 3 ) {
-    switch ( d ) {
-    case 0:
-      point_copy(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      break ;
-    case 1:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_copy(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 1) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      break ;
-    case 2:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      point_copy(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 2) ;
-      break ;
-    case 3:
-      point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-      point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-      point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-      break ;
-    default: g_assert_not_reached() ; break ;
-    }
-    return 0 ;
-  }
-  
-  switch ( d ) {
-  case 0:
-    point_copy(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.25, 0.0 ) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.25) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.0,  0.25) ;
-    break ;
-  case 1:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_copy(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 1) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.75, 0.0 ) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.75, 0.25) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.5 , 0.25) ;
-    break ;
-  case 2:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_copy(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 2) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.25, 0.5) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.75) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.0, 0.75) ;
-    break ;
-  case 3:
-    point_interp(xl, fl, 0, xe, xstr, ne, fe, fstr, nf, 0.5, 0.0) ;
-    point_interp(xl, fl, 1, xe, xstr, ne, fe, fstr, nf, 0.5, 0.5) ;
-    point_interp(xl, fl, 2, xe, xstr, ne, fe, fstr, nf, 0.0, 0.5) ;
-    point_interp(xl, fl, 3, xe, xstr, ne, fe, fstr, nf, 0.5, 0.25) ;
-    point_interp(xl, fl, 4, xe, xstr, ne, fe, fstr, nf, 0.25, 0.5) ;
-    point_interp(xl, fl, 5, xe, xstr, ne, fe, fstr, nf, 0.25, 0.25) ;
-    break ;
-    default: g_assert_not_reached() ; break ;
-  }
-
-  return 0 ;
-}
-
-gint QBX_FUNCTION_NAME(qbx_triangle_adaptive)(
+static void adaptive_quad_tri3(QBX_REAL *xe, gint xstr, QBX_REAL *st,
+			       QBX_REAL *q, gint nq, 
 #ifdef QBX_SINGLE_PRECISION
-					      qbx_quadrature_func_f_t func,
+			       qbx_adaptive_func_f_t func,
 #else /*QBX_SINGLE_PRECISION*/
-					      qbx_quadrature_func_t func,
+			       qbx_adaptive_func_t func,
 #endif /*QBX_SINGLE_PRECISION*/
-					      QBX_REAL *xt, gint tstr, gint ne,
-					      QBX_REAL *xd, gint dstr,
+			       QBX_REAL *quad, gint nc,
+			       gpointer data)
+
+{
+  gint i ;
+  QBX_REAL s, t, w, J, L[10], Ls[10], Lt[10], y[3], n[3] ;
+
+  for ( i = 0 ; i < nq ; i ++ ) {
+    s = q[3*i+0] ; t = q[3*i+1] ; w = q[3*i+2] ;
+    qbx_shape_derivatives3(s, t, L, Ls, Lt) ;
+    qbx_point_interp_jac3(xe, xstr, L[0], L[1], L[2],
+			  Ls[0], Ls[1], Ls[2],
+			  Lt[0], Lt[1], Lt[2],
+			  y, n, J) ;
+    w *= J ;
+    s = L[0]*st[0] + L[1]*st[2] + L[2]*st[4] ;
+    t = L[0]*st[1] + L[1]*st[3] + L[2]*st[5] ;
+    func(s, t, w, y, n, quad, nc, data) ;
+  }
+
+  return ;
+}
+
+gint QBX_FUNCTION_NAME(qbx_adaptive_quad_tri)(QBX_REAL *xe, gint xstr, gint ne,
 					      QBX_REAL *st,
-					      QBX_REAL w,
-					      QBX_REAL *xc,
-					      gint N,
-					      gint depth,
-					      QBX_REAL *q, gint nq, gint oq,
-					      QBX_REAL tol,
-					      QBX_REAL *f, gint fstr, gint nf,
+					      QBX_REAL *q, gint nq,
+#ifdef QBX_SINGLE_PRECISION
+					      qbx_adaptive_func_f_t func,
+#else /*QBX_SINGLE_PRECISION*/
+					      qbx_adaptive_func_t func,
+#endif /*QBX_SINGLE_PRECISION*/
+					      QBX_REAL *quad, gint nc,
+					      QBX_REAL tol, gint dmax,
+					      gboolean init,
 					      gpointer data)
 
 {
-  QBX_REAL std[32], xb[32], L[32], Ls[32], Lt[32], rp, err, s, t, wt ;
-  QBX_REAL J, y[3], n[3] ;
   gint i ;
-
-  g_assert(func != NULL) ;
+  QBX_REAL s, t, w, L[10], Ls[10], Lt[10], n[3], y[3], J ;
+  QBX_REAL work[2048], *q0, *q1, *q2, *q3 ;
+  QBX_REAL xe0[30], st0[20], xe1[30], st1[20], xe2[30], st2[20],
+    xe3[30], st3[20] ;
+  gboolean recurse ;
   
-  /*check error estimate for this triangle (rough estimate but quicker
-    than finding the nearest point accurately)*/
-  rp = 1e6 ;
-  for ( i = 0 ; i < ne ; i ++ ) {
-    rp = MIN(rp, qbx_vector_distance2(xc, &(xd[i*dstr]))) ;
+  /* fprintf(stderr, "depth %d; (%lg)\n", dmax, quad[0]) ; */
+
+#ifdef TRIANGLE_TRACE
+  fprintf(stdout, "%e %e %e %e %e %e %e %e %e\n",
+	  xe[0*xstr+0], xe[0*xstr+1], xe[0*xstr+2], 
+	  xe[1*xstr+0], xe[1*xstr+1], xe[1*xstr+2], 
+	  xe[2*xstr+0], xe[2*xstr+1], xe[2*xstr+2]) ;
+#endif
+  
+  if ( dmax == 0 ) return 0 ;
+
+  g_assert(ne == 3 ) ;
+  
+  if ( init ) {
+    memset(quad, 0, nc*sizeof(QBX_REAL)) ;
+    adaptive_quad_tri3(xe, xstr, st, q, nq, func, quad, nc, data) ;
   }
-  rp = SQRT(rp)*0.5 ;
-  err = QBX_FUNCTION_NAME(qbx_quadrature_error)(N, w, oq, rp, rp) ;
-  err *= 1 << depth ;
-    
-  if ( depth == 0 || err < tol ) {
-    for ( i = 0 ; i < nq ; i ++ ) {
-      s = q[3*i+0] ; t = q[3*i+1] ; wt = q[3*i+2] ;
-      QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, Ls, Lt,
-					      NULL, NULL, NULL) ;
-      QBX_FUNCTION_NAME(qbx_element_point_interp_3d)(xd, dstr, ne,
-						     L, Ls, Lt, y, n, &J,
-						     NULL) ;
-      wt *= J ;
-      /*coordinates on top-level element */
-      s = qbx_ddot(&ne, L, qbx_1i, st, qbx_2i) ;
-      t = qbx_ddot(&ne, L, qbx_1i, &(st[1]), qbx_2i) ;
-      func(s, t, wt, xc, y, n, N, f, fstr, nf, data) ;
+
+  memset(work, 0, 4*nc*sizeof(QBX_REAL)) ;
+  q0 = &(work[0]) ; q1 = &(q0[nc]) ; q2 = &(q1[nc]) ; q3 = &(q2[nc]) ;
+
+  qbx_triangle_divide_loop30(xe, xstr, st, xe0, st0) ;
+  adaptive_quad_tri3(xe0, xstr, st0, q, nq, func, q0, nc, data) ;
+  qbx_triangle_divide_loop31(xe, xstr, st, xe1, st1) ;
+  adaptive_quad_tri3(xe1, xstr, st1, q, nq, func, q1, nc, data) ;
+  qbx_triangle_divide_loop32(xe, xstr, st, xe2, st2) ;
+  adaptive_quad_tri3(xe2, xstr, st2, q, nq, func, q2, nc, data) ;
+  qbx_triangle_divide_loop33(xe, xstr, st, xe3, st3) ;
+  adaptive_quad_tri3(xe3, xstr, st3, q, nq, func, q3, nc, data) ;
+
+  recurse = FALSE ;
+
+  for ( i = 0 ; i < nc ; i ++ ) {
+    if ( fabs(quad[i] - q0[i] - q1[i] - q2[i] - q3[i]) > tol ) {
+      recurse = TRUE ; break ;
     }
-
-    return 0 ;
+    /* quad[i] = q0[i] + q1[i] + q2[i] + q3[i] ; */
   }
-  
-  for ( i = 0 ; i < 4 ; i ++ ) {
-    triangle_divide_loop(xd, dstr, ne, st, 2, 2, i, xb, std) ;
 
-    qbx_triangle_adaptive(func, xt, tstr, ne, xb, dstr, std, 0.5*w,
-			  xc, N, depth-1, q, nq, oq, tol, f, fstr, nf, data) ;
+  if ( !recurse ) return 0 ;
+
+  QBX_FUNCTION_NAME(qbx_adaptive_quad_tri)(xe0, xstr, ne, st0, q, nq, func,
+					   q0, nc, tol, dmax-1, FALSE, data) ;
+  QBX_FUNCTION_NAME(qbx_adaptive_quad_tri)(xe1, xstr, ne, st1, q, nq, func,
+					   q1, nc, tol, dmax-1, FALSE, data) ;
+  QBX_FUNCTION_NAME(qbx_adaptive_quad_tri)(xe2, xstr, ne, st2, q, nq, func,
+					   q2, nc, tol, dmax-1, FALSE, data) ;
+  QBX_FUNCTION_NAME(qbx_adaptive_quad_tri)(xe3, xstr, ne, st3, q, nq, func,
+					   q3, nc, tol, dmax-1, FALSE, data) ;
+  
+  for ( i = 0 ; i < nc ; i ++ ) {
+    quad[i] = q0[i] + q1[i] + q2[i] + q3[i] ;
   }
 
   return 0 ;

@@ -1,5 +1,5 @@
-laplace.lo: laplace.c /usr/include/stdc-predef.h /usr/include/stdio.h \
- /usr/include/features.h /usr/include/sys/cdefs.h \
+libsub_la-foreach.lo: foreach.c /usr/include/stdc-predef.h \
+ /usr/include/stdio.h /usr/include/features.h /usr/include/sys/cdefs.h \
  /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
  /usr/include/gnu/stubs-64.h \
  /usr/lib64/gcc/x86_64-slackware-linux/5.5.0/include/stddef.h \
@@ -98,8 +98,8 @@ laplace.lo: laplace.c /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/glib-2.0/glib/deprecated/gthread.h /usr/include/pthread.h \
  /usr/include/sched.h /usr/include/bits/sched.h \
  /usr/include/bits/setjmp.h \
- /usr/include/glib-2.0/glib/glib-autocleanups.h qbx.h \
- /home/michael/Codes/include/blaswrap.h qbx-private.h
+ /usr/include/glib-2.0/glib/glib-autocleanups.h \
+ /home/michael/Codes/include/blaswrap.h qbx.h qbx-private.h
 
 /usr/include/stdc-predef.h:
 
@@ -399,8 +399,8 @@ laplace.lo: laplace.c /usr/include/stdc-predef.h /usr/include/stdio.h \
 
 /usr/include/glib-2.0/glib/glib-autocleanups.h:
 
-qbx.h:
-
 /home/michael/Codes/include/blaswrap.h:
+
+qbx.h:
 
 qbx-private.h:

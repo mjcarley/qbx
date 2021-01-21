@@ -6,13 +6,18 @@
 typedef gint (*qbx_quadrature_func_t)(gdouble s, gdouble t, gdouble w,
 				      gdouble *x, gdouble *y, gdouble *n,
 				      gint N,
-				      gdouble *fq, gint fstr, gint nf,
 				      gpointer data) ;
 typedef gint (*qbx_quadrature_func_f_t)(gfloat s, gfloat t, gfloat w,
 					gfloat *x, gfloat *y, gfloat *n,
 					gint N,
-					gfloat *fq, gint fstr, gint nf,
 					gpointer data) ;
+
+typedef gint (*qbx_adaptive_func_t)(gdouble s, gdouble t, gdouble w,
+				    gdouble *y, gdouble *n,
+				    gdouble *quad, gint nc, gpointer data) ;
+typedef gint (*qbx_adaptive_func_f_t)(gfloat s, gfloat t, gfloat w,
+				      gfloat *y, gfloat *n,
+				      gfloat *quad, gint nc, gpointer data) ;
 
 gint qbx_expansion_make_laplace_sl(gdouble *xe, gint xstr, gint ne,
 				   gdouble *fe, gint fstr, gint nf,
@@ -27,7 +32,7 @@ gint qbx_expansion_make_laplace_dl(gdouble *xe, gint xstr,  gint ne,
 				   gdouble *L, gint str) ;
 gint qbx_expansion_make_laplace_adaptive(gdouble *xe, gint xstr, gint ne,
 					 gdouble *fe, gint fstr, gint nf,
-					 gdouble *qrule, gint ngp, gint order,
+					 gdouble *qrule, gint ngp, gint oq,
 					 gdouble *xc,
 					 gdouble rc, gint N,
 					 gdouble *L, gint str, gint depth,
@@ -62,11 +67,11 @@ gint qbx_triangle_truncation_error(gdouble *xe, gint xstr, gint ne,
 				   gdouble rc, gint depth, gdouble *ee) ;
 gdouble qbx_element_area(gdouble *xe, gint xstr, gint ne,
 			 gdouble *qrule, gint nq) ;
-gint qbx_truncation_optimal(gdouble Rb, gdouble c, gdouble rp, gint order,
+gint qbx_truncation_optimal(gdouble Rb, gdouble c, gdouble rp, gint oq,
 			    gint pmax, gint smax,
 			    gdouble tol, gint *pq, gint *s) ;
 gint qbx_quadrature_optimal(gdouble Rb, gdouble r0, gdouble r1, gint r,
-			    gint order, gint ngp,
+			    gint oq, gint ngp,
 			    gint pmax, gint smax, gdouble tol,
 			    gdouble *rc, gint *pq, gint *s) ;
 
@@ -82,7 +87,7 @@ gint qbx_element_point_interp_3d(gdouble *xe, gint xstr, gint ne,
 				 gdouble *y, gdouble *n,
 				 gdouble *J, gdouble *c) ;
 
-gint qbx_quadrature_select(gint nq, gdouble **q, gint *order) ;
+gint qbx_quadrature_select(gint nq, gdouble **q, gint *oq) ;
 
 
 
@@ -99,7 +104,7 @@ gint qbx_expansion_make_laplace_dl_f(gfloat *xe, gint xstr,  gint ne,
 				   gfloat *L, gint str) ;
 gint qbx_expansion_make_laplace_adaptive_f(gfloat *xe, gint xstr, gint ne,
 					   gfloat *fe, gint fstr, gint nf,
-					   gfloat *qrule, gint ngp, gint order,
+					   gfloat *qrule, gint ngp, gint oq,
 					   gfloat *xc,
 					   gfloat rc, gint N,
 					   gfloat *L, gint str, gint depth,
@@ -180,11 +185,11 @@ gint qbx_triangle_truncation_error_f(gfloat *xe, gint xstr, gint ne,
 				   gfloat rc, gint depth, gfloat *ee) ;
 gfloat qbx_element_area_f(gfloat *xe, gint xstr, gint ne,
 			 gfloat *qrule, gint nq) ;
-gint qbx_truncation_optimal_f(gfloat Rb, gfloat c, gfloat rp, gint order,
+gint qbx_truncation_optimal_f(gfloat Rb, gfloat c, gfloat rp, gint oq,
 			      gint pmax, gint smax,
 			      gfloat tol, gint *pq, gint *s) ;
 gint qbx_quadrature_optimal_f(gfloat Rb, gfloat r0, gfloat r1, gint r,
-			      gint order, gint ngp,
+			      gint oq, gint ngp,
 			      gint pmax, gint smax, gfloat tol,
 			      gfloat *rc, gint *pq, gint *s) ;
 
@@ -206,15 +211,15 @@ gint qbx_triangle_curvature_f(gfloat *xe, gint xstr, gint ne,
 			      gfloat s, gfloat t,
 			      gfloat *k1, gfloat *k2) ;
 
-gint qbx_quadrature_select_f(gint nq, gfloat **q, gint *order) ;
+gint qbx_quadrature_select_f(gint nq, gfloat **q, gint *oq) ;
 gint qbx_quadrature_optimal_points(gdouble Rb, gdouble r0, gdouble r1,
-				   gint nr, gint order, gint ngp,
+				   gint nr, gint oq, gint ngp,
 				   gint pmax, gint smax,
 				   gdouble tol,
 				   gdouble *x0, gdouble *n, gdouble *x,
 				   gdouble *rc, gint *pq, gint *s) ;
 gint qbx_quadrature_optimal_points_f(gfloat Rb, gfloat r0, gfloat r1,
-				     gint nr, gint order, gint ngp,
+				     gint nr, gint oq, gint ngp,
 				     gint pmax, gint smax,
 				     gfloat tol,
 				     gfloat *x0, gfloat *n, gfloat *x,
@@ -240,16 +245,18 @@ gint qbx_koornwinder_interp_matrix(gdouble *q, gint nq, gdouble *A) ;
 gint qbx_koornwinder_interp_matrix_f(gfloat *q, gint nq, gfloat *A) ;
 
 gint qbx_laplace_ts_integrate(gdouble *xe, gint xstr, gint ne,
-			      gdouble *q,  gint nq, gint order,
-			      gdouble *xc, gdouble rc, gint N,
+			      gdouble *q,  gint nq, gint oq,
+			      gdouble rc, gint N,
 			      gdouble s0, gdouble t0,
-			      gdouble *L,  gint str,
+			      gboolean in,
+			      gdouble *f,  gint str,
 			      gint depth,  gdouble tol, gdouble w) ;
 gint qbx_laplace_ts_integrate_f(gfloat *xe, gint xstr, gint ne,
-				gfloat *q,  gint nq, gint order,
-				gfloat *xc, gfloat rc, gint N,
+				gfloat *q,  gint nq, gint oq,
+				gfloat rc, gint N,
 				gfloat s0, gfloat t0,
-				gfloat *L,  gint str,
+				gboolean in,
+				gfloat *f,  gint str,
 				gint depth,  gfloat tol, gfloat w) ;
 
 gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
@@ -261,7 +268,7 @@ gint qbx_triangle_adaptive(qbx_quadrature_func_t func,
 			   gint depth,
 			   gdouble *q, gint nq, gint oq,
 			   gdouble tol,
-			   gdouble *f, gint fstr, gint nf,
+			   /* gdouble *f, gint fstr, gint nf, */
 			   gpointer data) ;
 gint qbx_triangle_adaptive_f(qbx_quadrature_func_f_t func,
 			     gfloat *xt, gint tstr, gint ne,
@@ -272,8 +279,93 @@ gint qbx_triangle_adaptive_f(qbx_quadrature_func_f_t func,
 			     gint depth,
 			     gfloat *q, gint nq, gint oq,
 			     gfloat tol,
-			     gfloat *f, gint fstr, gint nf,
 			     gpointer data) ;
 
+gint qbx_laplace_ts_self_weights(gdouble *xe, gint xstr, gint ne,
+				 gdouble *q, gint nq, gint oq,
+				 gdouble *Kq, gint Nq,
+				 gdouble rc, gint N,
+				 gdouble s0, gdouble t0,
+				 gboolean in,
+				 gdouble *ws, gdouble *wd,
+				 gint depth,
+				 gdouble tol,
+				 gdouble w) ;
+gint qbx_laplace_ts_self_weights_f(gfloat *xe, gint xstr, gint ne,
+				   gfloat *q, gint nq, gint oq,
+				   gfloat *Kq, gint Nq,
+				   gfloat rc, gint N,
+				   gfloat s0, gfloat t0,
+				   gboolean in,
+				   gfloat *ws, gfloat *wd,
+				   gint depth,
+				   gfloat tol,
+				   gfloat w) ;
+
+gint qbx_triangle_laplace_ts_self_matrix(gdouble *xe, gint xstr, gint ne,
+				    gdouble *q, gint nq, gint oq,
+				    gdouble *Kq, gint Nk,
+				    gdouble rc, gint N,
+				    gdouble *ws, gdouble *wd,
+				    gint depth,
+				    gdouble tol,
+				    gdouble w) ;
+gint qbx_triangle_laplace_ts_self_matrix_f(gfloat *xe, gint xstr, gint ne,
+				      gfloat *q, gint nq, gint oq,
+				      gfloat *Kq, gint Nk,
+				      gfloat rc, gint N,
+				      gfloat *ws, gfloat *wd,
+				      gint depth,
+				      gfloat tol,
+				      gfloat w) ;
+
+gint qbx_laplace_weights(gdouble *xe, gint xstr, gint ne,
+			 gdouble *q, gint nq, gint oq,
+			 gdouble *Kq, gint Nk,
+			 gdouble *xt,
+			 gdouble *ws, gdouble *wd,
+			 gint depth,
+			 gdouble tol,
+			 gdouble w) ;
+gint qbx_laplace_weights_f(gfloat *xe, gint xstr, gint ne,
+			   gfloat *q, gint nq, gint oq,
+			   gfloat *Kq, gint Nk,
+			   gfloat *xt,
+			   gfloat *ws, gfloat *wd,
+			   gint depth,
+			   gfloat tol,
+			   gfloat w) ;
+
+gint qbx_laplace_ts_off_weights(gdouble *xe, gint xstr, gint ne,
+				gdouble *q, gint nq, gint oq,
+				gdouble *Kq, gint Nk,
+				gdouble rc, gint N,
+				gdouble *xt, gdouble *n,
+				gboolean in,
+				gdouble *ws, gdouble *wd,
+				gint depth,
+				gdouble tol,
+				gdouble w) ;
+gint qbx_laplace_ts_off_weights_f(gfloat *xe, gint xstr, gint ne,
+				  gfloat *q, gint nq, gint oq,
+				  gfloat *Kq, gint Nk,
+				  gfloat rc, gint N,
+				  gfloat *xt, gfloat *n,
+				  gboolean in,
+				  gfloat *ws, gfloat *wd,
+				  gint depth,
+				  gfloat tol,
+				  gfloat w) ;
+
+gint qbx_adaptive_quad_tri(gdouble *xe, gint xstr, gint ne,
+			   gdouble *st, gdouble *q, gint nq,
+			   qbx_adaptive_func_t func,
+			   gdouble *quad, gint nc, gdouble tol, gint dmax,
+			   gboolean init, gpointer data) ;
+gint qbx_adaptive_quad_tri_f(gfloat *xe, gint xstr, gint ne,
+			     gfloat *st, gfloat *q, gint nq,
+			     qbx_adaptive_func_f_t func,
+			     gfloat *quad, gint nc, gfloat tol, gint dmax,
+			     gboolean init, gpointer data) ;
 
 #endif /*QBX_H_INCLUDED*/

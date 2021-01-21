@@ -21,6 +21,8 @@
 
 #include <glib.h>
 
+#include <blaswrap.h>
+
 #include <qbx.h>
 
 #include "qbx-private.h"
@@ -111,7 +113,7 @@ gint QBX_FUNCTION_NAME(qbx_koornwinder_interp_matrix)(QBX_REAL *q, gint nq,
 #ifdef QBX_SINGLE_PRECISION
     g_assert_not_reached() ;
 #else /*QBX_SINGLE_PRECISION*/
-    qbx_dscal(&nq, &(q[i*3+2]), &(A[i]), &nq) ;
+    blaswrap_dscal(nq, (q[i*3+2]), &(A[i]), nq) ;
 #endif /*QBX_SINGLE_PRECISION*/
   }
 

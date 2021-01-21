@@ -25,6 +25,16 @@
 
 #include "qbx-private.h"
 
+inline static void shape3(QBX_REAL s, QBX_REAL t, QBX_REAL L[])
+
+{
+  L[0] = 1.0 - s - t ; 
+  L[1] =       s     ; 
+  L[2] =           t ;
+
+  return ;
+}
+
 static gint calc_point(QBX_REAL *xe, gint xstr, gint ne,
 		       QBX_REAL *L, QBX_REAL *p)
 
@@ -65,20 +75,20 @@ gint QBX_FUNCTION_NAME(qbx_element_shape_3d)(gint ne, QBX_REAL s, QBX_REAL t,
     break ;
   case 6:
     L[0] = 2.0*(1.0-s-t)*(0.5-s-t) ;
-    L[1] = 2.0*s*(s-0.5);
-    L[2] = 2.0*t*(t-0.5);
-    L[3] = 4.0*s*(1.0-s-t);
-    L[4] = 4.0*s*t;
-    L[5] = 4.0*t*(1.0-s-t);
+    L[1] = 2.0*s*(s-0.5) ;
+    L[2] = 2.0*t*(t-0.5) ;
+    L[3] = 4.0*s*(1.0-s-t) ;
+    L[4] = 4.0*s*t ;
+    L[5] = 4.0*t*(1.0-s-t) ;
 
     if ( dLds == NULL ) break ;
 
     dLds[0] = -3.0 + 4.0*s + 4.0*t ;
-    dLds[1] = -1.0 + 4.0*s;
-    dLds[2] =  0.0;
-    dLds[3] =  4.0 - 8.0*s - 4.0*t;
-    dLds[4] =  4.0*t;
-    dLds[5] = -4.0*t;
+    dLds[1] = -1.0 + 4.0*s ;
+    dLds[2] =  0.0 ;
+    dLds[3] =  4.0 - 8.0*s - 4.0*t ;
+    dLds[4] =  4.0*t ;
+    dLds[5] = -4.0*t ;
 
     dLdt[0] = -3.0 + 4.0*s + 4.0*t ;
     dLdt[1] =  0.0 ;
@@ -429,15 +439,16 @@ static gint QBX_FUNCTION_NAME(laplace_quad_sl)(QBX_REAL s, QBX_REAL t,
 					       QBX_REAL *x, QBX_REAL *y,
 					       QBX_REAL *n,
 					       gint N,
-					       QBX_REAL *C, gint str,
-					       gint nf,
 					       gpointer data[])
 {
   gint ne = *((gint *)(data[2])) ;
+  QBX_REAL *C = data[3] ;
+  gint str = *((gint *)(data[4])) ;
   QBX_REAL r, th, ph, L[32], sc ;
   QBX_REAL Cth, Sth, Cmph[64], Smph[64], *Pnm1, *Pn, P[128] ;
-  gint nn, mm, idx, j ;
+  gint nn, mm, idx, j, nf ;
   
+  nf = ne ;
   QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(x, y, &r, &th, &ph) ;
   QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, NULL, NULL,
 					  NULL, NULL, NULL) ;
@@ -498,15 +509,16 @@ static gint QBX_FUNCTION_NAME(laplace_quad_dl)(QBX_REAL s, QBX_REAL t,
 					       QBX_REAL *x, QBX_REAL *y,
 					       QBX_REAL *n,
 					       gint N,
-					       QBX_REAL *C, gint str,
-					       gint nf,
 					       gpointer data[])
 {
   gint ne = *((gint *)(data[2])) ;
+  QBX_REAL *C = data[3] ;
+  gint str = *((gint *)(data[4])) ;
   QBX_REAL r, th, ph, L[32], rn, nR, sc, fr, fi ;
   QBX_REAL Cth, Sth, Cmph[64], Smph[64], dP, nC, nph, *Pnm1, *Pn, P[128] ;
-  gint nn, mm, idx, j ;
-  
+  gint nn, mm, idx, j, nf ;
+
+  nf = ne ;
   QBX_FUNCTION_NAME(qbx_cartesian_to_spherical)(x, y, &r, &th, &ph) ;
   QBX_FUNCTION_NAME(qbx_element_shape_3d)(ne, s, t, L, NULL, NULL,
 					  NULL, NULL, NULL) ;
@@ -593,11 +605,11 @@ static gint QBX_FUNCTION_NAME(laplace_quad_dl)(QBX_REAL s, QBX_REAL t,
   return 0 ;
 }
 
-gint QBX_FUNCTION_NAME(select_quadrature)(QBX_REAL w, QBX_REAL tol,
-					  gint nq, gint oq, gint Nmax,
-					  QBX_REAL rc, QBX_REAL rp,
-					  gint *N, gint *d)
-
+static gint select_quadrature(QBX_REAL w, QBX_REAL tol,
+			      gint nq, gint oq, gint Nmax,
+			      QBX_REAL rc, QBX_REAL rp,
+			      gint *N, gint *d)
+  
 {
   QBX_REAL rb, eT, b ;
   gint i ;
@@ -662,20 +674,10 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
   /*location of field point on element*/
   QBX_FUNCTION_NAME(qbx_element_point_3d)(xe, xstr, ne, s0, t0, x, n, &J,
 					  NULL) ;
-  /* QBX_FUNCTION_NAME(qbx_quadrature_optimal_points)(w, */
-  /* 						   0.25*w/(1 << dmax), */
-  /* 						   /\* 16.0*w/(1 << dmax), *\/ */
-  /* 						   0.5*w, */
-  /* 						   64, oq, nq, */
-  /* 						   Nmax, dmax, tol, */
-  /* 						   x, n, x, */
-  /* 						   &rp, &N, &d) ; */
-  /* rp = 0.0625*w ; d = dmax ; */
   d = dmax ; rp = w/(1 << (d)) ;
-  /* if ( rp < 1e-6 ) rp = 1e-6 ; */
-  /* rp *= 2 ; */
+
   rp = w/64 ;
-  QBX_FUNCTION_NAME(select_quadrature)(w, tol, nq, oq, 32, rp, rp, &N, &d) ;
+  select_quadrature(w, tol, nq, oq, 32, rp, rp, &N, &d) ;
   fprintf(stderr, "rp = %lg; N = %d; d = %d\n", rp, N, d) ;
   QBX_FUNCTION_NAME(qbx_triangle_truncation_error)(xe, xstr, ne, q, nq, N,
 						   rp, d, ee) ;
@@ -705,16 +707,17 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 #else /*QBX_SINGLE_PRECISION*/
     qbx_quadrature_func_t func = laplace_quad_dl ;
 #endif /*QBX_SINGLE_PRECISION*/
-    gpointer data[4] ;
+    gpointer data[8] ;
     QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
     
     data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    data[3] = work ; data[4] = &str ;
     memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ;
     QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
 					     xe, xstr, ne, xe, xstr, st,
 					     w, c, N, d, q, nq, oq, tol,
-					     work, str, ne, data) ;
+					     data) ;
     QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Id, ee) ;
   }
 
@@ -724,16 +727,17 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_self_quad)(QBX_REAL *xe,
 #else /*QBX_SINGLE_PRECISION*/
     qbx_quadrature_func_t func = laplace_quad_sl ;
 #endif /*QBX_SINGLE_PRECISION*/
-    gpointer data[4] ;
+    gpointer data[8] ;
     QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
     
     data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    data[3] = work ; data[4] = &str ;
     memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ;
     QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
 					     xe, xstr, ne, xe, xstr, st,
 					     w, c, N, d, q, nq, oq, tol,
-					     work, str, ne, data) ;
+					     data) ;
     QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Is, ee) ;
 
   }
@@ -809,16 +813,17 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
 #else /*QBX_SINGLE_PRECISION*/
     qbx_quadrature_func_t func = laplace_quad_dl ;
 #endif /*QBX_SINGLE_PRECISION*/
-    gpointer data[4] ;
+    gpointer data[8] ;
     QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
     
     data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    data[3] = work ; data[4] = &str ;
     memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ;
     QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
 					     xe, xstr, ne, xe, xstr, st,
 					     w, c, N, d, q, nq, oq, tol,
-					     work, str, ne, data) ;
+					     data) ;
     QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Id, ee) ;
   }
 
@@ -828,16 +833,17 @@ gint QBX_FUNCTION_NAME(qbx_triangle_laplace_quad)(QBX_REAL *xe,
 #else /*QBX_SINGLE_PRECISION*/
     qbx_quadrature_func_t func = laplace_quad_sl ;
 #endif /*QBX_SINGLE_PRECISION*/
-    gpointer data[4] ;
+    gpointer data[8] ;
     QBX_REAL st[] = {0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
 		     0.5, 0.0, 0.5, 0.5, 0.0, 0.5} ;
     
     data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
+    data[3] = work ; data[4] = &str ;
     memset(work, 0, ne*(N+1)*(N+2)/2*sizeof(QBX_REAL)) ;
     QBX_FUNCTION_NAME(qbx_triangle_adaptive)(func,
 					     xe, xstr, ne, xe, xstr, st,
 					     w, c, N, d, q, nq, oq, tol,
-					     work, str, ne, data) ;
+					     data) ;
     QBX_FUNCTION_NAME(qbx_expansion_eval_laplace)(c, N, work, str, x, Is, ee) ;
 
   }

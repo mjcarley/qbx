@@ -24,6 +24,8 @@
 
 #include <qbx.h>
 
+#include <blaswrap.h>
+
 #include "qbx-private.h"
 
 gchar *tests[] = {"planar_test",
@@ -34,8 +36,12 @@ gchar *tests[] = {"planar_test",
 		  "koornwinder_orthogonality",
 		  "blas",
 		  "koornwinder_interpolation",
-		  "adaptive",
+		  "foreach",
 		  "target_specific",
+		  "weights",
+		  "matrix_weights",
+		  "off_weights",
+		  "adaptive",
 		  ""} ;
 
 GTimer *timer ;
@@ -330,10 +336,12 @@ static gint target_specific_test(gdouble *xe, gint xstr, gint ne,
 	  (t = g_timer_elapsed(timer, NULL))) ;
   memset(f, 0, 64*sizeof(gdouble)) ;
   
-  /* qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, NULL, rc, N, */
-  /* 			   s0, t0, FALSE, &(f[ne]), fstr, depth, tol, w) ; */
-  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, NULL, rc, N,
-			   s0, t0, &(f[0]), fstr, depth, tol, w) ;
+  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, rc, N,
+			   s0, t0, TRUE, &(f[0]), fstr, depth, tol, w) ;
+  for ( i = 0 ; i < ne ; i ++ ) f[ne+i] *= -1 ;
+  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, rc, N,
+			   s0, t0, FALSE, &(f[0]), fstr, depth, tol, w) ;
+  for ( i = 0 ; i < 2*ne ; i ++ ) f[i] *= 0.5 ;
 
   fprintf(stderr, "integrals evaluated, t=%lg (%lg)\n",
 	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer, NULL)-t) ;
@@ -362,13 +370,13 @@ static gint target_specific_test(gdouble *xe, gint xstr, gint ne,
     gs[2] += g[i]*xe[i*xstr+1] ;
   }
   
-  fprintf(stderr, "single layer\n") ;
+  fprintf(stderr, "single layer average\n") ;
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "internal: ") ;
-  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+i]) ;
-  fprintf(stderr, "\n") ;
+  /* fprintf(stderr, "internal: ") ; */
+  /* for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+i]) ; */
+  /* fprintf(stderr, "\n") ; */
   fprintf(stderr, "planar:   ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
   fprintf(stderr, "\n") ;
@@ -397,14 +405,14 @@ static gint target_specific_test(gdouble *xe, gint xstr, gint ne,
     gs[2] += g[nf+i]*xe[i*xstr+1] ;
   }
 
-  fprintf(stderr, "double layer\n") ;
+  fprintf(stderr, "double layer jump\n") ;
   fprintf(stderr, "expansion:") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
   fprintf(stderr, "\n") ;
-  fprintf(stderr, "internal: ") ;
-  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+nf+i]) ;
-  fprintf(stderr, "\n") ;
-  fprintf(stderr, "planar:   ") ;
+  /* fprintf(stderr, "internal: ") ; */
+  /* for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[2*ne+nf+i]) ; */
+  /* fprintf(stderr, "\n") ; */
+  fprintf(stderr, "exact:    ") ;
   for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
   fprintf(stderr, "\n") ;
   fprintf(stderr, "error:    ") ;
@@ -421,6 +429,242 @@ static gint target_specific_test(gdouble *xe, gint xstr, gint ne,
   for ( i = 0 ; i < 3 ; i ++ ) fprintf(stderr, " %+lg", fabs(gs[i]-fs[i])) ;
   fprintf(stderr, "\n") ;
 
+  return 0 ;
+}
+
+static gint weight_test(gdouble *xe, gint xstr, gint ne,
+			gint nq, gint N,
+			gdouble *x0, gdouble s0, gdouble t0,
+			gdouble rc, gint depth, gdouble tol,
+			gint nx)
+
+{
+  gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+  gdouble rcopt, K[453*453], wt[453], L[16] ;
+  gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk ;
+  
+  nf = ne ; fstr = ne ; smax = 10 ;
+
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  w = sqrt(4*qbx_element_area(xe, xstr, ne, q, nq)/M_PI) ;
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+  qbx_quadrature_optimal_points(w, 0.5*w/(1 << smax), 4.0*w/(1 << smax),
+				16, order, nq, 20, smax, tol,
+				x, n, x,
+				&rcopt, &Nopt, &sopt) ;
+  
+  fprintf(stderr, "Koornwinder weighted self-point test\n") ;
+  fprintf(stderr, "====================================\n") ;
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
+  fprintf(stderr, "subdivision depth: %d %d\n", depth, sopt) ;
+  fprintf(stderr, "N: %d %d\n", N, Nopt) ;
+  fprintf(stderr, "rc: %lg %lg\n", rc, rcopt) ;
+
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  fprintf(stderr, "generating Koornwinder matrix, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  Nk = qbx_koornwinder_interp_matrix(q, nq, K) ;
+  
+  qbx_laplace_ts_self_weights(xe, xstr, ne, q, nq, order, K, Nk, rc, N,
+			      s0, t0, TRUE, wt, &(wt[nq]), depth, tol, w) ;
+  sc = -1.0 ; i = 1 ;
+  blaswrap_dscal(nq, sc, &(wt[nq]), i) ;
+
+  qbx_laplace_ts_self_weights(xe, xstr, ne, q, nq, order, K, Nk, rc, N,
+			      s0, t0, FALSE, wt, &(wt[nq]), depth, tol, w) ;
+  sc = 0.5 ;
+  blaswrap_dscal(nq, sc, wt, i) ;
+  blaswrap_dscal(nq, sc, &(wt[nq]), i) ;
+
+  fprintf(stderr, "evaluating integrals, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  memset(f, 0, 64*sizeof(gdouble)) ;
+  memset(g, 0, 64*sizeof(gdouble)) ;
+  
+  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, rc, N,
+			   s0, t0, TRUE, &(f[0]), fstr, depth, tol, w) ;
+  memset(f, 0, ne*sizeof(QBX_REAL)) ;
+  sc = -1.0 ; i = 1 ;
+  blaswrap_dscal(nq, sc, &(f[ne]), i) ;
+  qbx_laplace_ts_integrate(xe, xstr, ne, q, nq, order, rc, N,
+  			   s0, t0, FALSE, &(f[0]), fstr, depth, tol, w) ;
+  sc = 0.5 ;
+  blaswrap_dscal(nq, sc, &(f[ne]), i) ;
+
+  for ( i = 0 ; i < nq ; i ++ ) {
+    qbx_element_shape_3d(ne, q[3*i+0], q[3*i+1], L,
+			 NULL, NULL, NULL, NULL, NULL) ;
+    for ( j = 0 ; j < ne ; j ++ ) {
+      g[   j] += wt[0*nq+i]*L[j] ;
+      g[ne+j] += wt[1*nq+i]*L[j] ;
+    }
+  }
+
+  fprintf(stderr, "integrals evaluated, t=%lg (%lg)\n",
+	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer, NULL)-t) ;
+  
+  qbx_element_shape_3d(ne, s0, t0, gs, NULL, NULL, NULL, NULL, NULL) ;
+  sc = 0.5 ; i = 1 ;
+  blaswrap_dscal(ne, sc, gs, i) ;
+
+  fprintf(stderr, "single layer average\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "weights:  ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", fabs(f[i]-g[i])) ;
+  fprintf(stderr, "\n") ;
+  
+  fprintf(stderr, "double layer jump\n") ;
+  fprintf(stderr, "expansion:") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", f[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "jump:     ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", gs[  i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "weights:  ") ;
+  for ( i = 0 ; i < nf ; i ++ ) fprintf(stderr, " %+lg", g[nf+i]) ;
+  fprintf(stderr, "\n") ;
+  fprintf(stderr, "error:    ") ;
+  for ( i = 0 ; i < nf ; i ++ )
+    fprintf(stderr, " %+lg", fabs(g[nf+i]-gs[i])) ;
+  fprintf(stderr, "\n") ;
+
+  return 0 ;
+}
+
+static gint off_weight_test(gdouble *xe, gint xstr, gint ne,
+			    gint nq, gint N,
+			    gdouble *x0,
+			    gint depth, gdouble tol,
+			    gint nx)
+
+{
+  gdouble n[3], J, x[3], f[64], g[64], *q, fs[8], gs[8], t, w, sc ;
+  gdouble rcopt, K[453*453], wd[453], ws[453], L[16], s[453], work[1024] ;
+  gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc = 1, i1 = 1 ;
+  
+  nf = ne ; fstr = ne ;
+
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  /*set up a sample source vector*/
+  for ( i = 0 ; i < nq ; i ++ ) {
+    qbx_element_shape_3d(ne, q[3*i+0], q[3*i+1], L,
+			 NULL, NULL, NULL, NULL, NULL) ;
+    s[i] = L[isrc] ;
+  }
+
+  w = sqrt(4*qbx_element_area(xe, xstr, ne, q, nq)/M_PI) ;
+  
+  fprintf(stderr, "Koornwinder weighted off point test\n") ;
+  fprintf(stderr, "===================================\n") ;
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
+  fprintf(stderr, "subdivision depth: %d\n", depth) ;
+  fprintf(stderr, "target: %lg %lg %lg\n", x0[0], x0[1], x0[2]) ;
+  
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  fprintf(stderr, "generating Koornwinder matrix, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  Nk = qbx_koornwinder_interp_matrix(q, nq, K) ;
+
+  qbx_laplace_weights(xe, xstr, ne, q, nq, order, K, Nk,
+		      x0, ws, wd, depth, tol, w) ;
+  sc = 1.0 ;
+  f[0] = blaswrap_ddot(nq, ws, i1, s, i1) ;
+  f[1] = blaswrap_ddot(nq, wd, i1, s, i1) ;
+
+  memset(g, 0, 64*sizeof(gdouble)) ;
+  qbx_triangle_laplace_quad(xe, xstr, ne, x0, q, nq, order,
+			    0, depth, tol,
+			    &(g[0]), 1, &(g[ne]), 1, work) ;
+
+  fprintf(stderr, "single layer\n") ;
+  fprintf(stderr, "%lg %lg (%e)\n",
+	  f[0], g[isrc], fabs(f[0]-g[isrc])) ;
+  fprintf(stderr, "double layer\n") ;
+  fprintf(stderr, "%lg %lg (%e)\n",
+	  f[1], g[ne+isrc], fabs(f[1]-g[ne+isrc])) ;
+
+  return 0 ;
+}
+
+static gint matrix_weight_test(gdouble *xe, gint xstr, gint ne,
+			       gint nq, gint N,
+			       gdouble *x0, gdouble s0, gdouble t0,
+			       gdouble rc, gint depth, gdouble tol,
+			       gint nx)
+
+{
+  gdouble n[3], J, x[3], f[64], g[64], *q, t, w, al, bt ;
+  gdouble rcopt, K[453*453], wt[453], L[16], As[453*453], Ad[453*453] ;
+  gdouble s[453], fs[453], fd[453], ed ;
+  gint order, i, nf, j, fstr, Nopt, sopt, smax, Nk, isrc, one = 1 ;
+  
+  smax = 10 ;
+
+  isrc = 2 ;
+  
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  w = sqrt(4*qbx_element_area(xe, xstr, ne, q, nq)/M_PI) ;
+  qbx_element_point_3d(xe, xstr, ne, s0, t0, x, n, &J, NULL) ;
+  qbx_quadrature_optimal_points(w, 0.5*w/(1 << smax), 4.0*w/(1 << smax),
+				16, order, nq, 20, smax, tol,
+				x, n, x,
+				&rcopt, &Nopt, &sopt) ;
+  
+  fprintf(stderr, "element layer potential matrices test\n") ;
+  fprintf(stderr, "=====================================\n") ;
+  fprintf(stderr, "quadrature: %d points, %dth order\n", nq, order) ;
+  fprintf(stderr, "subdivision depth: %d %d\n", depth, sopt) ;
+  fprintf(stderr, "N: %d %d\n", N, Nopt) ;
+  fprintf(stderr, "rc: %lg %lg\n", rc, rcopt) ;
+
+  /*set up a sample source vector*/
+  for ( i = 0 ; i < nq ; i ++ ) {
+    qbx_element_shape_3d(ne, q[3*i+0], q[3*i+1], L,
+			 NULL, NULL, NULL, NULL, NULL) ;
+    s[i] = L[isrc] ;
+  }
+  
+  qbx_quadrature_select(nq, &q, &order) ;
+
+  fprintf(stderr, "generating Koornwinder matrix, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  Nk = qbx_koornwinder_interp_matrix(q, nq, K) ;
+
+  fprintf(stderr, "generating layer potential matrices, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+
+  qbx_triangle_laplace_ts_self_matrix(xe, xstr, ne, q, nq, order, K, Nk, rc, N,
+				      As, Ad, depth, tol, w) ;
+
+  fprintf(stderr, "layer potential matrices generated, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+
+  fprintf(stderr, "matrix evaluation of layer potentials, t=%lg\n",
+	  (t = g_timer_elapsed(timer, NULL))) ;
+  al = 1.0 ; bt = 0.0 ;
+  blaswrap_dgemv(FALSE, nq, nq, al, As, nq, s, one, bt, fs, one) ;
+  blaswrap_dgemv(FALSE, nq, nq, al, Ad, nq, s, one, bt, fd, one) ;
+
+  ed = 0.0 ;
+  for ( i = 0 ; i < nq ; i ++ ) {
+    fprintf(stdout,
+	    "%lg %lg %lg %lg %lg (%e)\n",
+	    q[3*i+0], q[3*i+1], fs[i], fd[i], 0.5*s[i], fabs(fd[i]-0.5*s[i])) ;
+    ed = MAX(ed, fabs(fd[i]-0.5*s[i])) ;
+  }
+
+  fprintf(stderr, "double layer maximum error: %lg\n", ed) ;
+  
   return 0 ;
 }
 
@@ -664,7 +908,7 @@ static gint koornwinder_orthogonality_test(gint N)
 static gint koornwinder_interpolation_test(gint N)
 
 {
-  gint nq, order, i ;
+  gint nq, order, i, i1 = 1 ;
   gdouble s, t, Knm[32768], A[4*65536], *q, f, fr, fi[512], al, bt, c[512] ;
   
   fprintf(stderr, "koornwinder interpolation test\n") ;
@@ -685,13 +929,13 @@ static gint koornwinder_interpolation_test(gint N)
   }
 
   al = 1.0 ; bt = 0.0 ;
-  qbx_dgemv(FALSE, &nq, &nq, &al, A, &nq, fi, qbx_1i, &bt, c, qbx_1i) ;
+  blaswrap_dgemv(FALSE, nq, nq, al, A, nq, fi, i1, bt, c, i1) ;
 
   for ( s = 0 ; s <= 1.0 ; s += 0.1 ) {
     for ( t = 0 ; t <= 1.0-s ; t += 0.1 ) {
       qbx_koornwinder_nm(N, s, t, 1, nq, Knm) ;
 
-      f = qbx_ddot(&nq, c, qbx_1i, Knm, qbx_1i) ;
+      f = blaswrap_ddot(nq, c, i1, Knm, i1) ;
       /* fr = 3.0*s*t - t*t ; */
       fr = sin(2.0*M_PI*s*t/8) ;
   
@@ -705,7 +949,7 @@ static gint koornwinder_interpolation_test(gint N)
 static gint blas_tests(gint N)
 
 {
-  gint i, j, stra, strx, stry, nr, nc ;
+  gint i, j, stra, strx, stry, nr, nc, i1 = 1 ;
   gdouble A[8192], x[256], y[256], yref[256], al, bt, d, dref ;
 
   fprintf(stderr, "BLAS test\n") ;
@@ -740,7 +984,7 @@ static gint blas_tests(gint N)
     }
   }
 
-  qbx_dgemv(FALSE, &nr, &nc, &al, A, &stra, x, &strx, &bt, y, &stry) ;
+  blaswrap_dgemv(FALSE, nr, nc, al, A, stra, x, strx, bt, y, stry) ;
 
   for ( i = 0 ; i < nr ; i ++ ) {
     fprintf(stderr, "%lg ", yref[i]) ;
@@ -757,14 +1001,14 @@ static gint blas_tests(gint N)
   }
   fprintf(stderr, "\n") ;
 
-  d = qbx_ddot(&nr, y, &stry, yref, qbx_1i) ;
+  d = blaswrap_ddot(nr, y, stry, yref, i1) ;
 
   fprintf(stderr, "dot: %lg %lg (%lg)\n", d, dref, fabs(d-dref)) ;
   
   return 0 ;
 }
 
-static gint adaptive_test_func(gdouble s, gdouble t, gdouble w,
+static gint foreach_test_func(gdouble s, gdouble t, gdouble w,
 			       gdouble *x, gdouble *y, gdouble *n,
 			       gint N,
 			       gdouble *fq, gint fstr, gint nf,
@@ -789,7 +1033,7 @@ static gint adaptive_test_func(gdouble s, gdouble t, gdouble w,
   return 0 ;
 }
 
-static gint adaptive_test(gdouble *xe, gint xstr, gint ne,
+static gint foreach_test(gdouble *xe, gint xstr, gint ne,
 			  gint nq, gint N,
 			  gdouble *x0, gdouble s0, gdouble t0,
 			  gdouble rc, gint depth, gdouble tol,
@@ -797,7 +1041,7 @@ static gint adaptive_test(gdouble *xe, gint xstr, gint ne,
 
 {
   gdouble st[32], *q, f[512], w, xt[3], J, n[3], c[3], rcopt ;
-  gint oq, nf, smax, sopt, Nopt, fstr ;
+  gint oq, smax, sopt, Nopt ;
   gpointer data[4] ;
   
   fprintf(stderr, "adaptive subdivision test\n") ;
@@ -838,17 +1082,91 @@ static gint adaptive_test(gdouble *xe, gint xstr, gint ne,
   fprintf(stderr, "n:  %lg %lg %lg\n", n[0], n[1], n[2]) ;
   fprintf(stderr, "c:  %lg %lg %lg\n", c[0], c[1], c[2]) ;
 
-  nf = 1 ; fstr = 1 ;
   f[0] = 0.0 ;
   
   data[0] = xe ; data[1] = &xstr ; data[2] = &ne ;
-  qbx_triangle_adaptive(adaptive_test_func,
+  qbx_triangle_adaptive(foreach_test_func,
 			xe, xstr, ne, xe, xstr, st, w, c, N, depth,
-			q, nq, oq, tol, f, fstr, nf, data) ;
+			q, nq, oq, tol,
+			data) ;
 			
   fprintf(stderr, "A:  %lg %lg (%e)\n",
 	  f[0], qbx_element_area(xe, xstr, ne, q, nq),
 	  fabs(f[0] - qbx_element_area(xe, xstr, ne, q, nq))) ;
+  
+  return 0 ;
+}
+
+gint adaptive_quad_func(gdouble s, gdouble t, gdouble w,
+			gdouble *y, gdouble *n,
+			gdouble *quad, gint nq, gpointer data[])
+{
+  gdouble *x = data[0] ;
+  gdouble R, dR ;
+
+  R = qbx_vector_distance(x, y) ;
+
+  dR = qbx_vector_diff_scalar(x, y, n)/R/R ;  
+  w *= 0.25*M_1_PI/R ;
+  
+  quad[0] += w*(1 - s - t)  ;
+  quad[1] += w*(    s    )  ;
+  quad[2] += w*(        t)  ;
+  quad[3] += w*(1 - s - t)*dR ;
+  quad[4] += w*(    s    )*dR ;
+  quad[5] += w*(        t)*dR ;
+  
+  return 0 ;
+}
+
+gint adaptive_quad_test(gdouble *xe, gint xstr, gint ne,
+			gint nq, gint N,
+			gdouble *x,
+			gint depth, gdouble tol,
+			gint nx)
+
+{
+  gdouble st[32], *q, f[512], J, n[3], g[8], dg[8], work[1024], t ;
+  gint oq, nc, i ;
+  gpointer data[4] ;
+
+  nc = 2*ne ;
+  
+  fprintf(stderr, "adaptive quadrature test\n") ;
+  fprintf(stderr, "========================\n") ;
+  fprintf(stderr, "x = %lg %lg %lg\n", x[0], x[1], x[2]) ;
+  fprintf(stderr, "tol = %lg\n", tol) ;
+  
+  st[0*2+0] = 0.0  ; st[0*2+1] = 0.0 ; 
+  st[1*2+0] = 1.0  ; st[1*2+1] = 0.0 ; 
+  st[2*2+0] = 0.0  ; st[2*2+1] = 1.0 ; 
+  st[3*2+0] = 0.5  ; st[3*2+1] = 0.0 ; 
+  st[4*2+0] = 0.5  ; st[4*2+1] = 0.5 ; 
+  st[5*2+0] = 0.0  ; st[5*2+1] = 0.5 ; 
+
+  qbx_quadrature_select(nq, &q, &oq) ;
+
+  data[0] = x ;
+  fprintf(stderr, "starting integration, t=%lg\n",
+	  t = g_timer_elapsed(timer, NULL)) ;  
+  qbx_adaptive_quad_tri(xe, xstr, ne, st, q, nq, adaptive_quad_func,
+			f, nc, tol, depth, TRUE, data) ;
+  fprintf(stderr, "integration completed, t=%lg (%lg)\n",
+	  g_timer_elapsed(timer, NULL), g_timer_elapsed(timer,NULL) - t) ;
+  newman_tri_shape(x, &(xe[xstr*0]), &(xe[xstr*1]), &(xe[xstr*2]), NULL, 0,
+		   &(g[0]), &(g[ne])) ;
+  for ( i = 0 ; i < 2*ne ; i ++ ) g[i] *= -1.0/4.0/M_PI ;
+
+  fprintf(stderr, "single layer\n") ;
+  fprintf(stderr, "  adaptive: %lg %lg %lg\n", f[0], f[1], f[2]) ;
+  fprintf(stderr, "  exact:    %lg %lg %lg\n", g[0], g[1], g[2]) ;
+  fprintf(stderr, "  error:    %lg %lg %lg\n",
+	  fabs(f[0]-g[0]), fabs(f[1]-g[1]), fabs(f[2]-g[2])) ;
+  fprintf(stderr, "double layer\n") ;
+  fprintf(stderr, "  adaptive: %lg %lg %lg\n", f[3], f[4], f[5]) ;
+  fprintf(stderr, "  exact:    %lg %lg %lg\n", g[3], g[4], g[5]) ;
+  fprintf(stderr, "  error:    %lg %lg %lg\n",
+	  fabs(f[3]-g[3]), fabs(f[4]-g[4]), fabs(f[5]-g[5])) ;
   
   return 0 ;
 }
@@ -947,7 +1265,7 @@ gint main(gint argc, gchar **argv)
   }
 
   if ( test == 8 ) {
-    adaptive_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc, depth, tol, nx) ;
+    foreach_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc, depth, tol, nx) ;
 
     return 0 ;
   }
@@ -959,6 +1277,32 @@ gint main(gint argc, gchar **argv)
     return 0 ;
   }
 
+  if ( test == 10 ) {
+    weight_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc,
+		depth, tol, nx) ;
+
+    return 0 ;
+  }
+
+  if ( test == 11 ) {
+    matrix_weight_test(xe, xstr, ne, nq, N, NULL, s0, t0, rc,
+		       depth, tol, nx) ;
+
+    return 0 ;
+  }
+
+  if ( test == 12 ) {
+    off_weight_test(xe, xstr, ne, nq, N, x0, depth, tol, nx) ;
+
+    return 0 ;
+  }
+
+  if ( test == 13 ) {
+    adaptive_quad_test(xe, xstr, ne, nq, N, x0, depth, tol, nx) ;
+
+    return 0 ;
+  }
+  
   return 0 ;
 }
 
